@@ -1,0 +1,6 @@
+BartoszBartniczak\EventSourcing\Shop\Basket\Event\QuantityOfTheProductHasBeenChanged:
+  properties:
+    productId:
+      type: BartoszBartniczak\EventSourcing\Shop\Product\Id
+    quantity:
+      type: float

@@ -1,0 +1,35 @@
+{
+  "name": "bartoszbartniczak/eventsourcing",
+  "description": "My first meeting with EventSourcing",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "Bartosz Bartniczak",
+      "email": "kontakt@bartoszbartniczak.pl"
+    }
+  ],
+  "require": {
+    "ramsey/uuid": "3.*",
+    "psr/log": "^1.0",
+    "jms/serializer": "1.*",
+    "symfony/yaml": "3.*",
+    "bartoszbartniczak/array-object": "^1.0",
+    "BartoszBartniczak/CQRS": "^1.0"
+  },
+  "require-dev": {
+    "filp/whoops": "*",
+    "symfony/var-dumper": "*",
+    "phpunit/phpunit": "5.*"
+  },
+  "autoload": {
+    "psr-4": {
+      "BartoszBartniczak\\EventSourcing\\Shop\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "BartoszBartniczak\\EventSourcing\\Shop\\": "tests/unit-tests/"
+    }
+  }
+}

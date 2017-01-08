@@ -1,0 +1,12 @@
+BartoszBartniczak\EventSourcing\Shop\Basket\Basket:
+  properties:
+    id:
+      type: BartoszBartniczak\EventSourcing\Shop\Basket\Id
+    positions:
+      exclude: true
+      expose: false
+    ownerEmail:
+      type: string
+    open:
+      exclude: true
+      expose: false

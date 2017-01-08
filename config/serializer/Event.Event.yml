@@ -1,0 +1,13 @@
+BartoszBartniczak\EventSourcing\Shop\Event\Event:
+  properties:
+    eventId:
+      type: BartoszBartniczak\EventSourcing\Shop\UUID\UUID
+    dateTime:
+      type: DateTime
+  virtual_properties:
+    getEventFamilyName:
+      serializedName: eventFamilyName
+      type: string
+    getName:
+      serializedName: name
+      type: string

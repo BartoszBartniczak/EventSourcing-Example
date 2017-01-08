@@ -1,0 +1,6 @@
+BartoszBartniczak\EventSourcing\Shop\Basket\Event\ProductHasBeenAddedToTheBasket:
+  properties:
+    product:
+      type: BartoszBartniczak\EventSourcing\Shop\Product\Product
+    quantity:
+      type: float

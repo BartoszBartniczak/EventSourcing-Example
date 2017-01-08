@@ -1,0 +1,4 @@
+BartoszBartniczak\EventSourcing\Shop\Basket\Event\ProductHasBeenRemovedFromTheBasket:
+  properties:
+    productId:
+      type: BartoszBartniczak\EventSourcing\Shop\Product\Id
