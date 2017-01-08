@@ -11,7 +11,7 @@ use BartoszBartniczak\EventSourcing\Shop\Password\HashGenerator;
 use BartoszBartniczak\EventSourcing\Shop\User\Command\LogInUser as LogInUserCommand;
 use BartoszBartniczak\EventSourcing\Shop\User\Repository\UserRepository;
 use BartoszBartniczak\EventSourcing\Shop\User\User;
-use BartoszBartniczak\EventSourcing\Shop\UUID\Generator;
+use BartoszBartniczak\EventSourcing\UUID\Generator;
 
 class LogInUserTest extends \PHPUnit_Framework_TestCase
 {

@@ -13,7 +13,7 @@ use BartoszBartniczak\EventSourcing\Shop\Email\Event\EmailHasNotBeenSent;
 use BartoszBartniczak\EventSourcing\Shop\Email\Id;
 use BartoszBartniczak\EventSourcing\Shop\Email\Sender\CannotSendEmailException;
 use BartoszBartniczak\EventSourcing\Shop\Email\Sender\Service;
-use BartoszBartniczak\EventSourcing\Shop\UUID\Generator;
+use BartoszBartniczak\EventSourcing\UUID\Generator;
 
 
 class SendEmailTest extends \PHPUnit_Framework_TestCase

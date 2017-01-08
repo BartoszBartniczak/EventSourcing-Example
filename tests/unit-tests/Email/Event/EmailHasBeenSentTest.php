@@ -8,7 +8,7 @@ namespace BartoszBartniczak\EventSourcing\Shop\Email\Event;
 
 
 use BartoszBartniczak\EventSourcing\Shop\Email\Email;
-use BartoszBartniczak\EventSourcing\Shop\EventTestCase;
+use BartoszBartniczak\EventSourcing\Test\EventTestCase;
 
 class EmailHasBeenSentTest extends EventTestCase
 {

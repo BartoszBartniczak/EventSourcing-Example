@@ -10,7 +10,7 @@ namespace BartoszBartniczak\EventSourcing\Shop\Basket\Command\Handler;
 use BartoszBartniczak\CQRS\Command\Command;
 use BartoszBartniczak\EventSourcing\Shop\Basket\Basket;
 use BartoszBartniczak\EventSourcing\Shop\Basket\Event\ProductHasBeenRemovedFromTheBasket;
-use BartoszBartniczak\EventSourcing\Shop\Command\Handler\CommandHandler;
+use BartoszBartniczak\EventSourcing\Command\Handler\CommandHandler;
 
 class RemoveProductFromTheBasket extends CommandHandler
 {

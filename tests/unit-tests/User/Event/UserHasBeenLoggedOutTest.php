@@ -7,7 +7,7 @@
 namespace BartoszBartniczak\EventSourcing\Shop\User\Event;
 
 
-use BartoszBartniczak\EventSourcing\Shop\EventTestCase;
+use BartoszBartniczak\EventSourcing\Test\EventTestCase;
 
 class UserHasBeenLoggedOutTest extends EventTestCase
 {

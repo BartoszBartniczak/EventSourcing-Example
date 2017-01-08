@@ -11,7 +11,7 @@ use BartoszBartniczak\EventSourcing\Shop\Basket\Basket;
 use BartoszBartniczak\EventSourcing\Shop\Basket\Command\CloseBasket as CloseBasketCommand;
 use BartoszBartniczak\EventSourcing\Shop\Basket\Event\BasketHasBeenClosed;
 use BartoszBartniczak\EventSourcing\Shop\Basket\Id as BasketId;
-use BartoszBartniczak\EventSourcing\Shop\UUID\Generator;
+use BartoszBartniczak\EventSourcing\UUID\Generator;
 
 class CloseBasketTest extends \PHPUnit_Framework_TestCase
 {

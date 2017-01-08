@@ -7,7 +7,7 @@
 namespace BartoszBartniczak\EventSourcing\Shop\Product\Repository\Event;
 
 
-use BartoszBartniczak\EventSourcing\Shop\EventTestCase;
+use BartoszBartniczak\EventSourcing\Test\EventTestCase;
 
 class ProductHasNotBeenFoundTest extends EventTestCase
 {

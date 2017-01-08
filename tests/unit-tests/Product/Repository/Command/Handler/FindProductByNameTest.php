@@ -13,7 +13,7 @@ use BartoszBartniczak\EventSourcing\Shop\Product\Repository\Command\FindProductB
 use BartoszBartniczak\EventSourcing\Shop\Product\Repository\Event\ProductHasNotBeenFound;
 use BartoszBartniczak\EventSourcing\Shop\Product\Repository\Repository;
 use BartoszBartniczak\EventSourcing\Shop\User\User;
-use BartoszBartniczak\EventSourcing\Shop\UUID\Generator;
+use BartoszBartniczak\EventSourcing\UUID\Generator;
 
 class FindProductByNameTest extends \PHPUnit_Framework_TestCase
 {

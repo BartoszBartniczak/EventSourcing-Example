@@ -8,7 +8,7 @@ namespace BartoszBartniczak\EventSourcing\Shop\User\Command\Handler;
 
 
 use BartoszBartniczak\CQRS\Command\Command;
-use BartoszBartniczak\EventSourcing\Shop\Command\Handler\CommandHandler;
+use BartoszBartniczak\EventSourcing\Command\Handler\CommandHandler;
 use BartoszBartniczak\EventSourcing\Shop\User\Event\UserHasBeenLoggedOut as UserHasBeenLoggedOutEvent;
 use BartoszBartniczak\EventSourcing\Shop\User\Repository\CannotFindUserException;
 use BartoszBartniczak\EventSourcing\Shop\User\User;

@@ -6,8 +6,8 @@
 
 namespace BartoszBartniczak\EventSourcing\Shop\User\Event;
 
-use BartoszBartniczak\EventSourcing\Shop\Event\Event as BasicEvent;
-use BartoszBartniczak\EventSourcing\Shop\Event\Id;
+use BartoszBartniczak\EventSourcing\Event\Event as BasicEvent;
+use BartoszBartniczak\EventSourcing\Event\Id;
 use BartoszBartniczak\EventSourcing\Shop\User\User;
 
 

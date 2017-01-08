@@ -7,7 +7,7 @@
 namespace BartoszBartniczak\EventSourcing\Shop\User\Repository;
 
 
-use BartoszBartniczak\EventSourcing\Shop\ExceptionTestCase;
+use BartoszBartniczak\TestCase\ExceptionTestCase;
 
 class InvalidArgumentExceptionTestCase extends ExceptionTestCase
 {

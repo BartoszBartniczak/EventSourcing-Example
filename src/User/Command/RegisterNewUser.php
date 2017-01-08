@@ -12,8 +12,7 @@ use BartoszBartniczak\EventSourcing\Shop\Email\Email;
 use BartoszBartniczak\EventSourcing\Shop\Email\Sender\Service as EmailSenderService;
 use BartoszBartniczak\EventSourcing\Shop\Generator\ActivationTokenGenerator;
 use BartoszBartniczak\EventSourcing\Shop\Password\HashGenerator;
-use BartoszBartniczak\EventSourcing\Shop\Password\SaltGenerator;
-use BartoszBartniczak\EventSourcing\Shop\UUID\Generator as UUIDGenerator;
+use BartoszBartniczak\EventSourcing\UUID\Generator as UUIDGenerator;
 
 class RegisterNewUser implements Command
 {

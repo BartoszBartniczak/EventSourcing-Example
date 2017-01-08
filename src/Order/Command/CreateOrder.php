@@ -11,7 +11,7 @@ use BartoszBartniczak\CQRS\Command\Command;
 use BartoszBartniczak\EventSourcing\Shop\Basket\Basket;
 use BartoszBartniczak\EventSourcing\Shop\Email\Email;
 use BartoszBartniczak\EventSourcing\Shop\Email\Sender\Service as EmailSenderService;
-use BartoszBartniczak\EventSourcing\Shop\UUID\Generator;
+use BartoszBartniczak\EventSourcing\UUID\Generator;
 
 class CreateOrder implements Command
 {

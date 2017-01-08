@@ -9,7 +9,7 @@ namespace BartoszBartniczak\EventSourcing\Shop\Order;
 use BartoszBartniczak\EventSourcing\Shop\Basket\Id as BasketId;
 use BartoszBartniczak\EventSourcing\Shop\Basket\Position\Position as BasketPosition;
 use BartoszBartniczak\EventSourcing\Shop\Basket\Position\PositionArray as BasketPositions;
-use BartoszBartniczak\EventSourcing\Shop\EventAggregate\EventAggregate;
+use BartoszBartniczak\EventSourcing\EventAggregate\EventAggregate;
 use BartoszBartniczak\EventSourcing\Shop\Order\Event\OrderHasBeenCreated;
 use BartoszBartniczak\EventSourcing\Shop\Order\Position\PositionArray;
 use BartoszBartniczak\EventSourcing\Shop\Product\Product;

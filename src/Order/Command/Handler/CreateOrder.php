@@ -9,7 +9,7 @@ namespace BartoszBartniczak\EventSourcing\Shop\Order\Command\Handler;
 
 use BartoszBartniczak\CQRS\Command\Command;
 use BartoszBartniczak\EventSourcing\Shop\Basket\Command\CloseBasket;
-use BartoszBartniczak\EventSourcing\Shop\Command\Handler\CommandHandler;
+use BartoszBartniczak\EventSourcing\Command\Handler\CommandHandler;
 use BartoszBartniczak\EventSourcing\Shop\Email\Command\SendEmail;
 use BartoszBartniczak\EventSourcing\Shop\Order\Event\OrderHasBeenCreated;
 use BartoszBartniczak\EventSourcing\Shop\Order\Id;

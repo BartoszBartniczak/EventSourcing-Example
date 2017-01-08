@@ -11,7 +11,7 @@ use BartoszBartniczak\EventSourcing\Shop\Basket\Basket;
 use BartoszBartniczak\EventSourcing\Shop\Basket\Event\BasketHasBeenCreated;
 use BartoszBartniczak\EventSourcing\Shop\Basket\Factory\Factory;
 use BartoszBartniczak\EventSourcing\Shop\Basket\Id;
-use BartoszBartniczak\EventSourcing\Shop\Event\Repository\InMemoryEventRepository;
+use BartoszBartniczak\EventSourcing\Event\Repository\InMemoryEventRepository;
 
 class InMemoryRepository implements BasketRepository
 {

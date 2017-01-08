@@ -14,7 +14,7 @@ use BartoszBartniczak\EventSourcing\Shop\Basket\Event\ProductHasBeenRemovedFromT
 use BartoszBartniczak\EventSourcing\Shop\Basket\Event\QuantityOfTheProductHasBeenChanged;
 use BartoszBartniczak\EventSourcing\Shop\Basket\Position\Position;
 use BartoszBartniczak\EventSourcing\Shop\Basket\Position\PositionArray;
-use BartoszBartniczak\EventSourcing\Shop\EventAggregate\EventAggregate;
+use BartoszBartniczak\EventSourcing\EventAggregate\EventAggregate;
 use BartoszBartniczak\EventSourcing\Shop\Product\Id as ProductId;
 use BartoszBartniczak\EventSourcing\Shop\Product\Product;
 

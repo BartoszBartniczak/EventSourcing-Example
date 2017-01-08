@@ -8,7 +8,7 @@ namespace BartoszBartniczak\EventSourcing\Shop\Basket\Event;
 
 
 use BartoszBartniczak\EventSourcing\Shop\Basket\Basket;
-use BartoszBartniczak\EventSourcing\Shop\Event\Id;
+use BartoszBartniczak\EventSourcing\Event\Id;
 use BartoszBartniczak\EventSourcing\Shop\Product\Product;
 
 class ProductHasBeenAddedToTheBasket extends Event

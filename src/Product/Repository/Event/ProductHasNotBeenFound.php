@@ -6,7 +6,7 @@
 
 namespace BartoszBartniczak\EventSourcing\Shop\Product\Repository\Event;
 
-use BartoszBartniczak\EventSourcing\Shop\Event\Id;
+use BartoszBartniczak\EventSourcing\Event\Id;
 
 class ProductHasNotBeenFound extends Event
 {

@@ -8,7 +8,7 @@ namespace BartoszBartniczak\EventSourcing\Shop\Basket\Event;
 
 
 use BartoszBartniczak\EventSourcing\Shop\Basket\Basket;
-use BartoszBartniczak\EventSourcing\Shop\EventTestCase;
+use BartoszBartniczak\EventSourcing\Test\EventTestCase;
 use BartoszBartniczak\EventSourcing\Shop\Product\Id as ProductId;
 
 class QuantityOfTheProductHasBeenChangedTest extends EventTestCase

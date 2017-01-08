@@ -7,9 +7,9 @@
 namespace BartoszBartniczak\EventSourcing\Shop\User\Repository;
 
 
-use BartoszBartniczak\EventSourcing\Shop\Event\EventStream;
-use BartoszBartniczak\EventSourcing\Shop\Event\Repository\InMemoryEventRepository;
-use BartoszBartniczak\EventSourcing\Shop\Event\Serializer\Serializer;
+use BartoszBartniczak\EventSourcing\Event\EventStream;
+use BartoszBartniczak\EventSourcing\Event\Repository\InMemoryEventRepository;
+use BartoszBartniczak\EventSourcing\Event\Serializer\Serializer;
 use BartoszBartniczak\EventSourcing\Shop\User\Event\UserHasBeenRegistered;
 use BartoszBartniczak\EventSourcing\Shop\User\Factory\Factory;
 use BartoszBartniczak\EventSourcing\Shop\User\User;

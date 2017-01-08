@@ -7,7 +7,7 @@
 namespace BartoszBartniczak\EventSourcing\Shop\User\Repository;
 
 
-use BartoszBartniczak\EventSourcing\Shop\Event\Repository\InMemoryEventRepository;
+use BartoszBartniczak\EventSourcing\Event\Repository\InMemoryEventRepository;
 use BartoszBartniczak\EventSourcing\Shop\User\Event\Event;
 use BartoszBartniczak\EventSourcing\Shop\User\Factory\Factory;
 use BartoszBartniczak\EventSourcing\Shop\User\User;

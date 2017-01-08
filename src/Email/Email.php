@@ -9,8 +9,8 @@ namespace BartoszBartniczak\EventSourcing\Shop\Email;
 
 use BartoszBartniczak\EventSourcing\Shop\Email\Event\EmailHasBeenSent;
 use BartoszBartniczak\EventSourcing\Shop\Email\Event\EmailHasNotBeenSent;
-use BartoszBartniczak\EventSourcing\Shop\EventAggregate\EventAggregate;
-use BartoszBartniczak\EventSourcing\Shop\UUID\UUID;
+use BartoszBartniczak\EventSourcing\EventAggregate\EventAggregate;
+use BartoszBartniczak\EventSourcing\UUID\UUID;
 
 class Email extends EventAggregate
 {

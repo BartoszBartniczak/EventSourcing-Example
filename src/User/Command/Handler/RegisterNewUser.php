@@ -8,9 +8,9 @@ namespace BartoszBartniczak\EventSourcing\Shop\User\Command\Handler;
 
 
 use BartoszBartniczak\CQRS\Command\Command;
-use BartoszBartniczak\EventSourcing\Shop\Command\Handler\CommandHandler;
+use BartoszBartniczak\EventSourcing\Command\Handler\CommandHandler;
 use BartoszBartniczak\EventSourcing\Shop\Email\Command\SendEmail as SendEmailCommand;
-use BartoszBartniczak\EventSourcing\Shop\EventAggregate\EventAggregate;
+use BartoszBartniczak\EventSourcing\EventAggregate\EventAggregate;
 use BartoszBartniczak\EventSourcing\Shop\User\Command\RegisterNewUser as RegisterNewUserCommand;
 use BartoszBartniczak\EventSourcing\Shop\User\Event\ActivationTokenHasBeenGenerated;
 use BartoszBartniczak\EventSourcing\Shop\User\Event\UserHasBeenRegistered;

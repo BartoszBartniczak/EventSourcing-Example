@@ -3,7 +3,7 @@ Event Sourcing
 An example of using EventSourcing pattern in a real project. Implementation of this pattern may contains some flaws. 
 -----------------------------------------------------------
 
-This is an example online shop. 
+This is an example of the online shop. 
 
 ### The scenario
 
@@ -52,5 +52,18 @@ To run unit tests run command:
 php vendor/phpunit/phpunit/phpunit --configuration tests/unit-tests/configuration.xml
 ```
 
+### Running the example
 
+Run command in console:
+
+```bash
+php -S localhost:8000
+
+```
+
+Open the browser and type:
+
+```
+http://localhost:8000/example.php
+```
 

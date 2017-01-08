@@ -10,7 +10,7 @@ use BartoszBartniczak\EventSourcing\Shop\User\Command\LogOutUser as LogOutUserCo
 use BartoszBartniczak\EventSourcing\Shop\User\Event\UserHasBeenLoggedOut;
 use BartoszBartniczak\EventSourcing\Shop\User\Repository\UserRepository;
 use BartoszBartniczak\EventSourcing\Shop\User\User;
-use BartoszBartniczak\EventSourcing\Shop\UUID\Generator;
+use BartoszBartniczak\EventSourcing\UUID\Generator;
 
 class LogOutUserTest extends \PHPUnit_Framework_TestCase
 {

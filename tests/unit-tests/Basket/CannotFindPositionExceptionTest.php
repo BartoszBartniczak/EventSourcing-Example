@@ -7,7 +7,7 @@
 namespace BartoszBartniczak\EventSourcing\Shop\Basket;
 
 
-use BartoszBartniczak\EventSourcing\Shop\ExceptionTestCase;
+use BartoszBartniczak\TestCase\ExceptionTestCase;
 
 class CannotFindPositionExceptionTest extends ExceptionTestCase
 {

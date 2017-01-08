@@ -8,7 +8,7 @@ namespace BartoszBartniczak\EventSourcing\Shop\Product\Repository;
 
 
 use BartoszBartniczak\EventSourcing\Shop\Product\Product;
-use BartoszBartniczak\EventSourcing\Shop\UUID\UUID;
+use BartoszBartniczak\EventSourcing\UUID\UUID;
 
 interface Repository
 {

@@ -6,7 +6,7 @@
 
 namespace BartoszBartniczak\EventSourcing\Shop\Order\Event;
 
-use BartoszBartniczak\EventSourcing\Shop\Event\Event as BasicEvent;
+use BartoszBartniczak\EventSourcing\Event\Event as BasicEvent;
 
 class Event extends BasicEvent
 {

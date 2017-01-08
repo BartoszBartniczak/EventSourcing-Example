@@ -11,7 +11,7 @@ use BartoszBartniczak\EventSourcing\Shop\User\Event\UnsuccessfulAttemptOfActivat
 use BartoszBartniczak\EventSourcing\Shop\User\Event\UserAccountHasBeenActivated;
 use BartoszBartniczak\EventSourcing\Shop\User\Repository\UserRepository;
 use BartoszBartniczak\EventSourcing\Shop\User\User;
-use BartoszBartniczak\EventSourcing\Shop\UUID\Generator;
+use BartoszBartniczak\EventSourcing\UUID\Generator;
 
 class ActivateUserTest extends \PHPUnit_Framework_TestCase
 {

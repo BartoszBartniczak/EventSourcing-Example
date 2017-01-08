@@ -7,7 +7,7 @@
 namespace BartoszBartniczak\EventSourcing\Shop\Basket;
 
 
-use BartoszBartniczak\EventSourcing\Shop\UUID\UUID;
+use BartoszBartniczak\EventSourcing\UUID\UUID;
 
 class IdTest extends \PHPUnit_Framework_TestCase
 {

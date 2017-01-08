@@ -11,7 +11,7 @@ use BartoszBartniczak\EventSourcing\Shop\Basket\Command\AddProductToTheBasket as
 use BartoszBartniczak\EventSourcing\Shop\Basket\Event\ProductHasBeenAddedToTheBasket;
 use BartoszBartniczak\EventSourcing\Shop\Basket\Id;
 use BartoszBartniczak\EventSourcing\Shop\Product\Product;
-use BartoszBartniczak\EventSourcing\Shop\UUID\Generator;
+use BartoszBartniczak\EventSourcing\UUID\Generator;
 
 class AddProductToTheBasketTest extends \PHPUnit_Framework_TestCase
 {

@@ -8,9 +8,10 @@ namespace BartoszBartniczak\EventSourcing\Shop\Basket\Event;
 
 
 use BartoszBartniczak\EventSourcing\Shop\Basket\Basket;
-use BartoszBartniczak\EventSourcing\Shop\Event\Id;
+use BartoszBartniczak\EventSourcing\Event\Id;
+use BartoszBartniczak\EventSourcing\Event\Event as BasicEvent;
 
-abstract class Event extends \BartoszBartniczak\EventSourcing\Shop\Event\Event
+abstract class Event extends BasicEvent
 {
 
     const FAMILY_NAME = 'Basket';

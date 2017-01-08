@@ -1,6 +1,6 @@
 {
-  "name": "bartoszbartniczak/eventsourcing",
-  "description": "My first meeting with EventSourcing",
+  "name": "bartoszbartniczak/eventsourcing-example",
+  "description": "Example of EventSourcing",
   "minimum-stability": "stable",
   "license": "proprietary",
   "authors": [
@@ -9,18 +9,25 @@
       "email": "kontakt@bartoszbartniczak.pl"
     }
   ],
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "git@github.com:BartoszBartniczak/EventSourcing.git"
+    }
+  ],
   "require": {
     "ramsey/uuid": "3.*",
     "psr/log": "^1.0",
     "jms/serializer": "1.*",
     "symfony/yaml": "3.*",
     "bartoszbartniczak/array-object": "^1.0",
-    "BartoszBartniczak/CQRS": "^1.0"
+    "bartoszbartniczak/EventSourcing": "dev-master"
   },
   "require-dev": {
     "filp/whoops": "*",
     "symfony/var-dumper": "*",
-    "phpunit/phpunit": "5.*"
+    "phpunit/phpunit": "5.*",
+    "bartoszbartniczak/test-case": "1.*"
   },
   "autoload": {
     "psr-4": {

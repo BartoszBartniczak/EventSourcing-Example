@@ -8,7 +8,7 @@ namespace BartoszBartniczak\EventSourcing\Shop\Order\Event;
 
 
 use BartoszBartniczak\EventSourcing\Shop\Basket\Id as BasketId;
-use BartoszBartniczak\EventSourcing\Shop\EventTestCase;
+use BartoszBartniczak\EventSourcing\Test\EventTestCase;
 use BartoszBartniczak\EventSourcing\Shop\Order\Id;
 use BartoszBartniczak\EventSourcing\Shop\Order\Position\PositionArray;
 

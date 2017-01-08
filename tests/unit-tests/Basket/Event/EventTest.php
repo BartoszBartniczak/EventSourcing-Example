@@ -8,7 +8,7 @@ namespace BartoszBartniczak\EventSourcing\Shop\Basket\Event;
 
 
 use BartoszBartniczak\EventSourcing\Shop\Basket\Basket;
-use BartoszBartniczak\EventSourcing\Shop\EventTestCase;
+use BartoszBartniczak\EventSourcing\Test\EventTestCase;
 
 class EventTest extends EventTestCase
 {

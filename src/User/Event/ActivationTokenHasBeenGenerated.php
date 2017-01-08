@@ -7,7 +7,7 @@
 namespace BartoszBartniczak\EventSourcing\Shop\User\Event;
 
 
-use BartoszBartniczak\EventSourcing\Shop\Event\Id;
+use BartoszBartniczak\EventSourcing\Event\Id;
 
 class ActivationTokenHasBeenGenerated extends Event
 {

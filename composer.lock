@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "46cde8f38fbfa1bddddb332837c88582",
-    "content-hash": "2ab17c19a74c4060984945e7e0f3156f",
+    "hash": "6858c024633bc8a9e4aa5f25ac953e68",
+    "content-hash": "d1bee5ab8afacdc9117292fa2a0c2d7d",
     "packages": [
         {
             "name": "bartoszbartniczak/array-object",
@@ -82,6 +82,59 @@
             ],
             "description": "Command Query Responsibility Segregation pattern applied in PHP.",
             "time": "2017-01-07 13:15:39"
+        },
+        {
+            "name": "bartoszbartniczak/eventsourcing",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/BartoszBartniczak/EventSourcing.git",
+                "reference": "37618339a3fcce40af9cc690a61a8fc6f60faae4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/BartoszBartniczak/EventSourcing/zipball/37618339a3fcce40af9cc690a61a8fc6f60faae4",
+                "reference": "37618339a3fcce40af9cc690a61a8fc6f60faae4",
+                "shasum": ""
+            },
+            "require": {
+                "bartoszbartniczak/array-object": "^1.0",
+                "bartoszbartniczak/cqrs": "^1.0",
+                "jms/serializer": "1.*",
+                "psr/log": "^1.0",
+                "ramsey/uuid": "3.*",
+                "symfony/yaml": "3.*"
+            },
+            "require-dev": {
+                "bartoszbartniczak/test-case": "1.*",
+                "phpunit/phpunit": "5.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "BartoszBartniczak\\EventSourcing\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "BartoszBartniczak\\EventSourcing\\": "tests/unit-tests/"
+                }
+            },
+            "license": [
+                "proprietary"
+            ],
+            "authors": [
+                {
+                    "name": "Bartosz Bartniczak",
+                    "email": "kontakt@bartoszbartniczak.pl"
+                }
+            ],
+            "description": "EventSourcing pattern library written in PHP",
+            "support": {
+                "source": "https://github.com/BartoszBartniczak/EventSourcing/tree/master",
+                "issues": "https://github.com/BartoszBartniczak/EventSourcing/issues"
+            },
+            "time": "2017-01-08 16:17:28"
         },
         {
             "name": "doctrine/annotations",
@@ -752,6 +805,42 @@
         }
     ],
     "packages-dev": [
+        {
+            "name": "bartoszbartniczak/test-case",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/BartoszBartniczak/TestCase.git",
+                "reference": "056ac82f5719add37ec2e351f51e20fda2d398da"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/BartoszBartniczak/TestCase/zipball/056ac82f5719add37ec2e351f51e20fda2d398da",
+                "reference": "056ac82f5719add37ec2e351f51e20fda2d398da",
+                "shasum": ""
+            },
+            "require": {
+                "phpunit/phpunit": "5.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "BartoszBartniczak\\TestCase\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache 2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Bartosz Bartniczak",
+                    "email": "kontakt@bartoszbartniczak.pl"
+                }
+            ],
+            "description": "The library of PHPUnit TestCases",
+            "time": "2017-01-08 14:44:53"
+        },
         {
             "name": "filp/whoops",
             "version": "2.1.5",
@@ -2136,7 +2225,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "bartoszbartniczak/eventsourcing": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],

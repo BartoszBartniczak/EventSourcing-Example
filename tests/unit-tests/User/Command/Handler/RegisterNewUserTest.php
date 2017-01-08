@@ -12,12 +12,11 @@ use BartoszBartniczak\EventSourcing\Shop\Email\Email;
 use BartoszBartniczak\EventSourcing\Shop\Email\Sender\Service;
 use BartoszBartniczak\EventSourcing\Shop\Generator\ActivationTokenGenerator;
 use BartoszBartniczak\EventSourcing\Shop\Password\HashGenerator;
-use BartoszBartniczak\EventSourcing\Shop\Password\SaltGenerator;
 use BartoszBartniczak\EventSourcing\Shop\User\Command\RegisterNewUser as RegisterNewUserCommand;
 use BartoszBartniczak\EventSourcing\Shop\User\Event\ActivationTokenHasBeenGenerated;
 use BartoszBartniczak\EventSourcing\Shop\User\Event\UserHasBeenRegistered;
 use BartoszBartniczak\EventSourcing\Shop\User\User;
-use BartoszBartniczak\EventSourcing\Shop\UUID\Generator;
+use BartoszBartniczak\EventSourcing\UUID\Generator;
 
 class RegisterNewUserTest extends \PHPUnit_Framework_TestCase
 {

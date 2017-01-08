@@ -7,7 +7,7 @@
 namespace BartoszBartniczak\EventSourcing\Shop\Order\Event;
 
 use BartoszBartniczak\EventSourcing\Shop\Basket\Id as BasketId;
-use BartoszBartniczak\EventSourcing\Shop\Event\Id;
+use BartoszBartniczak\EventSourcing\Event\Id;
 use BartoszBartniczak\EventSourcing\Shop\Order\Id as OrderId;
 use BartoszBartniczak\EventSourcing\Shop\Order\Position\PositionArray;
 

@@ -8,8 +8,8 @@ namespace BartoszBartniczak\EventSourcing\Shop\Basket\Factory;
 
 
 use BartoszBartniczak\EventSourcing\Shop\Basket\Basket;
-use BartoszBartniczak\EventSourcing\Shop\UUID\Generator;
-use BartoszBartniczak\EventSourcing\Shop\UUID\UUID;
+use BartoszBartniczak\EventSourcing\UUID\Generator;
+use BartoszBartniczak\EventSourcing\UUID\UUID;
 
 class FactoryTest extends \PHPUnit_Framework_TestCase
 {

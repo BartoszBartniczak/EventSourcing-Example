@@ -8,7 +8,7 @@ namespace BartoszBartniczak\EventSourcing\Shop\Email\Sender;
 
 
 use BartoszBartniczak\EventSourcing\Shop\Email\Exception as EmailException;
-use BartoszBartniczak\EventSourcing\Shop\ExceptionTestCase;
+use BartoszBartniczak\TestCase\ExceptionTestCase;
 
 class ExceptionTest extends ExceptionTestCase
 {

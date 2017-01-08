@@ -12,7 +12,7 @@ use BartoszBartniczak\EventSourcing\Shop\Email\Sender\Service;
 use BartoszBartniczak\EventSourcing\Shop\Generator\ActivationTokenGenerator;
 use BartoszBartniczak\EventSourcing\Shop\Password\HashGenerator;
 use BartoszBartniczak\EventSourcing\Shop\Password\SaltGenerator;
-use BartoszBartniczak\EventSourcing\Shop\UUID\Generator;
+use BartoszBartniczak\EventSourcing\UUID\Generator;
 
 class RegisterNewUserTest extends \PHPUnit_Framework_TestCase
 {

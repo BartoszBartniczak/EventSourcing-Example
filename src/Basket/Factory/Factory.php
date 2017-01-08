@@ -9,7 +9,7 @@ namespace BartoszBartniczak\EventSourcing\Shop\Basket\Factory;
 
 use BartoszBartniczak\EventSourcing\Shop\Basket\Basket;
 use BartoszBartniczak\EventSourcing\Shop\Basket\Id;
-use BartoszBartniczak\EventSourcing\Shop\UUID\Generator;
+use BartoszBartniczak\EventSourcing\UUID\Generator;
 
 class Factory
 {

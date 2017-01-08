@@ -8,7 +8,7 @@ namespace BartoszBartniczak\EventSourcing\Shop\Product\Repository\Command\Handle
 
 use BartoszBartniczak\CQRS\Command\Command;
 use BartoszBartniczak\CQRS\Command\Handler\CannotHandleTheCommandException;
-use BartoszBartniczak\EventSourcing\Shop\Command\Handler\CommandHandler;
+use BartoszBartniczak\EventSourcing\Command\Handler\CommandHandler;
 use BartoszBartniczak\EventSourcing\Shop\Product\Product;
 use BartoszBartniczak\EventSourcing\Shop\Product\Repository\CannotFindProductException;
 use BartoszBartniczak\EventSourcing\Shop\Product\Repository\Command\FindProductByName as FindProductByNameCommand;

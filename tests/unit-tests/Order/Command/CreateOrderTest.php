@@ -10,7 +10,7 @@ namespace BartoszBartniczak\EventSourcing\Shop\Order\Command;
 use BartoszBartniczak\EventSourcing\Shop\Basket\Basket;
 use BartoszBartniczak\EventSourcing\Shop\Email\Email;
 use BartoszBartniczak\EventSourcing\Shop\Email\Sender\Service;
-use BartoszBartniczak\EventSourcing\Shop\UUID\Generator;
+use BartoszBartniczak\EventSourcing\UUID\Generator;
 
 class CreateOrderTest extends \PHPUnit_Framework_TestCase
 {

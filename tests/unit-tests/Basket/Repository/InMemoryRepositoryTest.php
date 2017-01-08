@@ -13,10 +13,10 @@ use BartoszBartniczak\EventSourcing\Shop\Basket\Event\Event;
 use BartoszBartniczak\EventSourcing\Shop\Basket\Event\ProductHasBeenAddedToTheBasket;
 use BartoszBartniczak\EventSourcing\Shop\Basket\Factory\Factory;
 use BartoszBartniczak\EventSourcing\Shop\Basket\Id as BasketId;
-use BartoszBartniczak\EventSourcing\Shop\Event\EventStream;
-use BartoszBartniczak\EventSourcing\Shop\Event\Repository\InMemoryEventRepository;
-use BartoszBartniczak\EventSourcing\Shop\Event\Serializer\Serializer;
-use BartoszBartniczak\EventSourcing\Shop\UUID\Generator;
+use BartoszBartniczak\EventSourcing\Event\EventStream;
+use BartoszBartniczak\EventSourcing\Event\Repository\InMemoryEventRepository;
+use BartoszBartniczak\EventSourcing\Event\Serializer\Serializer;
+use BartoszBartniczak\EventSourcing\UUID\Generator;
 
 class InMemoryRepositoryTest extends \PHPUnit_Framework_TestCase
 {

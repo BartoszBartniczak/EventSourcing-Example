@@ -21,8 +21,8 @@ use BartoszBartniczak\EventSourcing\Shop\Order\Order;
 use BartoszBartniczak\EventSourcing\Shop\Order\Position\Position as OrderPosition;
 use BartoszBartniczak\EventSourcing\Shop\Order\Position\PositionArray as OrderPositions;
 use BartoszBartniczak\EventSourcing\Shop\Product\Product;
-use BartoszBartniczak\EventSourcing\Shop\UUID\Generator;
-use BartoszBartniczak\EventSourcing\Shop\UUID\UUID;
+use BartoszBartniczak\EventSourcing\UUID\Generator;
+use BartoszBartniczak\EventSourcing\UUID\UUID;
 
 class CreateOrderTest extends \PHPUnit_Framework_TestCase
 {

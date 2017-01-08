@@ -19,16 +19,16 @@ use BartoszBartniczak\EventSourcing\Shop\Basket\Command\Handler\RemoveProductFro
 use BartoszBartniczak\EventSourcing\Shop\Basket\Command\RemoveProductFromTheBasket;
 use BartoszBartniczak\EventSourcing\Shop\Basket\Factory\Factory as BasketFactory;
 use BartoszBartniczak\EventSourcing\Shop\Basket\Repository\InMemoryRepository as BasketRepository;
-use BartoszBartniczak\EventSourcing\Shop\Command\Bus\CommandBus;
+use BartoszBartniczak\EventSourcing\Command\Bus\CommandBus;
 use BartoszBartniczak\EventSourcing\Shop\Email\Command\Handler\SendEmail as SendEmailCommandHandler;
 use BartoszBartniczak\EventSourcing\Shop\Email\Command\SendEmail as SendEmailCommand;
 use BartoszBartniczak\EventSourcing\Shop\Email\Email;
 use BartoszBartniczak\EventSourcing\Shop\Email\Event\EmailHasNotBeenSent as EmailHasNotBeenSentEvent;
 use BartoszBartniczak\EventSourcing\Shop\Email\Id as EmailId;
 use BartoszBartniczak\EventSourcing\Shop\Email\Sender\NullEmailSenderService;
-use BartoszBartniczak\EventSourcing\Shop\Event\Bus\SimpleEventBus;
-use BartoszBartniczak\EventSourcing\Shop\Event\Repository\InMemoryEventRepository;
-use BartoszBartniczak\EventSourcing\Shop\Event\Serializer\JMSJsonSerializer;
+use BartoszBartniczak\EventSourcing\Event\Bus\SimpleEventBus;
+use BartoszBartniczak\EventSourcing\Event\Repository\InMemoryEventRepository;
+use BartoszBartniczak\EventSourcing\Event\Serializer\JMSJsonSerializer;
 use BartoszBartniczak\EventSourcing\Shop\Generator\ActivationTokenGenerator;
 use BartoszBartniczak\EventSourcing\Shop\Order\Command\CreateOrder as CreateOrderCommand;
 use BartoszBartniczak\EventSourcing\Shop\Order\Command\Handler\CreateOrder as CreateOrderCommandHandler;
@@ -49,7 +49,7 @@ use BartoszBartniczak\EventSourcing\Shop\User\Command\LogOutUser as LogOutUserCo
 use BartoszBartniczak\EventSourcing\Shop\User\Command\RegisterNewUser as RegisterNewUserCommand;
 use BartoszBartniczak\EventSourcing\Shop\User\Factory\Factory as UserFactory;
 use BartoszBartniczak\EventSourcing\Shop\User\Repository\InMemoryUserRepository as InMemoryUserRepository;
-use BartoszBartniczak\EventSourcing\Shop\UUID\RamseyGenerator;
+use BartoszBartniczak\EventSourcing\UUID\RamseyGeneratorAdapter;
 
 $whoops = new \Whoops\Run;
 $whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
@@ -57,7 +57,7 @@ $whoops->register();
 
 /* Dependency Injection Container */
 
-$uuidGenerator = new RamseyGenerator();
+$uuidGenerator = new RamseyGeneratorAdapter();
 $emailSenderService = new NullEmailSenderService(true);
 
 $propertyNamingStrategy = new \JMS\Serializer\Naming\CamelCaseNamingStrategy();
@@ -65,6 +65,7 @@ $propertyNamingStrategy = new \JMS\Serializer\Naming\CamelCaseNamingStrategy();
 $jmsSerializer = JMS\Serializer\SerializerBuilder::create()
     ->setPropertyNamingStrategy($propertyNamingStrategy)
     ->addMetadataDir(__DIR__ . '/config/serializer', "BartoszBartniczak\EventSourcing\Shop")
+    ->addMetadataDir(__DIR__ . '/config/serializer', "BartoszBartniczak\EventSourcing")
     ->build();
 $serializer = new JMSJsonSerializer($jmsSerializer, $propertyNamingStrategy);
 

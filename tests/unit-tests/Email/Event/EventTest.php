@@ -8,8 +8,8 @@ namespace BartoszBartniczak\EventSourcing\Shop\Email\Event;
 
 
 use BartoszBartniczak\EventSourcing\Shop\Email\Email;
-use BartoszBartniczak\EventSourcing\Shop\Event\Event as BasicEvent;
-use BartoszBartniczak\EventSourcing\Shop\EventTestCase;
+use BartoszBartniczak\EventSourcing\Event\Event as BasicEvent;
+use BartoszBartniczak\EventSourcing\Test\EventTestCase;
 
 class EventTest extends EventTestCase
 {

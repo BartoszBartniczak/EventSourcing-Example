@@ -11,7 +11,7 @@ use BartoszBartniczak\EventSourcing\Shop\Basket\Command\CreateNewBasket as Creat
 use BartoszBartniczak\EventSourcing\Shop\Basket\Event\BasketHasBeenCreated;
 use BartoszBartniczak\EventSourcing\Shop\Basket\Factory\Factory;
 use BartoszBartniczak\EventSourcing\Shop\Basket\Id;
-use BartoszBartniczak\EventSourcing\Shop\UUID\Generator;
+use BartoszBartniczak\EventSourcing\UUID\Generator;
 
 class CreateNewBasketTest extends \PHPUnit_Framework_TestCase
 {

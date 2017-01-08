@@ -7,7 +7,7 @@
 namespace BartoszBartniczak\EventSourcing\Shop\Product\Repository\Event;
 
 
-use BartoszBartniczak\EventSourcing\Shop\Event\Event as BasicEvent;
+use BartoszBartniczak\EventSourcing\Event\Event as BasicEvent;
 
 class EventTest extends \PHPUnit_Framework_TestCase
 {

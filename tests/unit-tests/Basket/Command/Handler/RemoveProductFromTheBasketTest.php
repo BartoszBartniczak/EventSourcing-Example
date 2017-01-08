@@ -13,7 +13,7 @@ use BartoszBartniczak\EventSourcing\Shop\Basket\Id as BasketId;
 use BartoszBartniczak\EventSourcing\Shop\Basket\Position\Position as BasketPosition;
 use BartoszBartniczak\EventSourcing\Shop\Product\Id as ProductId;
 use BartoszBartniczak\EventSourcing\Shop\Product\Product;
-use BartoszBartniczak\EventSourcing\Shop\UUID\Generator;
+use BartoszBartniczak\EventSourcing\UUID\Generator;
 
 class RemoveProductFromTheBasketTest extends \PHPUnit_Framework_TestCase
 {

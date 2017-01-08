@@ -1,4 +1,4 @@
-BartoszBartniczak\EventSourcing\Shop\EventAggregate\EventAggregate:
+BartoszBartniczak\EventSourcing\EventAggregate\EventAggregate:
   properties:
     committedEvents:
       expose: false

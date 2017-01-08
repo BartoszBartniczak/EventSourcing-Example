@@ -9,7 +9,7 @@ namespace BartoszBartniczak\EventSourcing\Shop\Basket\Command\Handler;
 
 use BartoszBartniczak\CQRS\Command\Command;
 use BartoszBartniczak\EventSourcing\Shop\Basket\Event\BasketHasBeenClosed;
-use BartoszBartniczak\EventSourcing\Shop\Command\Handler\CommandHandler;
+use BartoszBartniczak\EventSourcing\Command\Handler\CommandHandler;
 
 class CloseBasket extends CommandHandler
 {

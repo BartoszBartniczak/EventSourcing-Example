@@ -6,8 +6,9 @@
 
 namespace BartoszBartniczak\EventSourcing\Shop\Product\Repository\Event;
 
+use BartoszBartniczak\EventSourcing\Event\Event as BasicEvent;
 
-abstract class Event extends \BartoszBartniczak\EventSourcing\Shop\Event\Event
+abstract class Event extends BasicEvent
 {
 
     const FAMILY_NAME = 'ProductRepository';

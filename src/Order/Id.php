@@ -7,7 +7,7 @@
 namespace BartoszBartniczak\EventSourcing\Shop\Order;
 
 
-use BartoszBartniczak\EventSourcing\Shop\UUID\UUID;
+use BartoszBartniczak\EventSourcing\UUID\UUID;
 
 class Id extends UUID
 {

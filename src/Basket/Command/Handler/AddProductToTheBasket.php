@@ -9,8 +9,8 @@ namespace BartoszBartniczak\EventSourcing\Shop\Basket\Command\Handler;
 
 use BartoszBartniczak\CQRS\Command\Command;
 use BartoszBartniczak\EventSourcing\Shop\Basket\Event\ProductHasBeenAddedToTheBasket;
-use BartoszBartniczak\EventSourcing\Shop\Command\Handler\CommandHandler;
-use BartoszBartniczak\EventSourcing\Shop\EventAggregate\EventAggregate;
+use BartoszBartniczak\EventSourcing\Command\Handler\CommandHandler;
+use BartoszBartniczak\EventSourcing\EventAggregate\EventAggregate;
 
 class AddProductToTheBasket extends CommandHandler
 {

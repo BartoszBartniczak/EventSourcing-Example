@@ -8,7 +8,7 @@ namespace BartoszBartniczak\EventSourcing\Shop\Email\Event;
 
 
 use BartoszBartniczak\EventSourcing\Shop\Email\Email;
-use BartoszBartniczak\EventSourcing\Shop\Event\Id;
+use BartoszBartniczak\EventSourcing\Event\Id;
 
 class EmailHasNotBeenSent extends Event
 {

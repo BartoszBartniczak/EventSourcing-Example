@@ -8,9 +8,9 @@ namespace BartoszBartniczak\EventSourcing\Shop\Basket\Event;
 
 
 use BartoszBartniczak\EventSourcing\Shop\Basket\Basket;
-use BartoszBartniczak\EventSourcing\Shop\Event\Id;
+use BartoszBartniczak\EventSourcing\Event\Id;
 use BartoszBartniczak\EventSourcing\Shop\Product\Id as ProductId;
-use BartoszBartniczak\EventSourcing\Shop\UUID\UUID;
+use BartoszBartniczak\EventSourcing\UUID\UUID;
 
 class QuantityOfTheProductHasBeenChanged extends Event
 {
