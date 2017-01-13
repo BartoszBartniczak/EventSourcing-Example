@@ -7,11 +7,12 @@
 namespace BartoszBartniczak\EventSourcing\Shop\Basket\Repository;
 
 
+use BartoszBartniczak\EventSourcing\Event\Repository\InMemoryEventRepository;
 use BartoszBartniczak\EventSourcing\Shop\Basket\Basket;
 use BartoszBartniczak\EventSourcing\Shop\Basket\Event\BasketHasBeenCreated;
+use BartoszBartniczak\EventSourcing\Shop\Basket\Event\Event;
 use BartoszBartniczak\EventSourcing\Shop\Basket\Factory\Factory;
 use BartoszBartniczak\EventSourcing\Shop\Basket\Id;
-use BartoszBartniczak\EventSourcing\Event\Repository\InMemoryEventRepository;
 
 class InMemoryRepository implements BasketRepository
 {
@@ -43,8 +44,7 @@ class InMemoryRepository implements BasketRepository
      */
     public function findLastBasketByUserEmail(string $userEmail): Basket
     {
-        $propertyName = $this->inMemoryEventRepository->getEventSerializer()->getPropertyKey('name');
-        $eventStream = $this->inMemoryEventRepository->find('Basket', ['lastBasket' => $this->filterName($propertyName, $userEmail)]);
+        $eventStream = $this->inMemoryEventRepository->find('Basket', ['lastBasket' => $this->filterName($userEmail)]);
 
         if ($eventStream->isEmpty()) {
             throw new CannotFindBasketException(sprintf("Cannot find basket for user: '%s'.", $userEmail));
@@ -58,16 +58,12 @@ class InMemoryRepository implements BasketRepository
     }
 
     /**
-     * @param string $propertyName
      * @param string $userEmail
      * @return callable
      */
-    protected function filterName(string $propertyName, string $userEmail): callable
+    protected function filterName(string $userEmail): callable
     {
-        return function ($serializedEvent) use ($propertyName, $userEmail) {
-
-            $event = $this->inMemoryEventRepository->getEventSerializer()->deserialize($serializedEvent);
-            /* @var $event \Shop\Basket\Event\Event */
+        return function (Event $event) use ($userEmail) {
 
             if ($event->getBasket()->getOwnerEmail() !== $userEmail) {
                 return false;
@@ -106,10 +102,7 @@ class InMemoryRepository implements BasketRepository
      */
     protected function filterId(Id $basketId): callable
     {
-        return function ($serializedEvent) use ($basketId) {
-            $event = $this->inMemoryEventRepository->getEventSerializer()->deserialize($serializedEvent);
-            /* @var $event \Shop\Basket\Event\Event */
-
+        return function (Event $event) use ($basketId) {
             if ($event->getBasket()->getId()->toNative() !== $basketId->toNative()) {
                 return false;
             }

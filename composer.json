@@ -27,7 +27,8 @@
     "filp/whoops": "*",
     "symfony/var-dumper": "*",
     "phpunit/phpunit": "5.*",
-    "bartoszbartniczak/test-case": "1.*"
+    "bartoszbartniczak/test-case": "1.*",
+    "behat/behat": "3.*"
   },
   "autoload": {
     "psr-4": {

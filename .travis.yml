@@ -6,4 +6,5 @@ install:
   - composer install
 script:
   - phpunit --configuration tests/unit-tests/configuration.xml
+  - vendor/bin/behat --config tests/behat/behat.yml -v
 

@@ -8,9 +8,9 @@ namespace BartoszBartniczak\EventSourcing\Shop\Basket\Command\Handler;
 
 
 use BartoszBartniczak\CQRS\Command\Command;
-use BartoszBartniczak\EventSourcing\Shop\Basket\Event\BasketHasBeenCreated;
 use BartoszBartniczak\EventSourcing\Command\Handler\CommandHandler;
 use BartoszBartniczak\EventSourcing\EventAggregate\EventAggregate;
+use BartoszBartniczak\EventSourcing\Shop\Basket\Event\BasketHasBeenCreated;
 
 class CreateNewBasket extends CommandHandler
 {
@@ -20,7 +20,7 @@ class CreateNewBasket extends CommandHandler
      */
     public function handle(Command $command): EventAggregate
     {
-        /* @var $command \Shop\Basket\Command\CreateNewBasket */
+        /* @var $command \BartoszBartniczak\EventSourcing\Shop\Basket\Command\CreateNewBasket */
         $basket = $command->getBasketFactory()->createNew($command->getUserEmail());
 
         $basket->apply(

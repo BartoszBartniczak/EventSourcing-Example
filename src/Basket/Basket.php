@@ -7,6 +7,7 @@
 namespace BartoszBartniczak\EventSourcing\Shop\Basket;
 
 
+use BartoszBartniczak\EventSourcing\EventAggregate\EventAggregate;
 use BartoszBartniczak\EventSourcing\Shop\Basket\Event\BasketHasBeenClosed;
 use BartoszBartniczak\EventSourcing\Shop\Basket\Event\BasketHasBeenCreated;
 use BartoszBartniczak\EventSourcing\Shop\Basket\Event\ProductHasBeenAddedToTheBasket;
@@ -14,7 +15,6 @@ use BartoszBartniczak\EventSourcing\Shop\Basket\Event\ProductHasBeenRemovedFromT
 use BartoszBartniczak\EventSourcing\Shop\Basket\Event\QuantityOfTheProductHasBeenChanged;
 use BartoszBartniczak\EventSourcing\Shop\Basket\Position\Position;
 use BartoszBartniczak\EventSourcing\Shop\Basket\Position\PositionArray;
-use BartoszBartniczak\EventSourcing\EventAggregate\EventAggregate;
 use BartoszBartniczak\EventSourcing\Shop\Product\Id as ProductId;
 use BartoszBartniczak\EventSourcing\Shop\Product\Product;
 
@@ -42,9 +42,17 @@ class Basket extends EventAggregate
     private $open;
 
     /**
+     * @return bool
+     */
+    public function isOpen(): bool
+    {
+        return $this->open;
+    }
+
+    /**
      * @param BasketHasBeenCreated $basketHasBeenCreated
      */
-    public function handleBasketHasBeenCreated(BasketHasBeenCreated $basketHasBeenCreated)
+    protected function handleBasketHasBeenCreated(BasketHasBeenCreated $basketHasBeenCreated)
     {
         $this->__construct($basketHasBeenCreated->getBasket()->getId(), $basketHasBeenCreated->getBasket()->getOwnerEmail());
     }
@@ -82,7 +90,7 @@ class Basket extends EventAggregate
     /**
      * @param ProductHasBeenAddedToTheBasket $event
      */
-    public function handleProductHasBeenAddedToTheBasket(ProductHasBeenAddedToTheBasket $event)
+    protected function handleProductHasBeenAddedToTheBasket(ProductHasBeenAddedToTheBasket $event)
     {
         $this->add($event->getProduct(), $event->getQuantity());
     }
@@ -125,17 +133,9 @@ class Basket extends EventAggregate
     }
 
     /**
-     * @return bool
-     */
-    public function isOpen(): bool
-    {
-        return $this->open;
-    }
-
-    /**
      * @param QuantityOfTheProductHasBeenChanged $event
      */
-    public function handleQuantityOfTheProductHasBeenChanged(QuantityOfTheProductHasBeenChanged $event)
+    protected function handleQuantityOfTheProductHasBeenChanged(QuantityOfTheProductHasBeenChanged $event)
     {
         $this->changeQuantity($event->getProductId(), $event->getQuantity());
     }
@@ -148,15 +148,11 @@ class Basket extends EventAggregate
     private function changeQuantity(ProductId $productId, float $quantity)
     {
         $basketPosition = $this->findPositionByProductId($productId);
-        $basketPosition->changeQuantity($quantity);
-    }
-
-    /**
-     * @param ProductHasBeenRemovedFromTheBasket $event
-     */
-    public function handleProductHasBeenRemovedFromTheBasket(ProductHasBeenRemovedFromTheBasket $event)
-    {
-        $this->remove($event->getProductId());
+        if ($quantity > 0) {
+            $basketPosition->changeQuantity($quantity);
+        } else {
+            $this->remove($productId);
+        }
     }
 
     /**
@@ -178,7 +174,15 @@ class Basket extends EventAggregate
         return $this->positions;
     }
 
-    public function handleBasketHasBeenClosed(BasketHasBeenClosed $basketHasBeenClosed)
+    /**
+     * @param ProductHasBeenRemovedFromTheBasket $event
+     */
+    protected function handleProductHasBeenRemovedFromTheBasket(ProductHasBeenRemovedFromTheBasket $event)
+    {
+        $this->remove($event->getProductId());
+    }
+
+    protected function handleBasketHasBeenClosed(BasketHasBeenClosed $basketHasBeenClosed)
     {
         $this->close();
     }

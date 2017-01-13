@@ -30,11 +30,18 @@ class Factory
 
     /**
      * @param string $ownerEmail
+     * @param string $id This parameter is optional. If empty, new Id is generated
      * @return Basket
      */
-    public function createNew(string $ownerEmail): Basket
+    public function createNew(string $ownerEmail, string $id = ''): Basket
     {
-        return new Basket($this->generateNewId(), $ownerEmail);
+        if (empty($id)) {
+            $id = $this->generateNewId();
+        } else {
+            $id = new Id($id);
+        }
+
+        return new Basket($id, $ownerEmail);
     }
 
     /**

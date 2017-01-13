@@ -1,0 +1,4 @@
+BartoszBartniczak\ArrayObject\ArrayOfObjects:
+  properties:
+    className:
+      type: string

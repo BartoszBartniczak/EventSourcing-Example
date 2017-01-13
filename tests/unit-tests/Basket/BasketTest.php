@@ -453,4 +453,77 @@ class BasketTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($basketHasBeenClosed, $basket->getUncommittedEvents()->offsetGet(0));
     }
 
+    /**
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Basket\Basket::handleQuantityOfTheProductHasBeenChanged()
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Basket\Basket::changeQuantity
+     */
+    public function testChangeQuantitySetToZeroRemovesPosition()
+    {
+
+        $productId = new ProductId(uniqid());
+
+        $product = $this->getMockBuilder(Product::class)
+            ->disableOriginalConstructor()
+            ->setMethods([
+                'getId'
+            ])
+            ->getMock();
+        $product->method('getId')
+            ->willReturn($productId);
+        /* @var $product Product */
+
+        $productHasBeenAddedToTheBasket = $this->getMockBuilder(ProductHasBeenAddedToTheBasket::class)
+            ->disableOriginalConstructor()
+            ->setMethods([
+                'getProduct',
+                'getQuantity'
+            ])
+            ->getMock();
+        $productHasBeenAddedToTheBasket->method('getProduct')
+            ->willReturn($product);
+        $productHasBeenAddedToTheBasket->method('getQuantity')
+            ->willReturn(12.00);
+        /* @var $productHasBeenAddedToTheBasket ProductHasBeenAddedToTheBasket */
+
+        $quantityOfTheProductHasBeenChanged = $this->getMockBuilder(QuantityOfTheProductHasBeenChanged::class)
+            ->disableOriginalConstructor()
+            ->setMethods([
+                'getProductId',
+                'getQuantity'
+            ])
+            ->getMock();
+        $quantityOfTheProductHasBeenChanged->method('getProductId')
+            ->willReturn($productId);
+        $quantityOfTheProductHasBeenChanged->method('getQuantity')
+            ->willReturn(0.0);
+        /* @var $quantityOfTheProductHasBeenChanged QuantityOfTheProductHasBeenChanged */
+
+        $id = $this->getMockBuilder(Id::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        /* @var $id Id */
+
+
+        $basket = $this->getMockBuilder(Basket::class)
+            ->setConstructorArgs([
+                $id,
+                'email@owner.com'
+            ])
+            ->setMethods([
+                'findHandleMethod'
+            ])
+            ->getMock();
+        $basket->method('findHandleMethod')
+            ->willReturnOnConsecutiveCalls(
+                'handleProductHasBeenAddedToTheBasket',
+                'handleQuantityOfTheProductHasBeenChanged'
+            );
+        /* @var $basket Basket */
+
+        $basket->apply($productHasBeenAddedToTheBasket);
+        $basket->apply($quantityOfTheProductHasBeenChanged);
+
+        $this->assertEquals(0, $basket->getPositions()->count());
+    }
+
 }

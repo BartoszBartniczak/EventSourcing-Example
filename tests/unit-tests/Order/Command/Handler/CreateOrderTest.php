@@ -20,6 +20,7 @@ use BartoszBartniczak\EventSourcing\Shop\Order\Event\OrderHasBeenCreated;
 use BartoszBartniczak\EventSourcing\Shop\Order\Order;
 use BartoszBartniczak\EventSourcing\Shop\Order\Position\Position as OrderPosition;
 use BartoszBartniczak\EventSourcing\Shop\Order\Position\PositionArray as OrderPositions;
+use BartoszBartniczak\EventSourcing\Shop\Product\Id as ProductId;
 use BartoszBartniczak\EventSourcing\Shop\Product\Product;
 use BartoszBartniczak\EventSourcing\UUID\Generator;
 use BartoszBartniczak\EventSourcing\UUID\UUID;
@@ -59,7 +60,12 @@ class CreateOrderTest extends \PHPUnit_Framework_TestCase
 
         $product1 = $this->getMockBuilder(Product::class)
             ->disableOriginalConstructor()
+            ->setMethods([
+                'getId'
+            ])
             ->getMock();
+        $product1->method('getId')
+            ->willReturn(new ProductId(uniqid()));
         /* @var $product1 Product */
 
         $basketPosition1 = $this->getMockBuilder(BasketPosition::class)
@@ -78,7 +84,12 @@ class CreateOrderTest extends \PHPUnit_Framework_TestCase
 
         $product2 = $this->getMockBuilder(Product::class)
             ->disableOriginalConstructor()
+            ->setMethods([
+                'getId'
+            ])
             ->getMock();
+        $product2->method('getId')
+            ->willReturn(new ProductId(uniqid()));
         /* @var $product2 Product */
 
         $basketPosition2 = $this->getMockBuilder(BasketPosition::class)

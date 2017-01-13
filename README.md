@@ -33,13 +33,9 @@ This is an example of the online shop.
 
 ### TODO
 1. Seperate the modules:
-    1. Command Bus
-    2. Event Sourcing
     3. JMSSerializer
     4. DBAL
     5. Example
-    6. ExceptionTestCase
-2. Unit tests
 3. Behat tests
 4. Integrity tests
 
@@ -50,6 +46,14 @@ This is an example of the online shop.
 To run unit tests run command:
 ```bash
 php vendor/phpunit/phpunit/phpunit --configuration tests/unit-tests/configuration.xml
+```
+
+#### Behaviour Tests - Behat
+
+To run behat tests execute command:
+
+```bash
+vendor/bin/behat --config tests/behat/behat.yml 
 ```
 
 ### Running the example

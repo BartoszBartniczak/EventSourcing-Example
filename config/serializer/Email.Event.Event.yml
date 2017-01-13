@@ -1,3 +1,4 @@
 BartoszBartniczak\EventSourcing\Shop\Email\Event\Event:
   properties:
-    email: BartoszBartniczak\EventSourcing\Shop\Email\Email
+    email:
+      type: BartoszBartniczak\EventSourcing\Shop\Email\Email
