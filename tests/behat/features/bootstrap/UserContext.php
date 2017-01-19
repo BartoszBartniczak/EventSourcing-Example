@@ -11,6 +11,8 @@ use BartoszBartniczak\EventSourcing\Shop\Email\Factory\Factory as EmailFactory;
 use BartoszBartniczak\EventSourcing\Shop\Email\Sender\NullEmailSenderService;
 use BartoszBartniczak\EventSourcing\Shop\Generator\ActivationTokenGenerator;
 use BartoszBartniczak\EventSourcing\Shop\Password\HashGenerator;
+use BartoszBartniczak\EventSourcing\Shop\User\Command\ActivateUser as ActivateUserCommand;
+use BartoszBartniczak\EventSourcing\Shop\User\Command\Handler\ActivateUser as ActivateUserHandler;
 use BartoszBartniczak\EventSourcing\Shop\User\Command\Handler\RegisterNewUser as RegisterNewUserHandler;
 use BartoszBartniczak\EventSourcing\Shop\User\Command\RegisterNewUser as RegisterNewUserCommand;
 use BartoszBartniczak\EventSourcing\Shop\User\Factory\Factory as UserFactory;
@@ -54,6 +56,11 @@ class UserContext implements Context
     private $user;
 
     /**
+     * @var InMemoryUserRepository
+     */
+    private $userRepository;
+
+    /**
      * Initializes context.
      *
      * Every scenario gets its own context instance.
@@ -70,6 +77,7 @@ class UserContext implements Context
         $this->commandBus = new CommandBus($this->uuidGenerator, $this->eventRepository, $eventBus);
         $this->commandBus->registerHandler(RegisterNewUserCommand::class, new RegisterNewUserHandler($this->uuidGenerator));
         $this->commandBus->registerHandler(SendEmailCommand::class, new SendEmailHandler($this->uuidGenerator));
+        $this->commandBus->registerHandler(ActivateUserCommand::class, new ActivateUserHandler($this->uuidGenerator));
     }
 
     /**
@@ -138,5 +146,96 @@ class UserContext implements Context
     public function emailWithTheActivationTokenShouldBeSent()
     {
         PHPUnit_Framework_Assert::assertTrue($this->email->isSent());
+    }
+
+    /**
+     * @Given Inactive account with email: :email and token: :token
+     */
+    public function inactiveAccountWithEmailAndToken(string $email, string $token)
+    {
+        $userPassword = '';
+        $senderService = new NullEmailSenderService();
+        $tokenGenerator = Mockery::mock(ActivationTokenGenerator::class)
+            ->shouldReceive('generate')
+            ->andReturn($token)
+            ->getMock();
+        /* @var $tokenGenerator ActivationTokenGenerator */
+        $hashGenerator = new HashGenerator();
+        $emailFactory = new EmailFactory($this->uuidGenerator);
+        $emailObject = $emailFactory->createEmpty();
+
+        $registerNewUser = new RegisterNewUserCommand($email, $userPassword, $senderService, $tokenGenerator, $this->uuidGenerator, $hashGenerator, $emailObject);
+        $this->commandBus->execute($registerNewUser);
+    }
+
+    /**
+     * @When User is trying to activate the account with email: :email and token: :token
+     */
+    public function userIsTryingToActivateTheAccountWithEmailAndToken($email, $token)
+    {
+        $userFactory = new UserFactory();
+        $userRepository = new InMemoryUserRepository($this->eventRepository, $userFactory);
+        $activateUserCommand = new ActivateUserCommand($email, $token, $userRepository);
+        $this->commandBus->execute($activateUserCommand);
+        $this->user = $userRepository->findUserByEmail($email);
+    }
+
+    /**
+     * @Then Account should be activated
+     */
+    public function accountShouldBeActivated()
+    {
+        PHPUnit_Framework_Assert::assertTrue($this->user->isActive());
+    }
+
+    /**
+     * @Then Account should not be activated
+     */
+    public function accountShouldNotBeActivated()
+    {
+        PHPUnit_Framework_Assert::assertFalse($this->user->isActive());
+    }
+
+    /**
+     * @Then Number of invalid attempts of activating the account should be equal: :quantity
+     */
+    public function numberOfInvalidAttemptsOfActivatingAccountShouldBeEqual(int $quantity)
+    {
+        PHPUnit_Framework_Assert::assertSame($quantity, $this->user->getUnsuccessfulAttemptsOfActivatingUserAccount());
+    }
+
+    /**
+     * @Given Active account with email: :email and token: :token
+     */
+    public function activeAccountWithEmailAndToken(string $email, string $token)
+    {
+        $userPassword = '';
+        $senderService = new NullEmailSenderService();
+        $tokenGenerator = Mockery::mock(ActivationTokenGenerator::class)
+            ->shouldReceive('generate')
+            ->andReturn($token)
+            ->getMock();
+        /* @var $tokenGenerator ActivationTokenGenerator */
+        $hashGenerator = new HashGenerator();
+        $emailFactory = new EmailFactory($this->uuidGenerator);
+        $emailObject = $emailFactory->createEmpty();
+
+        $registerNewUser = new RegisterNewUserCommand($email, $userPassword, $senderService, $tokenGenerator, $this->uuidGenerator, $hashGenerator, $emailObject);
+        $this->commandBus->execute($registerNewUser);
+
+        $userFactory = new UserFactory();
+        $userRepository = new InMemoryUserRepository($this->eventRepository, $userFactory);
+        $activateUserCommand = new ActivateUserCommand($email, $token, $userRepository);
+        $this->commandBus->execute($activateUserCommand);
+        $this->user = $userRepository->findUserByEmail($email);
+    }
+
+    /**
+     * @Then The attempt should be stored in system
+     */
+    public function theAttemptShouldBeStoredInSystem()
+    {
+        $event = $this->user->getCommittedEvents()->last();
+        PHPUnit_Framework_Assert::assertInstanceOf(\BartoszBartniczak\EventSourcing\Shop\User\Event\AttemptOfActivatingAlreadyActivatedAccount::class, $event);
     }
 }

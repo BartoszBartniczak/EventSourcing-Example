@@ -9,3 +9,6 @@ default:
     Order:
       paths: [ %paths.base%/features/Order ]
       contexts: [OrderContext]
+    ProductRepository:
+      paths: [ %paths.base%/features/ProductRepository ]
+      contexts: [ProductRepositoryContext]

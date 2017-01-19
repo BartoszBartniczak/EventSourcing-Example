@@ -10,6 +10,7 @@ namespace BartoszBartniczak\EventSourcing\Shop\User;
 use BartoszBartniczak\ArrayObject\ArrayObject;
 use BartoszBartniczak\EventSourcing\EventAggregate\EventAggregate;
 use BartoszBartniczak\EventSourcing\Shop\User\Event\ActivationTokenHasBeenGenerated;
+use BartoszBartniczak\EventSourcing\Shop\User\Event\AttemptOfActivatingAlreadyActivatedAccount;
 use BartoszBartniczak\EventSourcing\Shop\User\Event\UnsuccessfulAttemptOfActivatingUserAccount;
 use BartoszBartniczak\EventSourcing\Shop\User\Event\UnsuccessfulAttemptOfLoggingIn;
 use BartoszBartniczak\EventSourcing\Shop\User\Event\UserAccountHasBeenActivated;
@@ -107,6 +108,14 @@ class User extends EventAggregate
     public function getUnsuccessfulAttemptsOfLoggingIn(): int
     {
         return $this->unsuccessfulAttemptsOfLoggingIn;
+    }
+
+    /**
+     * @param AttemptOfActivatingAlreadyActivatedAccount $attemptOfActivatingAlreadyActivatedAccount
+     */
+    public function handleAttemptOfActivatingAlreadyActivatedAccount(AttemptOfActivatingAlreadyActivatedAccount $attemptOfActivatingAlreadyActivatedAccount)
+    {
+
     }
 
     /**

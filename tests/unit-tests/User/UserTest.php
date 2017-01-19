@@ -10,6 +10,7 @@ namespace BartoszBartniczak\EventSourcing\Shop\User;
 use BartoszBartniczak\ArrayObject\ArrayObject;
 use BartoszBartniczak\EventSourcing\EventAggregate\EventAggregate;
 use BartoszBartniczak\EventSourcing\Shop\User\Event\ActivationTokenHasBeenGenerated;
+use BartoszBartniczak\EventSourcing\Shop\User\Event\AttemptOfActivatingAlreadyActivatedAccount;
 use BartoszBartniczak\EventSourcing\Shop\User\Event\UnsuccessfulAttemptOfActivatingUserAccount;
 use BartoszBartniczak\EventSourcing\Shop\User\Event\UnsuccessfulAttemptOfLoggingIn;
 use BartoszBartniczak\EventSourcing\Shop\User\Event\UserAccountHasBeenActivated;
@@ -270,5 +271,34 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf(UnsuccessfulAttemptOfLoggingIn::class, $user->getUncommittedEvents()->shift());
         $this->assertEquals(1, $user->getUnsuccessfulAttemptsOfLoggingIn());
 
+    }
+
+    /**
+     * @covers \BartoszBartniczak\EventSourcing\Shop\User\User::handleAttemptOfActivatingAlreadyActivatedAccount
+     */
+    public function testHandleAttemptOfActivatingAlreadyActivatedAccount()
+    {
+        $attemptOfActivatingAlreadyActivatedAccount = $this->getMockBuilder(AttemptOfActivatingAlreadyActivatedAccount::class)
+            ->disableOriginalConstructor()
+            ->setMethods(null)
+            ->getMock();
+        /* @var $attemptOfActivatingAlreadyActivatedAccount AttemptOfActivatingAlreadyActivatedAccount */
+
+        $user = $this->getMockBuilder(User::class)
+            ->setConstructorArgs([
+                'user@email', 'password', 'salt'
+            ])
+            ->setMethods([
+                'findHandleMethod'
+            ])
+            ->getMock();
+        $user->method('findHandleMethod')
+            ->willReturn('handleAttemptOfActivatingAlreadyActivatedAccount');
+        /* @var $user User */
+        $user->apply($attemptOfActivatingAlreadyActivatedAccount);
+
+        $this->assertEquals(1, $user->getUncommittedEvents()->count());
+        $this->assertInstanceOf(AttemptOfActivatingAlreadyActivatedAccount::class, $user->getUncommittedEvents()->shift());
+        $this->assertEquals(0, $user->getUnsuccessfulAttemptsOfLoggingIn());
     }
 }

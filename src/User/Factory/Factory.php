@@ -14,7 +14,12 @@ class Factory
 
     public function createEmpty(): User
     {
-        return new User('', '', '');
+        return new User('', '');
+    }
+
+    public function createNew(string $email, string $passwordHash): User
+    {
+        return new User($email, $passwordHash);
     }
 
 }
