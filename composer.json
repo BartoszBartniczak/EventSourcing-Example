@@ -29,7 +29,8 @@
     "phpunit/phpunit": "5.*",
     "bartoszbartniczak/test-case": "1.*",
     "behat/behat": "3.*",
-    "mockery/mockery": "0.*"
+    "mockery/mockery": "0.*",
+    "satooshi/php-coveralls": "*"
   },
   "autoload": {
     "psr-4": {
