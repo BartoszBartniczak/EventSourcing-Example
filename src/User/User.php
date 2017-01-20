@@ -11,6 +11,7 @@ use BartoszBartniczak\ArrayObject\ArrayObject;
 use BartoszBartniczak\EventSourcing\EventAggregate\EventAggregate;
 use BartoszBartniczak\EventSourcing\Shop\User\Event\ActivationTokenHasBeenGenerated;
 use BartoszBartniczak\EventSourcing\Shop\User\Event\AttemptOfActivatingAlreadyActivatedAccount;
+use BartoszBartniczak\EventSourcing\Shop\User\Event\AttemptOfLoggingInToInactiveAccount;
 use BartoszBartniczak\EventSourcing\Shop\User\Event\UnsuccessfulAttemptOfActivatingUserAccount;
 use BartoszBartniczak\EventSourcing\Shop\User\Event\UnsuccessfulAttemptOfLoggingIn;
 use BartoszBartniczak\EventSourcing\Shop\User\Event\UserAccountHasBeenActivated;
@@ -130,7 +131,6 @@ class User extends EventAggregate
      * User constructor.
      * @param string $email
      * @param string $passwordHash
-     * @param string $passwordSalt
      */
     public function __construct(string $email, string $passwordHash)
     {
@@ -201,6 +201,11 @@ class User extends EventAggregate
     protected function handleUnsuccessfulAttemptOfLoggingIn(UnsuccessfulAttemptOfLoggingIn $unsuccessfulAttemptOfLoggingIn)
     {
         $this->unsuccessfulAttemptsOfLoggingIn++;
+    }
+
+    protected function handleAttemptOfLoggingInToInactiveAccount(AttemptOfLoggingInToInactiveAccount $attemptOfLoggingInToInactiveAccount)
+    {
+
     }
 
 }

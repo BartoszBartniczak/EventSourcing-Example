@@ -11,6 +11,7 @@ use BartoszBartniczak\ArrayObject\ArrayObject;
 use BartoszBartniczak\EventSourcing\EventAggregate\EventAggregate;
 use BartoszBartniczak\EventSourcing\Shop\User\Event\ActivationTokenHasBeenGenerated;
 use BartoszBartniczak\EventSourcing\Shop\User\Event\AttemptOfActivatingAlreadyActivatedAccount;
+use BartoszBartniczak\EventSourcing\Shop\User\Event\AttemptOfLoggingInToInactiveAccount;
 use BartoszBartniczak\EventSourcing\Shop\User\Event\UnsuccessfulAttemptOfActivatingUserAccount;
 use BartoszBartniczak\EventSourcing\Shop\User\Event\UnsuccessfulAttemptOfLoggingIn;
 use BartoszBartniczak\EventSourcing\Shop\User\Event\UserAccountHasBeenActivated;
@@ -300,5 +301,31 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(1, $user->getUncommittedEvents()->count());
         $this->assertInstanceOf(AttemptOfActivatingAlreadyActivatedAccount::class, $user->getUncommittedEvents()->shift());
         $this->assertEquals(0, $user->getUnsuccessfulAttemptsOfLoggingIn());
+    }
+
+    public function testHandleAttemptOfLoggingInToInactiveAccount()
+    {
+        $attemptOfLoggingInToInactiveAccount = $this->getMockBuilder(AttemptOfLoggingInToInactiveAccount::class)
+            ->disableOriginalConstructor()
+            ->setMethods(null)
+            ->getMock();
+        /* @var $attemptOfLoggingInToInactiveAccount AttemptOfLoggingInToInactiveAccount */
+
+        $user = $this->getMockBuilder(User::class)
+            ->setConstructorArgs([
+                'test@email.com',
+                'passwordHash'
+            ])
+            ->setMethods([
+                'findHandleMethod'
+            ])
+            ->getMock();
+        $user->method('findHandleMethod')
+            ->willReturn('handleAttemptOfLoggingInToInactiveAccount');
+        /* @var $user User */
+        $user->apply($attemptOfLoggingInToInactiveAccount);
+
+        $this->assertEquals(1, $user->getUncommittedEvents()->count());
+        $this->assertInstanceOf(AttemptOfLoggingInToInactiveAccount::class, $user->getUncommittedEvents()->first());
     }
 }

@@ -1,5 +1,6 @@
 <?php
 
+use BartoszBartniczak\CQRS\Command\Bus\CannotExecuteTheCommandException;
 use BartoszBartniczak\EventSourcing\Command\Bus\CommandBus;
 use BartoszBartniczak\EventSourcing\Event\Bus\SimpleEventBus;
 use BartoszBartniczak\EventSourcing\Event\Repository\InMemoryEventRepository;
@@ -13,8 +14,13 @@ use BartoszBartniczak\EventSourcing\Shop\Generator\ActivationTokenGenerator;
 use BartoszBartniczak\EventSourcing\Shop\Password\HashGenerator;
 use BartoszBartniczak\EventSourcing\Shop\User\Command\ActivateUser as ActivateUserCommand;
 use BartoszBartniczak\EventSourcing\Shop\User\Command\Handler\ActivateUser as ActivateUserHandler;
+use BartoszBartniczak\EventSourcing\Shop\User\Command\Handler\LogInUser as LoginUserHandler;
 use BartoszBartniczak\EventSourcing\Shop\User\Command\Handler\RegisterNewUser as RegisterNewUserHandler;
+use BartoszBartniczak\EventSourcing\Shop\User\Command\LogInUser as LoginUserCommand;
 use BartoszBartniczak\EventSourcing\Shop\User\Command\RegisterNewUser as RegisterNewUserCommand;
+use BartoszBartniczak\EventSourcing\Shop\User\Event\AttemptOfLoggingInToInactiveAccount;
+use BartoszBartniczak\EventSourcing\Shop\User\Event\UnsuccessfulAttemptOfLoggingIn;
+use BartoszBartniczak\EventSourcing\Shop\User\Event\UserHasBeenLoggedIn;
 use BartoszBartniczak\EventSourcing\Shop\User\Factory\Factory as UserFactory;
 use BartoszBartniczak\EventSourcing\Shop\User\Repository\InMemoryUserRepository;
 use BartoszBartniczak\EventSourcing\Shop\User\User;
@@ -59,6 +65,14 @@ class UserContext implements Context
      * @var InMemoryUserRepository
      */
     private $userRepository;
+    /**
+     * @var UserFactory
+     */
+    private $userFactory;
+    /**
+     * @var HashGenerator
+     */
+    private $hashGenerator;
 
     /**
      * Initializes context.
@@ -70,14 +84,23 @@ class UserContext implements Context
     public function __construct()
     {
         $this->uuidGenerator = new UUIDGenerator();
+        $this->hashGenerator = new HashGenerator();
 
-        $this->eventRepository = new InMemoryEventRepository(new FakeSerializer());
+        $this->clearEventRepository();
+        $this->userFactory = new UserFactory();
+        $this->userRepository = new InMemoryUserRepository($this->eventRepository, $this->userFactory);
         $eventBus = new SimpleEventBus();
 
         $this->commandBus = new CommandBus($this->uuidGenerator, $this->eventRepository, $eventBus);
         $this->commandBus->registerHandler(RegisterNewUserCommand::class, new RegisterNewUserHandler($this->uuidGenerator));
         $this->commandBus->registerHandler(SendEmailCommand::class, new SendEmailHandler($this->uuidGenerator));
         $this->commandBus->registerHandler(ActivateUserCommand::class, new ActivateUserHandler($this->uuidGenerator));
+        $this->commandBus->registerHandler(LoginUserCommand::class, new LoginUserHandler($this->uuidGenerator));
+    }
+
+    private function clearEventRepository()
+    {
+        $this->eventRepository = new InMemoryEventRepository(new FakeSerializer());
     }
 
     /**
@@ -101,14 +124,23 @@ class UserContext implements Context
      */
     public function iRegisterInService()
     {
-        $senderService = new NullEmailSenderService();
-        $tokenGenerator = new ActivationTokenGenerator();
-        $hashGenerator = new HashGenerator();
+        $this->registerUser($this->userEmail, $this->userPassword);
+    }
+
+    private function registerUser(string $userEmail, string $password, ActivationTokenGenerator $activationTokenGenerator = null)
+    {
+        $emailService = new NullEmailSenderService();
+        if (!$activationTokenGenerator instanceof ActivationTokenGenerator) {
+            $activationTokenGenerator = new ActivationTokenGenerator();
+        }
+
         $emailFactory = new EmailFactory($this->uuidGenerator);
         $this->email = $emailFactory->createEmpty();
 
-        $command = new RegisterNewUserCommand($this->userEmail, $this->userPassword, $senderService, $tokenGenerator, $this->uuidGenerator, $hashGenerator, $this->email);
+        $command = new RegisterNewUserCommand($userEmail, $password, $emailService, $activationTokenGenerator, $this->uuidGenerator, $this->hashGenerator, $this->email);
         $this->commandBus->execute($command);
+
+        $this->user = $this->userRepository->findUserByEmail($userEmail);
     }
 
     /**
@@ -116,9 +148,6 @@ class UserContext implements Context
      */
     public function theAccountShouldBeRegisteredInSystem()
     {
-        $userFactory = new UserFactory();
-        $inMemoryUserRepository = new InMemoryUserRepository($this->eventRepository, $userFactory);
-        $this->user = $inMemoryUserRepository->findUserByEmail($this->userEmail);
         PHPUnit_Framework_Assert::assertInstanceOf(User::class, $this->user);
         PHPUnit_Framework_Assert::assertSame($this->userEmail, $this->user->getEmail());
         PHPUnit_Framework_Assert::assertNotEmpty($this->user->getPasswordHash());
@@ -154,30 +183,28 @@ class UserContext implements Context
     public function inactiveAccountWithEmailAndToken(string $email, string $token)
     {
         $userPassword = '';
-        $senderService = new NullEmailSenderService();
         $tokenGenerator = Mockery::mock(ActivationTokenGenerator::class)
             ->shouldReceive('generate')
             ->andReturn($token)
             ->getMock();
         /* @var $tokenGenerator ActivationTokenGenerator */
-        $hashGenerator = new HashGenerator();
-        $emailFactory = new EmailFactory($this->uuidGenerator);
-        $emailObject = $emailFactory->createEmpty();
 
-        $registerNewUser = new RegisterNewUserCommand($email, $userPassword, $senderService, $tokenGenerator, $this->uuidGenerator, $hashGenerator, $emailObject);
-        $this->commandBus->execute($registerNewUser);
+        $this->registerUser($email, $userPassword, $tokenGenerator);
     }
 
     /**
      * @When User is trying to activate the account with email: :email and token: :token
      */
-    public function userIsTryingToActivateTheAccountWithEmailAndToken($email, $token)
+    public function userIsTryingToActivateTheAccountWithEmailAndToken(string $email, string $token)
     {
-        $userFactory = new UserFactory();
-        $userRepository = new InMemoryUserRepository($this->eventRepository, $userFactory);
-        $activateUserCommand = new ActivateUserCommand($email, $token, $userRepository);
+        $this->activateAccount($email, $token);
+    }
+
+    private function activateAccount(string $email, string $activationToken)
+    {
+        $activateUserCommand = new ActivateUserCommand($email, $activationToken, $this->userRepository);
         $this->commandBus->execute($activateUserCommand);
-        $this->user = $userRepository->findUserByEmail($email);
+        $this->user = $this->userRepository->findUserByEmail($email);
     }
 
     /**
@@ -210,24 +237,13 @@ class UserContext implements Context
     public function activeAccountWithEmailAndToken(string $email, string $token)
     {
         $userPassword = '';
-        $senderService = new NullEmailSenderService();
         $tokenGenerator = Mockery::mock(ActivationTokenGenerator::class)
             ->shouldReceive('generate')
             ->andReturn($token)
             ->getMock();
         /* @var $tokenGenerator ActivationTokenGenerator */
-        $hashGenerator = new HashGenerator();
-        $emailFactory = new EmailFactory($this->uuidGenerator);
-        $emailObject = $emailFactory->createEmpty();
-
-        $registerNewUser = new RegisterNewUserCommand($email, $userPassword, $senderService, $tokenGenerator, $this->uuidGenerator, $hashGenerator, $emailObject);
-        $this->commandBus->execute($registerNewUser);
-
-        $userFactory = new UserFactory();
-        $userRepository = new InMemoryUserRepository($this->eventRepository, $userFactory);
-        $activateUserCommand = new ActivateUserCommand($email, $token, $userRepository);
-        $this->commandBus->execute($activateUserCommand);
-        $this->user = $userRepository->findUserByEmail($email);
+        $this->registerUser($email, $userPassword, $tokenGenerator);
+        $this->activateAccount($email, $token);
     }
 
     /**
@@ -237,5 +253,89 @@ class UserContext implements Context
     {
         $event = $this->user->getCommittedEvents()->last();
         PHPUnit_Framework_Assert::assertInstanceOf(\BartoszBartniczak\EventSourcing\Shop\User\Event\AttemptOfActivatingAlreadyActivatedAccount::class, $event);
+    }
+
+    /**
+     * @Given Active User account with email: :email and password: :password
+     */
+    public function activeUserAccountWithEmailAndPassword($email, $password)
+    {
+        $tokenGenerator = Mockery::mock(ActivationTokenGenerator::class)
+            ->shouldReceive('generate')
+            ->andReturn('secret-token')
+            ->getMock();
+        /* @var $tokenGenerator ActivationTokenGenerator */
+        $this->registerUser($email, $password, $tokenGenerator);
+        $this->activateAccount($email, 'secret-token');
+    }
+
+    /**
+     * @When I try to log in with parameters: :email and :password
+     */
+    public function iTryToLogInWithParameters(string $email, string $password)
+    {
+        try {
+            $command = new LoginUserCommand($email, $password, $this->hashGenerator, $this->userRepository);
+            $this->commandBus->execute($command);
+            $this->user = $this->userRepository->findUserByEmail($email);
+        } catch (CannotExecuteTheCommandException $cannotExecuteTheCommandException) {
+
+        }
+    }
+
+    /**
+     * @Then The fact of the logging in should be registered
+     */
+    public function theFactOfTheLoggingInShouldBeRegistered()
+    {
+        PHPUnit_Framework_Assert::assertInstanceOf(UserHasBeenLoggedIn::class, $this->user->getCommittedEvents()->last());
+    }
+
+    /**
+     * @Then The fact of the unsuccessful attempt of logging in should be registered
+     */
+    public function theFactOfTheUnsuccessfulAttemptOfLoggingInShouldBeRegistered()
+    {
+        PHPUnit_Framework_Assert::assertInstanceOf(UnsuccessfulAttemptOfLoggingIn::class, $this->user->getCommittedEvents()->last());
+    }
+
+    /**
+     * @Given Inactive User account with email: :email and password: :password
+     */
+    public function inactiveUserAccountWithEmailAndPassword(string $email, $password)
+    {
+        $this->registerUser($email, $password);
+    }
+
+    /**
+     * @Then The number of unsuccessful attempts of logging in should be equals :quantity
+     */
+    public function theNumberOfUnsuccessfulAttemptsOfLoggingInShouldBeEquals(int $quantity)
+    {
+        PHPUnit_Framework_Assert::assertEquals($quantity, $this->user->getUnsuccessfulAttemptsOfLoggingIn());
+    }
+
+    /**
+     * @Then The fact of the unsuccessful attempt of logging in to the inactive account should be registered
+     */
+    public function theFactOfTheUnsuccessfulAttemptOfLoggingInToTheInactiveAccountShouldBeRegistered()
+    {
+        PHPUnit_Framework_Assert::assertInstanceOf(AttemptOfLoggingInToInactiveAccount::class, $this->user->getCommittedEvents()->last());
+    }
+
+    /**
+     * @Given Empty user repository
+     */
+    public function emptyUserRepository()
+    {
+        $this->clearEventRepository();
+    }
+
+    /**
+     * @Then None event should be registered
+     */
+    public function noneEventShouldBeRegistered()
+    {
+        PHPUnit_Framework_Assert::assertEquals(0, $this->eventRepository->find()->count());
     }
 }
