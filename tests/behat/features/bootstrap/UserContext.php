@@ -15,12 +15,15 @@ use BartoszBartniczak\EventSourcing\Shop\Password\HashGenerator;
 use BartoszBartniczak\EventSourcing\Shop\User\Command\ActivateUser as ActivateUserCommand;
 use BartoszBartniczak\EventSourcing\Shop\User\Command\Handler\ActivateUser as ActivateUserHandler;
 use BartoszBartniczak\EventSourcing\Shop\User\Command\Handler\LogInUser as LoginUserHandler;
+use BartoszBartniczak\EventSourcing\Shop\User\Command\Handler\LogOutUser as LogOutUserHandler;
 use BartoszBartniczak\EventSourcing\Shop\User\Command\Handler\RegisterNewUser as RegisterNewUserHandler;
 use BartoszBartniczak\EventSourcing\Shop\User\Command\LogInUser as LoginUserCommand;
+use BartoszBartniczak\EventSourcing\Shop\User\Command\LogOutUser as LogOutUserCommand;
 use BartoszBartniczak\EventSourcing\Shop\User\Command\RegisterNewUser as RegisterNewUserCommand;
 use BartoszBartniczak\EventSourcing\Shop\User\Event\AttemptOfLoggingInToInactiveAccount;
 use BartoszBartniczak\EventSourcing\Shop\User\Event\UnsuccessfulAttemptOfLoggingIn;
 use BartoszBartniczak\EventSourcing\Shop\User\Event\UserHasBeenLoggedIn;
+use BartoszBartniczak\EventSourcing\Shop\User\Event\UserHasBeenLoggedOut;
 use BartoszBartniczak\EventSourcing\Shop\User\Factory\Factory as UserFactory;
 use BartoszBartniczak\EventSourcing\Shop\User\Repository\InMemoryUserRepository;
 use BartoszBartniczak\EventSourcing\Shop\User\User;
@@ -96,6 +99,7 @@ class UserContext implements Context
         $this->commandBus->registerHandler(SendEmailCommand::class, new SendEmailHandler($this->uuidGenerator));
         $this->commandBus->registerHandler(ActivateUserCommand::class, new ActivateUserHandler($this->uuidGenerator));
         $this->commandBus->registerHandler(LoginUserCommand::class, new LoginUserHandler($this->uuidGenerator));
+        $this->commandBus->registerHandler(LogOutUserCommand::class, new LogOutUserHandler($this->uuidGenerator));
     }
 
     private function clearEventRepository()
@@ -275,12 +279,17 @@ class UserContext implements Context
     public function iTryToLogInWithParameters(string $email, string $password)
     {
         try {
-            $command = new LoginUserCommand($email, $password, $this->hashGenerator, $this->userRepository);
-            $this->commandBus->execute($command);
+            $this->loginUser($email, $password);
             $this->user = $this->userRepository->findUserByEmail($email);
         } catch (CannotExecuteTheCommandException $cannotExecuteTheCommandException) {
 
         }
+    }
+
+    private function loginUser(string $email, string $password)
+    {
+        $command = new LoginUserCommand($email, $password, $this->hashGenerator, $this->userRepository);
+        $this->commandBus->execute($command);
     }
 
     /**
@@ -337,5 +346,40 @@ class UserContext implements Context
     public function noneEventShouldBeRegistered()
     {
         PHPUnit_Framework_Assert::assertEquals(0, $this->eventRepository->find()->count());
+    }
+
+    /**
+     * @Given Logged in user
+     */
+    public function loggedInUser()
+    {
+        $this->userEmail = 'user@email.com';
+        $this->userPassword = 'password';
+        $tokenGenerator = Mockery::mock(ActivationTokenGenerator::class)
+            ->shouldReceive('generate')
+            ->andReturn('secret-token')
+            ->getMock();
+        /* @var $tokenGenerator ActivationTokenGenerator */
+        $this->registerUser($this->userEmail, $this->userPassword, $tokenGenerator);
+        $this->activateAccount($this->userEmail, 'secret-token');
+        $this->loginUser($this->userEmail, $this->userPassword);
+    }
+
+    /**
+     * @When I will try to log out
+     */
+    public function iWillTryToLogOut()
+    {
+        $command = new LogOutUserCommand($this->userEmail, $this->userRepository);
+        $this->commandBus->execute($command);
+    }
+
+    /**
+     * @Then The fact of the logging out should be registered
+     */
+    public function theFactOfTheLoggingOutShouldBeRegistered()
+    {
+        $this->user = $this->userRepository->findUserByEmail($this->userEmail);
+        PHPUnit_Framework_Assert::assertInstanceOf(UserHasBeenLoggedOut::class, $this->user->getCommittedEvents()->last());
     }
 }
