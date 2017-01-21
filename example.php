@@ -7,6 +7,10 @@
 require_once('vendor/autoload.php');
 
 use BartoszBartniczak\CQRS\Command\Bus\CannotExecuteTheCommandException;
+use BartoszBartniczak\EventSourcing\Command\Bus\CommandBus;
+use BartoszBartniczak\EventSourcing\Event\Bus\SimpleEventBus;
+use BartoszBartniczak\EventSourcing\Event\Repository\InMemoryEventRepository;
+use BartoszBartniczak\EventSourcing\Event\Serializer\JMSJsonSerializer;
 use BartoszBartniczak\EventSourcing\Shop\Basket\Command\AddProductToTheBasket as AddProductToTheBasketCommand;
 use BartoszBartniczak\EventSourcing\Shop\Basket\Command\ChangeQuantityOfTheProduct;
 use BartoszBartniczak\EventSourcing\Shop\Basket\Command\CloseBasket as CloseBasketCommand;
@@ -19,16 +23,12 @@ use BartoszBartniczak\EventSourcing\Shop\Basket\Command\Handler\RemoveProductFro
 use BartoszBartniczak\EventSourcing\Shop\Basket\Command\RemoveProductFromTheBasket;
 use BartoszBartniczak\EventSourcing\Shop\Basket\Factory\Factory as BasketFactory;
 use BartoszBartniczak\EventSourcing\Shop\Basket\Repository\InMemoryRepository as BasketRepository;
-use BartoszBartniczak\EventSourcing\Command\Bus\CommandBus;
 use BartoszBartniczak\EventSourcing\Shop\Email\Command\Handler\SendEmail as SendEmailCommandHandler;
 use BartoszBartniczak\EventSourcing\Shop\Email\Command\SendEmail as SendEmailCommand;
 use BartoszBartniczak\EventSourcing\Shop\Email\Email;
 use BartoszBartniczak\EventSourcing\Shop\Email\Event\EmailHasNotBeenSent as EmailHasNotBeenSentEvent;
 use BartoszBartniczak\EventSourcing\Shop\Email\Id as EmailId;
 use BartoszBartniczak\EventSourcing\Shop\Email\Sender\NullEmailSenderService;
-use BartoszBartniczak\EventSourcing\Event\Bus\SimpleEventBus;
-use BartoszBartniczak\EventSourcing\Event\Repository\InMemoryEventRepository;
-use BartoszBartniczak\EventSourcing\Event\Serializer\JMSJsonSerializer;
 use BartoszBartniczak\EventSourcing\Shop\Generator\ActivationTokenGenerator;
 use BartoszBartniczak\EventSourcing\Shop\Order\Command\CreateOrder as CreateOrderCommand;
 use BartoszBartniczak\EventSourcing\Shop\Order\Command\Handler\CreateOrder as CreateOrderCommandHandler;
@@ -66,6 +66,7 @@ $jmsSerializer = JMS\Serializer\SerializerBuilder::create()
     ->setPropertyNamingStrategy($propertyNamingStrategy)
     ->addMetadataDir(__DIR__ . '/config/serializer', "BartoszBartniczak\EventSourcing\Shop")
     ->addMetadataDir(__DIR__ . '/config/serializer', "BartoszBartniczak\EventSourcing")
+    ->addMetadataDir(__DIR__ . '/config/serializer', "BartoszBartniczak")
     ->build();
 $serializer = new JMSJsonSerializer($jmsSerializer, $propertyNamingStrategy);
 

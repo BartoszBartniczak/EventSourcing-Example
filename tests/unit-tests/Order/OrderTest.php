@@ -6,12 +6,13 @@
 
 namespace BartoszBartniczak\EventSourcing\Shop\Order;
 
+use BartoszBartniczak\EventSourcing\EventAggregate\EventAggregate;
 use BartoszBartniczak\EventSourcing\Shop\Basket\Id as BasketId;
 use BartoszBartniczak\EventSourcing\Shop\Basket\Position\Position as BasketPosition;
 use BartoszBartniczak\EventSourcing\Shop\Basket\Position\PositionArray as BasketPositions;
-use BartoszBartniczak\EventSourcing\EventAggregate\EventAggregate;
 use BartoszBartniczak\EventSourcing\Shop\Order\Event\OrderHasBeenCreated;
 use BartoszBartniczak\EventSourcing\Shop\Order\Position\PositionArray;
+use BartoszBartniczak\EventSourcing\Shop\Product\Id as ProductId;
 use BartoszBartniczak\EventSourcing\Shop\Product\Product;
 
 class OrderTest extends \PHPUnit_Framework_TestCase
@@ -62,12 +63,22 @@ class OrderTest extends \PHPUnit_Framework_TestCase
 
         $product1 = $this->getMockBuilder(Product::class)
             ->disableOriginalConstructor()
+            ->setMethods([
+                'getId'
+            ])
             ->getMock();
+        $product1->method('getId')
+            ->willReturn(new ProductId(uniqid()));
         /* @var $product1 Product */
 
         $product2 = $this->getMockBuilder(Product::class)
             ->disableOriginalConstructor()
+            ->setMethods([
+                'getId'
+            ])
             ->getMock();
+        $product2->method('getId')
+            ->willReturn(new ProductId(uniqid()));
         /* @var $product2 Product */
 
         $basketPosition1 = $this->getMockBuilder(BasketPosition::class)

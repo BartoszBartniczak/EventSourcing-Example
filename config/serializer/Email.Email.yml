@@ -2,3 +2,7 @@ BartoszBartniczak\EventSourcing\Shop\Email\Email:
   properties:
     id:
       type: BartoszBartniczak\EventSourcing\Shop\Email\Id
+    sent:
+      type: boolean
+    unsuccessfulAttemptsOfSending:
+      type: int

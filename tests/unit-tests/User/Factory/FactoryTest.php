@@ -22,4 +22,16 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf(User::class, $user);
     }
 
+    /**
+     * @covers \BartoszBartniczak\EventSourcing\Shop\User\Factory\Factory::createNew
+     */
+    public function testCreateNew()
+    {
+        $factory = new Factory();
+        $user = $factory->createNew('test@email.pl', 'passwordHash');
+        $this->assertInstanceOf(User::class, $user);
+        $this->assertSame('test@email.pl', $user->getEmail());
+        $this->assertSame('passwordHash', $user->getPasswordHash());
+    }
+
 }

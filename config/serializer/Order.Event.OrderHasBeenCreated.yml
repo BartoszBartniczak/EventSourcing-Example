@@ -1,0 +1,6 @@
+BartoszBartniczak\EventSourcing\Shop\Order\Event\OrderHasBeenCreated:
+  properties:
+    basketId:
+      type: BartoszBartniczak\EventSourcing\Shop\Basket\Id
+    positions:
+      type: BartoszBartniczak\EventSourcing\Shop\Order\Position\PositionArray

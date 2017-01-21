@@ -60,12 +60,9 @@ class InMemoryUserRepository implements UserRepository
      */
     protected function getFilterEmail(string $email): callable
     {
-        return function ($eventData) use ($email) {
+        return function (Event $event) use ($email) {
 
-            $userEvent = $this->inMemoryEventRepository->getEventSerializer()->deserialize($eventData);
-            /* @var $userEvent \Shop\User\Event\Event */
-
-            if ($userEvent->getUserEmail() === $email) {
+            if ($event->getUserEmail() === $email) {
                 return true;
             } else {
                 return false;

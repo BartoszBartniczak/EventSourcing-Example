@@ -9,7 +9,6 @@ namespace BartoszBartniczak\EventSourcing\Shop\User\Command;
 
 use BartoszBartniczak\CQRS\Command\Command;
 use BartoszBartniczak\EventSourcing\Shop\User\Repository\UserRepository;
-use BartoszBartniczak\EventSourcing\Shop\User\User;
 
 class ActivateUser implements Command
 {
@@ -32,8 +31,10 @@ class ActivateUser implements Command
 
     /**
      * ActivateUser constructor.
-     * @param User $user
+     * @param string $userEmail
      * @param string $activationToken
+     * @param UserRepository $userRepository
+     * @internal param User $user
      */
     public function __construct(string $userEmail, string $activationToken, UserRepository $userRepository)
     {

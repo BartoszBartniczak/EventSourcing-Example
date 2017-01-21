@@ -10,6 +10,7 @@ namespace BartoszBartniczak\EventSourcing\Shop\User\Command\Handler;
 use BartoszBartniczak\CQRS\Command\Command;
 use BartoszBartniczak\EventSourcing\Command\Handler\CommandHandler;
 use BartoszBartniczak\EventSourcing\Shop\User\Command\ActivateUser as ActivateUserCommand;
+use BartoszBartniczak\EventSourcing\Shop\User\Event\AttemptOfActivatingAlreadyActivatedAccount;
 use BartoszBartniczak\EventSourcing\Shop\User\Event\UnsuccessfulAttemptOfActivatingUserAccount as UnsuccessfulAttemptOfActivatingUserAccountEvent;
 use BartoszBartniczak\EventSourcing\Shop\User\Event\UserAccountHasBeenActivated as UserAccountHasBeenActivatedEvent;
 use BartoszBartniczak\EventSourcing\Shop\User\Repository\CannotFindUserException;
@@ -60,9 +61,17 @@ class ActivateUser extends CommandHandler
         $this->userRepository = $command->getUserRepository();
         $this->user = $this->userRepository->findUserByEmail($this->userEmail);
 
-        $this->tokenValidation();
-
-        if ($this->isTokenValid) {
+        if ($this->user->isActive() === true) {
+            $this->user->apply(
+                new AttemptOfActivatingAlreadyActivatedAccount(
+                    $this->generateEventId(),
+                    $this->generateDateTime(),
+                    $this->userEmail,
+                    $this->activationToken,
+                    'User has been already activated.'
+                )
+            );
+        } elseif ($this->isTokenValid()) {
             $this->user->apply(new UserAccountHasBeenActivatedEvent(
                 $this->generateEventId(),
                 $this->generateDateTime(),
@@ -75,7 +84,7 @@ class ActivateUser extends CommandHandler
                     $this->generateDateTime(),
                     $this->userEmail,
                     $this->activationToken,
-                    $this->errorMessage
+                    'Invalid activation token.'
                 )
             );
         }
@@ -83,17 +92,9 @@ class ActivateUser extends CommandHandler
         return $this->user;
     }
 
-    private function tokenValidation()
+    private function isTokenValid(): bool
     {
-        if ($this->user->isActive() === false && $this->user->getActivationToken() === $this->activationToken) {
-            $this->isTokenValid = true;
-        } elseif ($this->user->isActive()) {
-            $this->isTokenValid = false;
-            $this->errorMessage = 'User has been already activated.';
-        } else {
-            $this->isTokenValid = false;
-            $this->errorMessage = 'Invalid activation token.';
-        }
+        return $this->user->getActivationToken() === $this->activationToken;
     }
 
 

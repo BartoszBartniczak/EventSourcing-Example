@@ -40,6 +40,11 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($uuid->toNative(), $basket->getId()->toNative());
         $this->assertSame('owner@email.com', $basket->getOwnerEmail());
         $this->assertEquals(0, $basket->getPositions()->count());
+
+        $basket = $factory->createNew('owner@email.com', 'fec62b3f-6de2-4337-a48f-1bbe9bc132c6');
+        $this->assertSame('fec62b3f-6de2-4337-a48f-1bbe9bc132c6', $basket->getId()->toNative());
+        $this->assertSame('owner@email.com', $basket->getOwnerEmail());
+        $this->assertEquals(0, $basket->getPositions()->count());
     }
 
     /**

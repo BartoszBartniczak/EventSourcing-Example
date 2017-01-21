@@ -7,6 +7,7 @@
 namespace BartoszBartniczak\EventSourcing\Shop\User\Command\Handler;
 
 use BartoszBartniczak\EventSourcing\Shop\User\Command\ActivateUser as ActivateUserCommand;
+use BartoszBartniczak\EventSourcing\Shop\User\Event\AttemptOfActivatingAlreadyActivatedAccount;
 use BartoszBartniczak\EventSourcing\Shop\User\Event\UnsuccessfulAttemptOfActivatingUserAccount;
 use BartoszBartniczak\EventSourcing\Shop\User\Event\UserAccountHasBeenActivated;
 use BartoszBartniczak\EventSourcing\Shop\User\Repository\UserRepository;
@@ -18,7 +19,7 @@ class ActivateUserTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers \BartoszBartniczak\EventSourcing\Shop\User\Command\Handler\ActivateUser::handle
-     * @covers \BartoszBartniczak\EventSourcing\Shop\User\Command\Handler\ActivateUser::tokenValidation
+     * @covers \BartoszBartniczak\EventSourcing\Shop\User\Command\Handler\ActivateUser::isTokenValid
      */
     public function testHandleValidActivationToken()
     {
@@ -69,7 +70,7 @@ class ActivateUserTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers \BartoszBartniczak\EventSourcing\Shop\User\Command\Handler\ActivateUser::handle
-     * @covers \BartoszBartniczak\EventSourcing\Shop\User\Command\Handler\ActivateUser::tokenValidation
+     * @covers \BartoszBartniczak\EventSourcing\Shop\User\Command\Handler\ActivateUser::isTokenValid
      */
     public function testHandleUserHasBeenAlreadyActivated()
     {
@@ -113,17 +114,17 @@ class ActivateUserTest extends \PHPUnit_Framework_TestCase
         $activateUserHandler = new ActivateUser($uuidGenerator);
         $user = $activateUserHandler->handle($command);
         $this->assertEquals(0, $user->getCommittedEvents()->count());
-        $unsuccessfulAttemptOfActivatingUserAccount = $user->getUncommittedEvents()->shift();
-        /* @var $unsuccessfulAttemptOfActivatingUserAccount UnsuccessfulAttemptOfActivatingUserAccount */
-        $this->assertInstanceOf(UnsuccessfulAttemptOfActivatingUserAccount::class, $unsuccessfulAttemptOfActivatingUserAccount);
-        $this->assertSame('email@user.com', $unsuccessfulAttemptOfActivatingUserAccount->getUserEmail());
-        $this->assertSame('activationToken', $unsuccessfulAttemptOfActivatingUserAccount->getActivationToken());
-        $this->assertSame('User has been already activated.', $unsuccessfulAttemptOfActivatingUserAccount->getMessage());
+        $attemptOfActivatingAlreadyActivatedAccount = $user->getUncommittedEvents()->shift();
+        /* @var $attemptOfActivatingAlreadyActivatedAccount UnsuccessfulAttemptOfActivatingUserAccount */
+        $this->assertInstanceOf(AttemptOfActivatingAlreadyActivatedAccount::class, $attemptOfActivatingAlreadyActivatedAccount);
+        $this->assertSame('email@user.com', $attemptOfActivatingAlreadyActivatedAccount->getUserEmail());
+        $this->assertSame('activationToken', $attemptOfActivatingAlreadyActivatedAccount->getActivationToken());
+        $this->assertSame('User has been already activated.', $attemptOfActivatingAlreadyActivatedAccount->getMessage());
     }
 
     /**
      * @covers \BartoszBartniczak\EventSourcing\Shop\User\Command\Handler\ActivateUser::handle
-     * @covers \BartoszBartniczak\EventSourcing\Shop\User\Command\Handler\ActivateUser::tokenValidation
+     * @covers \BartoszBartniczak\EventSourcing\Shop\User\Command\Handler\ActivateUser::isTokenValid
      */
     public function testHandleInvalidActivationToken()
     {

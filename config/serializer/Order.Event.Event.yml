@@ -1,0 +1,4 @@
+BartoszBartniczak\EventSourcing\Shop\Order\Event\Event:
+  properties:
+    orderId:
+      type: BartoszBartniczak\EventSourcing\Shop\Order\Id

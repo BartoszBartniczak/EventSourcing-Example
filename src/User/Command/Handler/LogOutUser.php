@@ -21,7 +21,7 @@ class LogOutUser extends CommandHandler
      */
     public function handle(Command $command): User
     {
-        /* @var $command \Shop\User\Command\LogOutUser */
+        /* @var $command \BartoszBartniczak\EventSourcing\Shop\User\Command\LogOutUser */
 
         $user = $command->getUserRepository()->findUserByEmail($command->getUserEmail());
 

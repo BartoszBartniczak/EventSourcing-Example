@@ -7,10 +7,10 @@
 namespace BartoszBartniczak\EventSourcing\Shop\Order;
 
 
+use BartoszBartniczak\EventSourcing\EventAggregate\EventAggregate;
 use BartoszBartniczak\EventSourcing\Shop\Basket\Id as BasketId;
 use BartoszBartniczak\EventSourcing\Shop\Basket\Position\Position as BasketPosition;
 use BartoszBartniczak\EventSourcing\Shop\Basket\Position\PositionArray as BasketPositions;
-use BartoszBartniczak\EventSourcing\EventAggregate\EventAggregate;
 use BartoszBartniczak\EventSourcing\Shop\Order\Event\OrderHasBeenCreated;
 use BartoszBartniczak\EventSourcing\Shop\Order\Id as OrderId;
 use BartoszBartniczak\EventSourcing\Shop\Order\Position\Position;
@@ -30,7 +30,7 @@ class Order extends EventAggregate
     private $basketId;
 
     /**
-     * @var array
+     * @var PositionArray
      */
     private $positions;
 
@@ -66,7 +66,7 @@ class Order extends EventAggregate
         foreach ($basketPositions as $basketPosition) {
             /* @var $basketPosition BasketPosition */
             $orderPosition = new Position($basketPosition->getProduct(), $basketPosition->getQuantity());
-            $this->positions[] = $orderPosition;
+            $this->positions[$orderPosition->getProduct()->getId()->toNative()] = $orderPosition;
         }
     }
 

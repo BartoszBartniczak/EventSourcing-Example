@@ -1,0 +1,14 @@
+default:
+  suites:
+    User:
+      paths: [ %paths.base%/features/User ]
+      contexts: [ UserContext ]
+    Basket:
+      paths: [ %paths.base%/features/Basket ]
+      contexts: [ BasketContext ]
+    Order:
+      paths: [ %paths.base%/features/Order ]
+      contexts: [OrderContext]
+    ProductRepository:
+      paths: [ %paths.base%/features/ProductRepository ]
+      contexts: [ProductRepositoryContext]
