@@ -1,0 +1,12 @@
+{
+  "event_family_name": "Basket",
+  "name": "BartoszBartniczak\\EventSourcing\\Shop\\Basket\\Event\\BasketHasBeenCreated",
+  "event_id": {
+    "uuid": "c3e9f89e-cb7b-407d-8d6c-19c5be66f081"
+  },
+  "date_time": "2017-01-23T12:34:36+0100",
+  "basket_id": {
+    "uuid": "073ead35-8fb5-41cb-9c68-9ac0defe4970"
+  },
+  "owner_email": "user@user.com"
+}

@@ -90,7 +90,7 @@ class BasketContext implements Context
         $position = $this->basket->getPositions()->offsetGet($productId);
         /* @var $position \BartoszBartniczak\EventSourcing\Shop\Basket\Position\Position */
 
-        PHPUnit_Framework_Assert::assertSame($productId, $position->getProduct()->getId()->toNative());
+        PHPUnit_Framework_Assert::assertSame($productId, $position->getProductId()->toNative());
         PHPUnit_Framework_Assert::assertSame($quantity, $position->getQuantity());
     }
 

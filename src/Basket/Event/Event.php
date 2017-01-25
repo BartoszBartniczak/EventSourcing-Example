@@ -7,9 +7,10 @@
 namespace BartoszBartniczak\EventSourcing\Shop\Basket\Event;
 
 
-use BartoszBartniczak\EventSourcing\Shop\Basket\Basket;
-use BartoszBartniczak\EventSourcing\Event\Id;
 use BartoszBartniczak\EventSourcing\Event\Event as BasicEvent;
+use BartoszBartniczak\EventSourcing\Event\Id;
+use BartoszBartniczak\EventSourcing\Shop\Basket\Basket;
+use BartoszBartniczak\EventSourcing\Shop\Basket\Id as BasketId;
 
 abstract class Event extends BasicEvent
 {
@@ -17,14 +18,14 @@ abstract class Event extends BasicEvent
     const FAMILY_NAME = 'Basket';
 
     /**
-     * @var Basket
+     * @var BasketId
      */
-    protected $basket;
+    protected $basketId;
 
-    public function __construct(Id $eventId, \DateTime $dateTime, Basket $basket)
+    public function __construct(Id $eventId, \DateTime $dateTime, BasketId $basketIdId)
     {
         parent::__construct($eventId, $dateTime);
-        $this->basket = $basket;
+        $this->basketId = $basketIdId;
     }
 
     /**
@@ -38,9 +39,9 @@ abstract class Event extends BasicEvent
     /**
      * @return Basket
      */
-    public function getBasket(): Basket
+    public function getBasketId(): BasketId
     {
-        return $this->basket;
+        return $this->basketId;
     }
 
 }

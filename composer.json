@@ -30,7 +30,8 @@
     "bartoszbartniczak/test-case": "1.*",
     "behat/behat": "3.*",
     "mockery/mockery": "0.*",
-    "satooshi/php-coveralls": "*"
+    "satooshi/php-coveralls": "*",
+    "symfony/finder": "3.*"
   },
   "autoload": {
     "psr-4": {
@@ -39,7 +40,10 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "BartoszBartniczak\\EventSourcing\\Shop\\": "tests/unit-tests/"
+      "BartoszBartniczak\\EventSourcing\\Shop\\": [
+        "tests/unit-tests/",
+        "tests/integration-tests/"
+      ]
     }
   }
 }

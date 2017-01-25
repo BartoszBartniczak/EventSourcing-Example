@@ -10,6 +10,7 @@ namespace BartoszBartniczak\EventSourcing\Shop\Order\Command;
 use BartoszBartniczak\EventSourcing\Shop\Basket\Basket;
 use BartoszBartniczak\EventSourcing\Shop\Email\Email;
 use BartoszBartniczak\EventSourcing\Shop\Email\Sender\Service;
+use BartoszBartniczak\EventSourcing\Shop\Order\Position\PositionArray\Factory;
 use BartoszBartniczak\EventSourcing\UUID\Generator;
 
 class CreateOrderTest extends \PHPUnit_Framework_TestCase
@@ -21,6 +22,7 @@ class CreateOrderTest extends \PHPUnit_Framework_TestCase
      * @covers \BartoszBartniczak\EventSourcing\Shop\Order\Command\CreateOrder::getBasket()
      * @covers \BartoszBartniczak\EventSourcing\Shop\Order\Command\CreateOrder::getEmailSenderService()
      * @covers \BartoszBartniczak\EventSourcing\Shop\Order\Command\CreateOrder::getEmail
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Order\Command\CreateOrder::getPositionsFactory
      */
     public function testGetters()
     {
@@ -45,11 +47,18 @@ class CreateOrderTest extends \PHPUnit_Framework_TestCase
             ->getMock();
         /* @var $email Email */
 
-        $createOrder = new CreateOrder($generator, $basket, $service, $email);
+        $factory = $this->getMockBuilder(Factory::class)
+            ->disableOriginalConstructor()
+            ->setMethods(null)
+            ->getMock();
+        /* @var $factory Factory */
+
+        $createOrder = new CreateOrder($generator, $basket, $service, $email, $factory);
         $this->assertSame($generator, $createOrder->getUuidGenerator());
         $this->assertSame($basket, $createOrder->getBasket());
         $this->assertSame($service, $createOrder->getEmailSenderService());
         $this->assertSame($email, $createOrder->getEmail());
+        $this->assertSame($factory, $createOrder->getPositionsFactory());
     }
 
 }

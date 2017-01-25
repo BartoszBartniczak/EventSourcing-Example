@@ -25,13 +25,14 @@ use BartoszBartniczak\EventSourcing\Shop\Basket\Factory\Factory as BasketFactory
 use BartoszBartniczak\EventSourcing\Shop\Basket\Repository\InMemoryRepository as BasketRepository;
 use BartoszBartniczak\EventSourcing\Shop\Email\Command\Handler\SendEmail as SendEmailCommandHandler;
 use BartoszBartniczak\EventSourcing\Shop\Email\Command\SendEmail as SendEmailCommand;
-use BartoszBartniczak\EventSourcing\Shop\Email\Email;
 use BartoszBartniczak\EventSourcing\Shop\Email\Event\EmailHasNotBeenSent as EmailHasNotBeenSentEvent;
-use BartoszBartniczak\EventSourcing\Shop\Email\Id as EmailId;
+use BartoszBartniczak\EventSourcing\Shop\Email\Factory\Factory as EmailFactory;
 use BartoszBartniczak\EventSourcing\Shop\Email\Sender\NullEmailSenderService;
 use BartoszBartniczak\EventSourcing\Shop\Generator\ActivationTokenGenerator;
 use BartoszBartniczak\EventSourcing\Shop\Order\Command\CreateOrder as CreateOrderCommand;
 use BartoszBartniczak\EventSourcing\Shop\Order\Command\Handler\CreateOrder as CreateOrderCommandHandler;
+use BartoszBartniczak\EventSourcing\Shop\Order\Position\PositionArray\Factory as OrderPositionsFactory;
+use BartoszBartniczak\EventSourcing\Shop\Order\Position\PositionArray\ProductIdStrategy;
 use BartoszBartniczak\EventSourcing\Shop\Password\HashGenerator;
 use BartoszBartniczak\EventSourcing\Shop\Product\Id as ProductId;
 use BartoszBartniczak\EventSourcing\Shop\Product\Product;
@@ -58,7 +59,7 @@ $whoops->register();
 /* Dependency Injection Container */
 
 $uuidGenerator = new RamseyGeneratorAdapter();
-$emailSenderService = new NullEmailSenderService(true);
+$emailSenderService = new NullEmailSenderService();
 
 $propertyNamingStrategy = new \JMS\Serializer\Naming\CamelCaseNamingStrategy();
 
@@ -111,10 +112,12 @@ $productRepository->save(new Product($breadId, 'Bread'));
 $butterUuid = new ProductId($uuidGenerator->generate()->toNative());
 $productRepository->save(new Product($butterUuid, 'Butter'));
 
+$emailFactory = new EmailFactory($uuidGenerator);
 
+$orderPositionsFactory = new OrderPositionsFactory($productRepository, new ProductIdStrategy());
 /* Controller */
 
-$registerUserCommand = new RegisterNewUserCommand('user@user.com', 'password', $emailSenderService, new ActivationTokenGenerator(), $uuidGenerator, $hashGenerator, new Email(new EmailId(uniqid())));
+$registerUserCommand = new RegisterNewUserCommand('user@user.com', 'password', $emailSenderService, new ActivationTokenGenerator(), $uuidGenerator, $hashGenerator, $emailFactory->createEmpty());
 $commandBus->execute($registerUserCommand);
 $user = $userRepository->findUserByEmail('user@user.com');
 
@@ -171,7 +174,7 @@ try {
     dump("Display the error message", $cannotHandleTheCommandException);
 }
 
-$createOrderCommand = new CreateOrderCommand($uuidGenerator, $basket, $emailSenderService, new Email(new EmailId(uniqid())));
+$createOrderCommand = new CreateOrderCommand($uuidGenerator, $basket, $emailSenderService, $emailFactory->createEmpty(), $orderPositionsFactory);
 $commandBus->execute($createOrderCommand);
 
 ///** Recreating the basket */

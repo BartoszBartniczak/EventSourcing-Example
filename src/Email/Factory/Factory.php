@@ -36,9 +36,17 @@ class Factory
 
     }
 
-    private function generateNewId(): Id
+    private function generateNewId(string $id = ''): Id
     {
-        return new Id($this->uuidGenerator->generate()->toNative());
+        if (empty($id)) {
+            $id = $this->uuidGenerator->generate()->toNative();
+        }
+        return new Id($id);
+    }
+
+    public function createNew(string $id = ''): Email
+    {
+        return new Email($this->generateNewId($id));
     }
 
 }

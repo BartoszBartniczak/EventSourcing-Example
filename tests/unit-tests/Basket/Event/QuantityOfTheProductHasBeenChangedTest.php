@@ -7,9 +7,9 @@
 namespace BartoszBartniczak\EventSourcing\Shop\Basket\Event;
 
 
-use BartoszBartniczak\EventSourcing\Shop\Basket\Basket;
-use BartoszBartniczak\EventSourcing\Test\EventTestCase;
+use BartoszBartniczak\EventSourcing\Shop\Basket\Id as BasketId;
 use BartoszBartniczak\EventSourcing\Shop\Product\Id as ProductId;
+use BartoszBartniczak\EventSourcing\Test\EventTestCase;
 
 class QuantityOfTheProductHasBeenChangedTest extends EventTestCase
 {
@@ -22,10 +22,11 @@ class QuantityOfTheProductHasBeenChangedTest extends EventTestCase
     public function testConstructor()
     {
 
-        $basket = $this->getMockBuilder(Basket::class)
+        $basketId = $this->getMockBuilder(BasketId::class)
             ->disableOriginalConstructor()
+            ->setMethods(null)
             ->getMock();
-        /* @var $basket Basket */
+        /* @var $basketId BasketId */
 
         $productId = $this->getMockBuilder(ProductId::class)
             ->disableOriginalConstructor()
@@ -35,13 +36,13 @@ class QuantityOfTheProductHasBeenChangedTest extends EventTestCase
         $quantityOfTheProductHasBeenChanged = new QuantityOfTheProductHasBeenChanged(
             $this->generateEventId(),
             $this->generateDateTime(),
-            $basket,
+            $basketId,
             $productId,
             32.12
         );
         $this->assertSameEventIdAsGenerated($quantityOfTheProductHasBeenChanged);
         $this->assertSameDateTimeAsGenerated($quantityOfTheProductHasBeenChanged);
-        $this->assertSame($basket, $quantityOfTheProductHasBeenChanged->getBasket());
+        $this->assertSame($basketId, $quantityOfTheProductHasBeenChanged->getBasketId());
         $this->assertSame($productId, $quantityOfTheProductHasBeenChanged->getProductId());
         $this->assertSame(32.12, $quantityOfTheProductHasBeenChanged->getQuantity());
 

@@ -1,0 +1,10 @@
+{
+  "event_family_name": "User",
+  "name": "BartoszBartniczak\\EventSourcing\\Shop\\User\\Event\\ActivationTokenHasBeenGenerated",
+  "event_id": {
+    "uuid": "40a0ab50-5029-4574-9790-8e5132422124"
+  },
+  "date_time": "2017-01-23T10:33:21+0100",
+  "user_email": "user@user.com",
+  "activation_token": "5885cde1a1471"
+}

@@ -7,8 +7,9 @@
 namespace BartoszBartniczak\EventSourcing\Shop\Basket\Event;
 
 
-use BartoszBartniczak\EventSourcing\Shop\Basket\Basket;
 use BartoszBartniczak\EventSourcing\Event\Id;
+use BartoszBartniczak\EventSourcing\Shop\Basket\Id as BasketId;
+use BartoszBartniczak\EventSourcing\Shop\Product\Id as ProductId;
 use BartoszBartniczak\EventSourcing\Shop\Product\Product;
 
 class ProductHasBeenAddedToTheBasket extends Event
@@ -16,7 +17,7 @@ class ProductHasBeenAddedToTheBasket extends Event
     /**
      * @var Product
      */
-    private $product;
+    private $product_id;
 
     /**
      * @var float
@@ -27,23 +28,23 @@ class ProductHasBeenAddedToTheBasket extends Event
      * ProductHasBeenAddedToTheBasket constructor.
      * @param Id $eventId
      * @param \DateTime $eventDateTime
-     * @param Basket $basket
-     * @param Product $product
+     * @param BasketId $basketIdId
+     * @param ProductId $productId
      * @param float $quantity
      */
-    public function __construct(Id $eventId, \DateTime $eventDateTime, Basket $basket, Product $product, float $quantity)
+    public function __construct(Id $eventId, \DateTime $eventDateTime, BasketId $basketIdId, ProductId $productId, float $quantity)
     {
-        parent::__construct($eventId, $eventDateTime, $basket);
-        $this->product = $product;
+        parent::__construct($eventId, $eventDateTime, $basketIdId);
+        $this->product_id = $productId;
         $this->quantity = $quantity;
     }
 
     /**
-     * @return Product
+     * @return ProductId
      */
-    public function getProduct(): Product
+    public function getProductId(): ProductId
     {
-        return $this->product;
+        return $this->product_id;
     }
 
     /**

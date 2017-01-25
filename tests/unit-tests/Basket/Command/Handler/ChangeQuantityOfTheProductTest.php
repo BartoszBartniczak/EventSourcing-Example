@@ -41,12 +41,17 @@ class ChangeQuantityOfTheProductTest extends \PHPUnit_Framework_TestCase
 
         $product = $this->getMockBuilder(Product::class)
             ->disableOriginalConstructor()
+            ->setMethods([
+                'getId'
+            ])
             ->getMock();
+        $product->method('getId')
+            ->willReturn($productId);
         /* @var $product Product */
 
         $basketPosition = $this->getMockBuilder(BasketPosition::class)
             ->setConstructorArgs([
-                $product,
+                $productId,
                 1.00
             ])
             ->setMethods(null)
@@ -78,7 +83,7 @@ class ChangeQuantityOfTheProductTest extends \PHPUnit_Framework_TestCase
         $quantityOfTheProductHasBeenChanged = $basket->getUncommittedEvents()->shift();
         $this->assertInstanceOf(QuantityOfTheProductHasBeenChanged::class, $quantityOfTheProductHasBeenChanged);
         /* @var $quantityOfTheProductHasBeenChanged QuantityOfTheProductHasBeenChanged */
-        $this->assertSame($basket, $quantityOfTheProductHasBeenChanged->getBasket());
+        $this->assertSame($basketId, $quantityOfTheProductHasBeenChanged->getBasketId());
         $this->assertSame($productId, $quantityOfTheProductHasBeenChanged->getProductId());
         $this->assertSame(12.56, $quantityOfTheProductHasBeenChanged->getQuantity());
     }

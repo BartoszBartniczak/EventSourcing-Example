@@ -52,7 +52,7 @@ class CloseBasketTest extends \PHPUnit_Framework_TestCase
         $basketHasBeenClosed = $basket->getUncommittedEvents()->shift();
         $this->assertInstanceOf(BasketHasBeenClosed::class, $basketHasBeenClosed);
         /* @var $basketHasBeenClosed BasketHasBeenClosed */
-        $this->assertSame($basket, $basketHasBeenClosed->getBasket());
+        $this->assertSame($basketId, $basketHasBeenClosed->getBasketId());
     }
 
 }

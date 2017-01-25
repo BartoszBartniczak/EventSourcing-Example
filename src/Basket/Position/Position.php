@@ -7,15 +7,15 @@
 namespace BartoszBartniczak\EventSourcing\Shop\Basket\Position;
 
 
-use BartoszBartniczak\EventSourcing\Shop\Product\Product;
+use BartoszBartniczak\EventSourcing\Shop\Product\Id as ProductId;
 
 class Position
 {
 
     /**
-     * @var Product
+     * @var ProductId
      */
-    private $product;
+    private $productId;
 
     /**
      * @var float
@@ -24,12 +24,12 @@ class Position
 
     /**
      * Position constructor.
-     * @param Product $product
+     * @param ProductId $productId
      * @param float $quantity
      */
-    public function __construct(Product $product, float $quantity)
+    public function __construct(ProductId $productId, float $quantity)
     {
-        $this->product = $product;
+        $this->productId = $productId;
         $this->changeQuantity($quantity);
     }
 
@@ -39,11 +39,11 @@ class Position
     }
 
     /**
-     * @return Product
+     * @return ProductId
      */
-    public function getProduct(): Product
+    public function getProductId(): ProductId
     {
-        return $this->product;
+        return $this->productId;
     }
 
     /**

@@ -7,8 +7,8 @@
 namespace BartoszBartniczak\EventSourcing\Shop\Basket\Event;
 
 
-use BartoszBartniczak\EventSourcing\Shop\Basket\Basket;
 use BartoszBartniczak\EventSourcing\Event\Id;
+use BartoszBartniczak\EventSourcing\Shop\Basket\Id as BasketId;
 use BartoszBartniczak\EventSourcing\Shop\Product\Id as ProductId;
 
 class ProductHasBeenRemovedFromTheBasket extends Event
@@ -23,13 +23,13 @@ class ProductHasBeenRemovedFromTheBasket extends Event
      * ProductHasBeenRemovedFromTheBasket constructor.
      * @param Id $eventId
      * @param \DateTime $dateTime
-     * @param Basket $basket
-     * @param ProductId $productId
+     * @param BasketId $basketIdId
+     * @param ProductId $productIdId
      */
-    public function __construct(Id $eventId, \DateTime $dateTime, Basket $basket, ProductId $productId)
+    public function __construct(Id $eventId, \DateTime $dateTime, BasketId $basketIdId, ProductId $productIdId)
     {
-        parent::__construct($eventId, $dateTime, $basket);
-        $this->productId = $productId;
+        parent::__construct($eventId, $dateTime, $basketIdId);
+        $this->productId = $productIdId;
     }
 
     /**

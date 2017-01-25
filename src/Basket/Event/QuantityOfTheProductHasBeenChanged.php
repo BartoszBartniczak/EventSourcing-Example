@@ -7,8 +7,8 @@
 namespace BartoszBartniczak\EventSourcing\Shop\Basket\Event;
 
 
-use BartoszBartniczak\EventSourcing\Shop\Basket\Basket;
 use BartoszBartniczak\EventSourcing\Event\Id;
+use BartoszBartniczak\EventSourcing\Shop\Basket\Id as BasketId;
 use BartoszBartniczak\EventSourcing\Shop\Product\Id as ProductId;
 use BartoszBartniczak\EventSourcing\UUID\UUID;
 
@@ -29,14 +29,14 @@ class QuantityOfTheProductHasBeenChanged extends Event
      * QuantityOfTheProductHasBeenChanged constructor.
      * @param Id $eventId
      * @param \DateTime $dateTime
-     * @param Basket $basket
-     * @param ProductId $productId
+     * @param BasketId $basketIdId
+     * @param ProductId $productIdId
      * @param float $quantity
      */
-    public function __construct(Id $eventId, \DateTime $dateTime, Basket $basket, ProductId $productId, float $quantity)
+    public function __construct(Id $eventId, \DateTime $dateTime, BasketId $basketIdId, ProductId $productIdId, float $quantity)
     {
-        parent::__construct($eventId, $dateTime, $basket);
-        $this->productId = $productId;
+        parent::__construct($eventId, $dateTime, $basketIdId);
+        $this->productId = $productIdId;
         $this->quantity = $quantity;
     }
 

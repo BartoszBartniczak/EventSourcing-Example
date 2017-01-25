@@ -56,6 +56,14 @@ To run behat tests execute command:
 vendor/bin/behat --config tests/behat/behat.yml 
 ```
 
+#### Integration tests
+
+To run integration tests run command:
+
+```bash
+php vendor/phpunit/phpunit/phpunit --configuration tests/integration-tests/configuration.xml
+```
+
 ### Running the example
 
 Run command in console:

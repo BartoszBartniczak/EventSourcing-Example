@@ -109,26 +109,28 @@ class InMemoryRepositoryTest extends \PHPUnit_Framework_TestCase
      */
     private function createEventMock(BasketId $basketId, string $ownerEmail, $className = BasketHasBeenCreated::class): Event
     {
+        $methods = [
+            'getBasketId',
+            'getName',
+        ];
+        if ($className === BasketHasBeenCreated::class) {
+            $methods[] = 'getOwnerEmail';
 
-        $basket = $this->getMockBuilder(Basket::class)
-            ->setConstructorArgs([
-                $basketId, $ownerEmail
-            ])
-            ->setMethods(null)
-            ->getMock();
-        /* @var $basket Basket */
+        }
 
         $event = $this->getMockBuilder($className)
             ->disableOriginalConstructor()
-            ->setMethods([
-                'getBasket',
-                'getName'
-            ])
+            ->setMethods($methods)
             ->getMock();
-        $event->method('getBasket')
-            ->willReturn($basket);
+        $event->method('getBasketId')
+            ->willReturn($basketId);
         $event->method('getName')
             ->willReturn($className);
+
+        if ($className === BasketHasBeenCreated::class) {
+            $event->method('getOwnerEmail')
+                ->willReturn($ownerEmail);
+        }
         /* @var $event Event */
 
         return $event;

@@ -1,0 +1,13 @@
+{
+  "event_family_name": "Email",
+  "name": "BartoszBartniczak\\EventSourcing\\Shop\\Email\\Event\\EmailHasBeenSent",
+  "event_id": {
+    "uuid": "94c027b5-b3e8-4c55-a289-9c0660494335"
+  },
+  "date_time": "2017-01-23T12:34:36+0100",
+  "email": {
+    "id": {
+      "uuid": "8e1d6661-3fa2-436d-89bb-3164adf7f163"
+    }
+  }
+}

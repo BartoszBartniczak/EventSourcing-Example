@@ -1,2 +1,4 @@
 BartoszBartniczak\EventSourcing\Shop\Basket\Event\BasketHasBeenCreated:
   properties:
+    ownerEmail:
+      type: string

@@ -3,6 +3,6 @@ BartoszBartniczak\EventSourcing\Shop\Email\Email:
     id:
       type: BartoszBartniczak\EventSourcing\Shop\Email\Id
     sent:
-      type: boolean
+      exclude: true
     unsuccessfulAttemptsOfSending:
-      type: int
+      exclude: true

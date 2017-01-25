@@ -12,7 +12,6 @@ use BartoszBartniczak\EventSourcing\Shop\Basket\Event\ProductHasBeenRemovedFromT
 use BartoszBartniczak\EventSourcing\Shop\Basket\Id as BasketId;
 use BartoszBartniczak\EventSourcing\Shop\Basket\Position\Position as BasketPosition;
 use BartoszBartniczak\EventSourcing\Shop\Product\Id as ProductId;
-use BartoszBartniczak\EventSourcing\Shop\Product\Product;
 use BartoszBartniczak\EventSourcing\UUID\Generator;
 
 class RemoveProductFromTheBasketTest extends \PHPUnit_Framework_TestCase
@@ -24,24 +23,16 @@ class RemoveProductFromTheBasketTest extends \PHPUnit_Framework_TestCase
     public function testHandle()
     {
 
-        $productId = $this->getMockBuilder(ProductId::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        /* @var $productId ProductId */
-
         $basketId = $this->getMockBuilder(BasketId::class)
             ->disableOriginalConstructor()
             ->getMock();
         /* @var $basketId BasketId */
 
-        $product = $this->getMockBuilder(Product::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        /* @var $product Product */
+        $productId = new ProductId(uniqid());
 
         $basketPosition = $this->getMockBuilder(BasketPosition::class)
             ->setConstructorArgs([
-                $product,
+                $productId,
                 1.00
             ])
             ->getMock();
@@ -79,7 +70,7 @@ class RemoveProductFromTheBasketTest extends \PHPUnit_Framework_TestCase
         $productHasBeenRemovedFromBasket = $basket->getUncommittedEvents()->shift();
         $this->assertInstanceOf(ProductHasBeenRemovedFromTheBasket::class, $productHasBeenRemovedFromBasket);
         /* @var $productHasBeenRemovedFromBasket ProductHasBeenRemovedFromTheBasket */
-        $this->assertSame($basket, $productHasBeenRemovedFromBasket->getBasket());
+        $this->assertSame($basketId, $productHasBeenRemovedFromBasket->getBasketId());
         $this->assertSame($productId, $productHasBeenRemovedFromBasket->getProductId());
     }
 

@@ -7,7 +7,7 @@
 namespace BartoszBartniczak\EventSourcing\Shop\Basket\Position;
 
 
-use BartoszBartniczak\EventSourcing\Shop\Product\Product;
+use BartoszBartniczak\EventSourcing\Shop\Product\Id as ProductId;
 
 class PositionTest extends \PHPUnit_Framework_TestCase
 {
@@ -15,18 +15,19 @@ class PositionTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers \BartoszBartniczak\EventSourcing\Shop\Basket\Position\Position::__construct
      * @covers \BartoszBartniczak\EventSourcing\Shop\Basket\Position\Position::getQuantity()
-     * @covers \BartoszBartniczak\EventSourcing\Shop\Basket\Position\Position::getProduct()
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Basket\Position\Position::getProductId()
      */
     public function testGetters()
     {
 
-        $product = $this->getMockBuilder(Product::class)
+        $productId = $this->getMockBuilder(ProductId::class)
             ->disableOriginalConstructor()
+            ->setMethods(null)
             ->getMock();
-        /* @var $product Product */
+        /* @var $productId ProductId */
 
-        $position = new Position($product, 15.39);
-        $this->assertSame($product, $position->getProduct());
+        $position = new Position($productId, 15.39);
+        $this->assertSame($productId, $position->getProductId());
         $this->assertSame(15.39, $position->getQuantity());
     }
 
@@ -36,12 +37,13 @@ class PositionTest extends \PHPUnit_Framework_TestCase
      */
     public function testChangeQuantity()
     {
-        $product = $this->getMockBuilder(Product::class)
+        $productId = $this->getMockBuilder(ProductId::class)
             ->disableOriginalConstructor()
+            ->setMethods(null)
             ->getMock();
-        /* @var $product Product */
+        /* @var $productId ProductId */
 
-        $position = new Position($product, 15.39);
+        $position = new Position($productId, 15.39);
         $position->changeQuantity(193.87);
         $this->assertSame(193.87, $position->getQuantity());
     }
@@ -52,12 +54,13 @@ class PositionTest extends \PHPUnit_Framework_TestCase
      */
     public function testAddToQuantity()
     {
-        $product = $this->getMockBuilder(Product::class)
+        $productId = $this->getMockBuilder(ProductId::class)
             ->disableOriginalConstructor()
+            ->setMethods(null)
             ->getMock();
-        /* @var $product Product */
+        /* @var $productId ProductId */
 
-        $position = new Position($product, 15.39);
+        $position = new Position($productId, 15.39);
         $position->addToQuantity(1.00);
         $this->assertSame(16.39, $position->getQuantity());
     }

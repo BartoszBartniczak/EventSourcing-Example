@@ -11,6 +11,7 @@ use BartoszBartniczak\CQRS\Command\Command;
 use BartoszBartniczak\EventSourcing\Shop\Basket\Basket;
 use BartoszBartniczak\EventSourcing\Shop\Email\Email;
 use BartoszBartniczak\EventSourcing\Shop\Email\Sender\Service as EmailSenderService;
+use BartoszBartniczak\EventSourcing\Shop\Order\Position\PositionArray\Factory;
 use BartoszBartniczak\EventSourcing\UUID\Generator;
 
 class CreateOrder implements Command
@@ -35,18 +36,24 @@ class CreateOrder implements Command
     private $email;
 
     /**
+     * @var Factory
+     */
+    private $positionsFactory;
+
+    /**
      * CreateOrder constructor.
      * @param Generator $uuidGenerator
      * @param Basket $basket
      * @param EmailSenderService $service
      * @param Email $email
      */
-    public function __construct(Generator $uuidGenerator, Basket $basket, EmailSenderService $service, Email $email)
+    public function __construct(Generator $uuidGenerator, Basket $basket, EmailSenderService $service, Email $email, Factory $factory)
     {
         $this->uuidGenerator = $uuidGenerator;
         $this->basket = $basket;
         $this->emailSenderService = $service;
         $this->email = $email;
+        $this->positionsFactory = $factory;
     }
 
     /**
@@ -81,5 +88,12 @@ class CreateOrder implements Command
         return $this->email;
     }
 
+    /**
+     * @return Factory
+     */
+    public function getPositionsFactory(): Factory
+    {
+        return $this->positionsFactory;
+    }
 
 }

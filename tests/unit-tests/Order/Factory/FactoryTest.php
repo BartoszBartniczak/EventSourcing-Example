@@ -8,6 +8,9 @@ namespace BartoszBartniczak\EventSourcing\Shop\Order\Factory;
 
 
 use BartoszBartniczak\EventSourcing\Shop\Order\Order;
+use BartoszBartniczak\EventSourcing\Shop\Order\Position\PositionArray\Factory as PositionsFactory;
+use BartoszBartniczak\EventSourcing\Shop\Order\Position\PositionArray\ProductIdStrategy;
+use BartoszBartniczak\EventSourcing\Shop\Product\Repository\Repository as ProductRepository;
 use BartoszBartniczak\EventSourcing\UUID\Generator;
 use BartoszBartniczak\EventSourcing\UUID\UUID;
 
@@ -33,7 +36,12 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
             ->willReturn(new UUID('b26c245b-00ce-4465-bc60-5318fbd3868e'));
         /* @var $generator Generator */
 
-        $factory = new Factory($generator);
+        $productRepository = $this->getMockBuilder(ProductRepository::class)
+            ->getMockForAbstractClass();
+        /* @var $productRepository ProductRepository */
+        $positionsFactory = new PositionsFactory($productRepository, new ProductIdStrategy());
+
+        $factory = new Factory($generator, $positionsFactory);
         $order = $factory->createEmpty();
         $this->assertInstanceOf(Order::class, $order);
         $this->assertSame('b26c245b-00ce-4465-bc60-5318fbd3868e', $order->getOrderId()->toNative());

@@ -8,8 +8,8 @@ namespace BartoszBartniczak\EventSourcing\Shop\Basket\Command\Handler;
 
 
 use BartoszBartniczak\CQRS\Command\Command;
-use BartoszBartniczak\EventSourcing\Shop\Basket\Event\BasketHasBeenClosed;
 use BartoszBartniczak\EventSourcing\Command\Handler\CommandHandler;
+use BartoszBartniczak\EventSourcing\Shop\Basket\Event\BasketHasBeenClosed;
 
 class CloseBasket extends CommandHandler
 {
@@ -18,13 +18,13 @@ class CloseBasket extends CommandHandler
      */
     public function handle(Command $command)
     {
-        /* @var $command \Shop\Basket\Command\CloseBasket */
+        /* @var $command \BartoszBartniczak\EventSourcing\Shop\Basket\Command\CloseBasket */
         $command->getBasket()
             ->apply(
                 new BasketHasBeenClosed(
                     $this->generateEventId(),
                     $this->generateDateTime(),
-                    $command->getBasket()
+                    $command->getBasket()->getId()
                 )
             );
 

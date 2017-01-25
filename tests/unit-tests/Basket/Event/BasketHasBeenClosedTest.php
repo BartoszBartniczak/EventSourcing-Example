@@ -7,7 +7,7 @@
 namespace BartoszBartniczak\EventSourcing\Shop\Basket\Event;
 
 
-use BartoszBartniczak\EventSourcing\Shop\Basket\Basket;
+use BartoszBartniczak\EventSourcing\Shop\Basket\Id as BasketId;
 use BartoszBartniczak\EventSourcing\Test\EventTestCase;
 
 class BasketHasBeenClosedTest extends EventTestCase
@@ -19,21 +19,22 @@ class BasketHasBeenClosedTest extends EventTestCase
     public function testConstructor()
     {
 
-        $basket = $this->getMockBuilder(Basket::class)
+        $basketId = $this->getMockBuilder(BasketId::class)
             ->disableOriginalConstructor()
+            ->setMethods(null)
             ->getMock();
-        /* @var $basket Basket */
+        /* @var $basketId BasketId */
 
         $basketHasBeenClosed = new BasketHasBeenClosed(
             $this->generateEventId(),
             $this->generateDateTime(),
-            $basket
+            $basketId
         );
 
         $this->assertInstanceOf(Event::class, $basketHasBeenClosed);
         $this->assertSameEventIdAsGenerated($basketHasBeenClosed);
         $this->assertSameDateTimeAsGenerated($basketHasBeenClosed);
-        $this->assertSame($basket, $basketHasBeenClosed->getBasket());
+        $this->assertSame($basketId, $basketHasBeenClosed->getBasketId());
 
     }
 

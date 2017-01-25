@@ -65,13 +65,16 @@ class InMemoryRepository implements BasketRepository
     {
         return function (Event $event) use ($userEmail) {
 
-            if ($event->getBasket()->getOwnerEmail() !== $userEmail) {
-                return false;
-            }
 
             if ($event->getName() !== BasketHasBeenCreated::class) {
                 return false;
             }
+
+            /* @var $event BasketHasBeenCreated */
+            if ($event->getOwnerEmail() !== $userEmail) {
+                return false;
+            }
+
 
             return true;
 
@@ -103,7 +106,7 @@ class InMemoryRepository implements BasketRepository
     protected function filterId(Id $basketId): callable
     {
         return function (Event $event) use ($basketId) {
-            if ($event->getBasket()->getId()->toNative() !== $basketId->toNative()) {
+            if ($event->getBasketId()->toNative() !== $basketId->toNative()) {
                 return false;
             }
 

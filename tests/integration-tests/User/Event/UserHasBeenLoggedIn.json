@@ -1,0 +1,9 @@
+{
+  "event_family_name": "User",
+  "name": "BartoszBartniczak\\EventSourcing\\Shop\\User\\Event\\UserHasBeenLoggedIn",
+  "event_id": {
+    "uuid": "ed6af706-193a-4c3b-a149-2ab075ef30c7"
+  },
+  "date_time": "2017-01-23T12:34:36+0100",
+  "user_email": "user@user.com"
+}

@@ -1,0 +1,5 @@
+BartoszBartniczak\EventSourcing\Shop\Order\Position\PositionArray\PositionArray:
+  properties:
+    keyNamingStrategy:
+      expose: false
+      exclude: true

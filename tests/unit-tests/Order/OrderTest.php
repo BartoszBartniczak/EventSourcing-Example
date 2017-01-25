@@ -11,9 +11,13 @@ use BartoszBartniczak\EventSourcing\Shop\Basket\Id as BasketId;
 use BartoszBartniczak\EventSourcing\Shop\Basket\Position\Position as BasketPosition;
 use BartoszBartniczak\EventSourcing\Shop\Basket\Position\PositionArray as BasketPositions;
 use BartoszBartniczak\EventSourcing\Shop\Order\Event\OrderHasBeenCreated;
-use BartoszBartniczak\EventSourcing\Shop\Order\Position\PositionArray;
+use BartoszBartniczak\EventSourcing\Shop\Order\Position\Position;
+use BartoszBartniczak\EventSourcing\Shop\Order\Position\PositionArray\Factory as PositionsFactory;
+use BartoszBartniczak\EventSourcing\Shop\Order\Position\PositionArray\PositionArray;
+use BartoszBartniczak\EventSourcing\Shop\Order\Position\PositionArray\ProductIdStrategy;
 use BartoszBartniczak\EventSourcing\Shop\Product\Id as ProductId;
 use BartoszBartniczak\EventSourcing\Shop\Product\Product;
+use BartoszBartniczak\EventSourcing\Shop\Product\Repository\InMemoryRepository as ProductRepository;
 
 class OrderTest extends \PHPUnit_Framework_TestCase
 {
@@ -37,7 +41,14 @@ class OrderTest extends \PHPUnit_Framework_TestCase
             ->getMock();
         /* @var $basketId BasketId */
 
-        $order = new Order($orderId, $basketId);
+        $productRepository = $this->getMockBuilder(ProductRepository::class)
+            ->getMockForAbstractClass();
+        /* @var $productRepository ProductRepository */
+
+        $positionsFactory = new PositionsFactory($productRepository, new ProductIdStrategy());
+        $positions = $positionsFactory->createEmpty();
+
+        $order = new Order($orderId, $basketId, $positions);
         $this->assertInstanceOf(EventAggregate::class, $order);
         $this->assertEquals(0, $order->getCommittedEvents()->count());
         $this->assertEquals(0, $order->getUncommittedEvents()->count());
@@ -46,9 +57,6 @@ class OrderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(0, $order->getPositions()->count());
     }
 
-    /**
-     * @covers \BartoszBartniczak\EventSourcing\Shop\Order\Order::addPositionsFromBasket
-     */
     public function testAddPositionsFromBasket()
     {
         $orderId = $this->getMockBuilder(Id::class)
@@ -61,35 +69,45 @@ class OrderTest extends \PHPUnit_Framework_TestCase
             ->getMock();
         /* @var $basketId BasketId */
 
+        $productId1 = new ProductId(uniqid());
+
         $product1 = $this->getMockBuilder(Product::class)
             ->disableOriginalConstructor()
             ->setMethods([
-                'getId'
+                'getId',
+                'getName'
             ])
             ->getMock();
         $product1->method('getId')
-            ->willReturn(new ProductId(uniqid()));
+            ->willReturn($productId1);
+        $product1->method('getName')
+            ->willReturn(uniqid());
         /* @var $product1 Product */
+
+        $productId2 = new ProductId(uniqid());
 
         $product2 = $this->getMockBuilder(Product::class)
             ->disableOriginalConstructor()
             ->setMethods([
-                'getId'
+                'getId',
+                'getName'
             ])
             ->getMock();
         $product2->method('getId')
-            ->willReturn(new ProductId(uniqid()));
+            ->willReturn($productId2);
+        $product2->method('getName')
+            ->willReturn(uniqid());
         /* @var $product2 Product */
 
         $basketPosition1 = $this->getMockBuilder(BasketPosition::class)
             ->disableOriginalConstructor()
             ->setMethods([
-                'getProduct',
+                'getProductId',
                 'getQuantity'
             ])
             ->getMock();
-        $basketPosition1->method('getProduct')
-            ->willReturn($product1);
+        $basketPosition1->method('getProductId')
+            ->willReturn($productId1);
         $basketPosition1->method('getQuantity')
             ->willReturn(120.01);
         /* @var $basketPosition1 BasketPosition */
@@ -97,12 +115,12 @@ class OrderTest extends \PHPUnit_Framework_TestCase
         $basketPosition2 = $this->getMockBuilder(BasketPosition::class)
             ->disableOriginalConstructor()
             ->setMethods([
-                'getProduct',
+                'getProductId',
                 'getQuantity'
             ])
             ->getMock();
-        $basketPosition2->method('getProduct')
-            ->willReturn($product2);
+        $basketPosition2->method('getProductId')
+            ->willReturn($productId2);
         $basketPosition2->method('getQuantity')
             ->willReturn(13.07);
         /* @var $basketPosition1 BasketPosition */
@@ -111,17 +129,24 @@ class OrderTest extends \PHPUnit_Framework_TestCase
         $basketPositions[] = $basketPosition1;
         $basketPositions[] = $basketPosition2;
 
-        $order = new Order($orderId, $basketId);
-        $order->addPositionsFromBasket($basketPositions);
+        $productRepository = new ProductRepository();
+        $productRepository->save($product1);
+        $productRepository->save($product2);
+
+        $positionsFactory = new PositionsFactory($productRepository, new ProductIdStrategy());
+        $positions = $positionsFactory->createFromBasketPositions($basketPositions);
+
+        $order = new Order($orderId, $basketId, $positions);
+
         $this->assertEquals(2, $order->getPositions()->count());
 
         $position1 = $order->getPositions()->shift();
-        /* @var $position1 \Shop\Order\Position\Position */
+        /* @var $position1 Position */
         $this->assertSame($product1, $position1->getProduct());
         $this->assertSame(120.01, $position1->getQuantity());
 
         $position2 = $order->getPositions()->shift();
-        /* @var $position2 \Shop\Order\Position\Position */
+        /* @var $position2 Position */
         $this->assertSame($product2, $position2->getProduct());
         $this->assertSame(13.07, $position2->getQuantity());
     }
@@ -142,9 +167,14 @@ class OrderTest extends \PHPUnit_Framework_TestCase
             ->getMock();
         /* @var $basketId BasketId */
 
+        $positions = $this->getMockBuilder(PositionArray::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        /* @var $positions PositionArray */
+
         $order = $this->getMockBuilder(Order::class)
             ->setConstructorArgs([
-                $orderIdConstructor, $basketIdConstructor
+                $orderIdConstructor, $basketIdConstructor, $positions
             ])
             ->setMethods([
                 'findHandleMethod'
@@ -164,9 +194,6 @@ class OrderTest extends \PHPUnit_Framework_TestCase
             ->getMock();
         /* @var $basketId BasketId */
 
-        $positions = $this->getMockBuilder(PositionArray::class)
-            ->getMock();
-        /* @var $positions PositionArray */
 
         $orderHasBeenCreatedEvent = $this->getMockBuilder(OrderHasBeenCreated::class)
             ->disableOriginalConstructor()
