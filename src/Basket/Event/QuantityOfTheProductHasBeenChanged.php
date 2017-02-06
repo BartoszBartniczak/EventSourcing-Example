@@ -30,13 +30,13 @@ class QuantityOfTheProductHasBeenChanged extends Event
      * @param Id $eventId
      * @param \DateTime $dateTime
      * @param BasketId $basketIdId
-     * @param ProductId $productIdId
+     * @param ProductId $productId
      * @param float $quantity
      */
-    public function __construct(Id $eventId, \DateTime $dateTime, BasketId $basketIdId, ProductId $productIdId, float $quantity)
+    public function __construct(Id $eventId, \DateTime $dateTime, BasketId $basketIdId, ProductId $productId, float $quantity)
     {
         parent::__construct($eventId, $dateTime, $basketIdId);
-        $this->productId = $productIdId;
+        $this->productId = $productId;
         $this->quantity = $quantity;
     }
 

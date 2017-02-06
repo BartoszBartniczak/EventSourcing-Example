@@ -24,12 +24,12 @@ class ProductHasBeenRemovedFromTheBasket extends Event
      * @param Id $eventId
      * @param \DateTime $dateTime
      * @param BasketId $basketIdId
-     * @param ProductId $productIdId
+     * @param ProductId $productId
      */
-    public function __construct(Id $eventId, \DateTime $dateTime, BasketId $basketIdId, ProductId $productIdId)
+    public function __construct(Id $eventId, \DateTime $dateTime, BasketId $basketIdId, ProductId $productId)
     {
         parent::__construct($eventId, $dateTime, $basketIdId);
-        $this->productId = $productIdId;
+        $this->productId = $productId;
     }
 
     /**

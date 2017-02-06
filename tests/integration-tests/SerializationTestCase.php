@@ -6,6 +6,7 @@
 
 namespace BartoszBartniczak\EventSourcing\Shop;
 
+use BartoszBartniczak\EventSourcing\Event\Event;
 use BartoszBartniczak\EventSourcing\Event\Id as EventId;
 use BartoszBartniczak\EventSourcing\Event\Serializer\JMSJsonSerializer;
 use BartoszBartniczak\EventSourcing\Event\Serializer\Serializer;
@@ -28,6 +29,11 @@ abstract class SerializationTestCase extends \PHPUnit_Framework_TestCase
      */
     protected $uuidGenerator;
 
+    final public function testOutputJson()
+    {
+        $this->assertIdentical($this->loadJsonFromFile($this->getJsonFileName()), $this->getJson());
+    }
+
     public function assertIdentical($expected, $actual)
     {
         $expected = $this->stripWhitespaces($expected);
@@ -40,7 +46,27 @@ abstract class SerializationTestCase extends \PHPUnit_Framework_TestCase
         return preg_replace('/\s+/', '', $string);
     }
 
-    abstract public function testOutputJson();
+    protected function loadJsonFromFile(string $name): string
+    {
+        $finder = new Finder();
+        $files = $finder->in(__DIR__)
+            ->files()
+            ->name($name);
+        foreach ($files as $file) {
+            /* @var $file \Symfony\Component\Finder\SplFileInfo */
+            return $file->getContents();
+        }
+        throw new \InvalidArgumentException('Cannot find file.');
+    }
+
+    abstract protected function getJsonFileName(): string;
+
+    final protected function getJson(): string
+    {
+        return $this->serializer->serialize($this->getEvent());
+    }
+
+    abstract protected function getEvent(): Event;
 
     protected function setUp()
     {
@@ -57,19 +83,6 @@ abstract class SerializationTestCase extends \PHPUnit_Framework_TestCase
 
         $this->uuidGenerator = new RamseyGeneratorAdapter();
 
-    }
-
-    protected function loadJsonFromFile(string $name): string
-    {
-        $finder = new Finder();
-        $files = $finder->in(__DIR__)
-            ->files()
-            ->name($name);
-        foreach ($files as $file) {
-            /* @var $file \Symfony\Component\Finder\SplFileInfo */
-            return $file->getContents();
-        }
-        throw new \InvalidArgumentException('Cannot find file.');
     }
 
     protected function generateEventId(string $uuid = ''): EventId
@@ -92,7 +105,5 @@ abstract class SerializationTestCase extends \PHPUnit_Framework_TestCase
         }
 
     }
-
-    abstract protected function getJson(): string;
 
 }

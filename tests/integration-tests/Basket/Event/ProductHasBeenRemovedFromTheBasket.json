@@ -1,0 +1,14 @@
+{
+  "event_family_name": "Basket",
+  "name": "BartoszBartniczak\\EventSourcing\\Shop\\Basket\\Event\\ProductHasBeenRemovedFromTheBasket",
+  "event_id": {
+    "uuid": "cc65c388-5ec4-49c4-82fd-e270c03d019f"
+  },
+  "date_time": "2017-01-26T08:51:10+0100",
+  "basket_id": {
+    "uuid": "b70fce84-2a90-46e4-9867-e6b2574aadd9"
+  },
+  "product_id": {
+    "uuid": "1e5ae4d6-8ecb-4a7f-8699-5e6a9216e32b"
+  }
+}

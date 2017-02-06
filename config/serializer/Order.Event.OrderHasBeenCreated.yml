@@ -3,4 +3,4 @@ BartoszBartniczak\EventSourcing\Shop\Order\Event\OrderHasBeenCreated:
     basketId:
       type: BartoszBartniczak\EventSourcing\Shop\Basket\Id
     positions:
-      type: BartoszBartniczak\EventSourcing\Shop\Order\Position\PositionArray\PositionArray
+      type: array<string,BartoszBartniczak\EventSourcing\Shop\Order\Position\Position>

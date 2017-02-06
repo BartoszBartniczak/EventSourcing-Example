@@ -1,0 +1,10 @@
+{
+  "event_family_name": "ProductRepository",
+  "name": "BartoszBartniczak\\EventSourcing\\Shop\\Product\\Repository\\Event\\ProductHasNotBeenFound",
+  "event_id": {
+    "uuid": "250f5d1a-d68d-4c10-8ffc-f63cd1f99455"
+  },
+  "date_time": "2017-01-26T08:51:10+0100",
+  "product_name": "Cookies",
+  "user_email": "user@user.com"
+}

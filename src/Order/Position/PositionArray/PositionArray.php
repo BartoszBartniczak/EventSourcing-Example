@@ -10,7 +10,7 @@ namespace BartoszBartniczak\EventSourcing\Shop\Order\Position\PositionArray;
 use BartoszBartniczak\ArrayObject\ArrayOfObjects;
 use BartoszBartniczak\EventSourcing\Shop\Order\Position\Position;
 
-class PositionArray extends ArrayOfObjects
+class PositionArray extends ArrayOfObjects implements \IteratorAggregate, \Countable, \ArrayAccess
 {
     /**
      * @var KeyNamingStrategy

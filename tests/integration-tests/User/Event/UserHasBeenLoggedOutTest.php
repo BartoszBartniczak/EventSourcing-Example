@@ -10,21 +10,19 @@ namespace BartoszBartniczak\EventSourcing\Shop\User\Event;
 use BartoszBartniczak\EventSourcing\Event\Event;
 use BartoszBartniczak\EventSourcing\Shop\SerializationTestCase;
 
-class UserAccountHasBeenActivatedTest extends SerializationTestCase
+class UserHasBeenLoggedOutTest extends SerializationTestCase
 {
-
     protected function getJsonFileName(): string
     {
-        return 'UserAccountHasBeenActivated.json';
+        return 'UserHasBeenLoggedOut.json';
     }
 
     protected function getEvent(): Event
     {
-        return new UserAccountHasBeenActivated(
-            $this->generateEventId('e725c8af-ef0d-479d-95bf-ab6238fc5d7f'),
-            $this->generateDateTime('2017-01-23T12:34:36+0100'),
-            'user@user.com',
-            '5885ea4c4bd4d'
+        return new UserHasBeenLoggedOut(
+            $this->generateEventId('99f9ad90-38f2-4392-ad50-a19c1365cb9a'),
+            $this->generateDateTime('2017-01-26T08:51:10+0100'),
+            'user@user.com'
         );
     }
 

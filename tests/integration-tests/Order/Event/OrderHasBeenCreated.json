@@ -1,0 +1,38 @@
+{
+  "event_family_name": "Order",
+  "name": "BartoszBartniczak\\EventSourcing\\Shop\\Order\\Event\\OrderHasBeenCreated",
+  "event_id": {
+    "uuid": "eb7094ff-c48d-4b5b-9d6d-0acda5a74b09"
+  },
+  "date_time": "2017-01-26T12:16:01+0100",
+  "order_id": {
+    "uuid": "001c8a7c-94b1-4625-aab5-086b30ee7e8b"
+  },
+  "basket_id": {
+    "uuid": "bcb49e53-35ee-4863-adfc-b4ca10e80d3a"
+  },
+  "positions": {
+    "class_name": "BartoszBartniczak\\EventSourcing\\Shop\\Order\\Position\\Position",
+    "key_naming_strategy": "BartoszBartniczak\\EventSourcing\\Shop\\Order\\Position\\PositionArray\\ProductIdStrategy",
+    "positions": {
+      "518ad57c-9e93-4410-8792-5fd37b74bc5e": {
+        "product": {
+          "id": {
+            "uuid": "518ad57c-9e93-4410-8792-5fd37b74bc5e"
+          },
+          "name": "Milk"
+        },
+        "quantity": 2
+      },
+      "5f88bdad-0fc7-447b-b1dc-d6379c9cab2e": {
+        "product": {
+          "id": {
+            "uuid": "5f88bdad-0fc7-447b-b1dc-d6379c9cab2e"
+          },
+          "name": "Butter"
+        },
+        "quantity": 1
+      }
+    }
+  }
+}
