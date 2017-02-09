@@ -6,8 +6,8 @@
 
 namespace BartoszBartniczak\EventSourcing\Shop\Product\Repository;
 
-
 use BartoszBartniczak\EventSourcing\Shop\Product\Product;
+use BartoszBartniczak\EventSourcing\Shop\Product\ProductArray;
 use BartoszBartniczak\EventSourcing\UUID\UUID;
 
 interface Repository
@@ -32,5 +32,11 @@ interface Repository
      * @return void
      */
     public function save(Product $product);
+
+    /**
+     * @return ProductArray
+     * @throws CannotFindProductException
+     */
+    public function find(): ProductArray;
 
 }

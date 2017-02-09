@@ -8,6 +8,7 @@ namespace BartoszBartniczak\EventSourcing\Shop\Product\Repository;
 
 
 use BartoszBartniczak\EventSourcing\Shop\Product\Product;
+use BartoszBartniczak\EventSourcing\Shop\Product\ProductArray;
 use BartoszBartniczak\EventSourcing\UUID\UUID;
 
 class InMemoryRepository implements Repository
@@ -65,6 +66,14 @@ class InMemoryRepository implements Repository
     {
         $this->productsStoredById[$product->getId()->toNative()] = $product;
         $this->productStoredByName[$product->getName()] = $product;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function find(): ProductArray
+    {
+        return new ProductArray($this->productsStoredById);
     }
 
 

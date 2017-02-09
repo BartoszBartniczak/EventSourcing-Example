@@ -30,7 +30,6 @@ class InMemoryRepositoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testSavingAndSearching()
     {
-
         $id1 = new Id(uniqid());
         $id2 = new Id(uniqid());
 
@@ -91,6 +90,35 @@ class InMemoryRepositoryTest extends \PHPUnit_Framework_TestCase
 
         $inMemoryRepository = new InMemoryRepository();
         $inMemoryRepository->findByName('Batmobile');
+    }
+
+    /**
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Product\Repository\InMemoryRepository::find
+     */
+    public function testFind()
+    {
+
+        $id = new Id(uniqid());
+
+        $product = $this->getMockBuilder(Product::class)
+            ->disableOriginalConstructor()
+            ->setMethods([
+                'getId',
+                'getName'
+            ])
+            ->getMock();
+        $product->method('getId')
+            ->willReturn($id);
+        $product->method('getName')
+            ->willReturn('not important');
+        /* @var $product Product */
+
+        $inMemoryRepository = new InMemoryRepository();
+        $inMemoryRepository->save($product);
+
+        $result = $inMemoryRepository->find();
+        $this->assertEquals(1, $result->count());
+        $this->assertSame($product, $result->first());
     }
 
 }
