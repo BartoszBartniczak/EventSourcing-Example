@@ -1,6 +1,0 @@
-BartoszBartniczak\EventSourcing\Shop\Order\Position\Position:
-  properties:
-    product:
-      type: BartoszBartniczak\EventSourcing\Shop\Product\Product
-    quantity:
-      type: float

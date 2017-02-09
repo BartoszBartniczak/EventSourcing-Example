@@ -23,12 +23,12 @@ class ProductHasBeenRemovedFromTheBasket extends Event
      * ProductHasBeenRemovedFromTheBasket constructor.
      * @param Id $eventId
      * @param \DateTime $dateTime
-     * @param BasketId $basketIdId
+     * @param BasketId $basketId
      * @param ProductId $productId
      */
-    public function __construct(Id $eventId, \DateTime $dateTime, BasketId $basketIdId, ProductId $productId)
+    public function __construct(Id $eventId, \DateTime $dateTime, BasketId $basketId, ProductId $productId)
     {
-        parent::__construct($eventId, $dateTime, $basketIdId);
+        parent::__construct($eventId, $dateTime, $basketId);
         $this->productId = $productId;
     }
 

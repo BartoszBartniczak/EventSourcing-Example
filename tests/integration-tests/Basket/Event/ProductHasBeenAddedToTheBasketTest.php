@@ -9,11 +9,11 @@ namespace BartoszBartniczak\EventSourcing\Shop\Basket\Event;
 
 use BartoszBartniczak\EventSourcing\Event\Event;
 use BartoszBartniczak\EventSourcing\Shop\Basket\Factory\Factory as BasketFactory;
+use BartoszBartniczak\EventSourcing\Shop\DeSerializationTestCase;
 use BartoszBartniczak\EventSourcing\Shop\Product\Factory\Factory as ProductFactory;
-use BartoszBartniczak\EventSourcing\Shop\SerializationTestCase;
 
 
-class ProductHasBeenAddedToTheBasketTest extends SerializationTestCase
+class ProductHasBeenAddedToTheBasketTest extends DeSerializationTestCase
 {
     protected function getJsonFileName(): string
     {

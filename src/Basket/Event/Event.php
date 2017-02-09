@@ -22,10 +22,10 @@ abstract class Event extends BasicEvent
      */
     protected $basketId;
 
-    public function __construct(Id $eventId, \DateTime $dateTime, BasketId $basketIdId)
+    public function __construct(Id $eventId, \DateTime $dateTime, BasketId $basketId)
     {
         parent::__construct($eventId, $dateTime);
-        $this->basketId = $basketIdId;
+        $this->basketId = $basketId;
     }
 
     /**

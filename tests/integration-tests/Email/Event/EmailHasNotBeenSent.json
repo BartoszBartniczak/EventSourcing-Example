@@ -1,14 +1,16 @@
 {
-  "event_family_name": "Email",
+  "eventFamilyName": "Email",
   "name": "BartoszBartniczak\\EventSourcing\\Shop\\Email\\Event\\EmailHasNotBeenSent",
-  "event_id": {
-    "uuid": "e41d4459-05a3-4c02-a359-0045e42ca1ba"
+  "eventId": {
+    "uuid": "e41d4459-05a3-4c02-a359-0045e42ca1ba",
+    "className": "BartoszBartniczak\\EventSourcing\\Event\\Id"
   },
-  "date_time": "2017-01-23T10:33:21+0100",
+  "dateTime": "2017-01-23T10:33:21+01:00",
   "email": {
     "id": {
-      "uuid": "03b4a547-b951-4bc8-87fb-108646e753e7"
+      "uuid": "03b4a547-b951-4bc8-87fb-108646e753e7",
+      "className": "BartoszBartniczak\\EventSourcing\\Shop\\Email\\Id"
     }
   },
-  "error_message": "You are using NullEmailSenderService!"
+  "errorMessage": "You are using NullEmailSenderService!"
 }

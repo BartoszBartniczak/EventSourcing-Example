@@ -1,11 +1,12 @@
 {
-  "event_family_name": "User",
+  "eventFamilyName": "User",
   "name": "BartoszBartniczak\\EventSourcing\\Shop\\User\\Event\\AttemptOfActivatingAlreadyActivatedAccount",
-  "event_id": {
-    "uuid": "eccacc01-db93-4738-9b82-a3737843f617"
+  "eventId": {
+    "uuid": "eccacc01-db93-4738-9b82-a3737843f617",
+    "className": "BartoszBartniczak\\EventSourcing\\Event\\Id"
   },
-  "date_time": "2017-01-23T12:34:36+0100",
-  "user_email": "user@user.com",
-  "activation_token": "5885ea4c4bd4d",
+  "dateTime": "2017-01-23T12:34:36+01:00",
+  "userEmail": "user@user.com",
+  "activationToken": "5885ea4c4bd4d",
   "message": "User has been already activated."
 }

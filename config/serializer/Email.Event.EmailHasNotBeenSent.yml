@@ -1,4 +1,0 @@
-BartoszBartniczak\EventSourcing\Shop\Email\Event\EmailHasNotBeenSent:
-  properties:
-    errorMessage:
-      type: string

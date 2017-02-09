@@ -8,15 +8,12 @@ namespace BartoszBartniczak\EventSourcing\Shop;
 
 use BartoszBartniczak\EventSourcing\Event\Event;
 use BartoszBartniczak\EventSourcing\Event\Id as EventId;
-use BartoszBartniczak\EventSourcing\Event\Serializer\JMSJsonSerializer;
 use BartoszBartniczak\EventSourcing\Event\Serializer\Serializer;
 use BartoszBartniczak\EventSourcing\UUID\Generator as UUIDGenerator;
 use BartoszBartniczak\EventSourcing\UUID\RamseyGeneratorAdapter;
-use JMS\Serializer\Naming\CamelCaseNamingStrategy;
-use JMS\Serializer\SerializerBuilder;
 use Symfony\Component\Finder\Finder;
 
-abstract class SerializationTestCase extends \PHPUnit_Framework_TestCase
+abstract class DeSerializationTestCase extends \PHPUnit_Framework_TestCase
 {
 
     /**
@@ -29,7 +26,7 @@ abstract class SerializationTestCase extends \PHPUnit_Framework_TestCase
      */
     protected $uuidGenerator;
 
-    final public function testOutputJson()
+    final public function testSerialization()
     {
         $this->assertIdentical($this->loadJsonFromFile($this->getJsonFileName()), $this->getJson());
     }
@@ -68,18 +65,16 @@ abstract class SerializationTestCase extends \PHPUnit_Framework_TestCase
 
     abstract protected function getEvent(): Event;
 
+    final public function testDeserialization()
+    {
+        $this->assertEquals($this->getEvent(), $this->serializer->deserialize($this->loadJsonFromFile($this->getJsonFileName())));
+    }
+
     protected function setUp()
     {
         parent::setUp();
-        $propertyNamingStrategy = new CamelCaseNamingStrategy();
-
-        $jmsSerializer = SerializerBuilder::create()
-            ->setPropertyNamingStrategy($propertyNamingStrategy)
-            ->addMetadataDir(__DIR__ . '/../../config/serializer', "BartoszBartniczak\EventSourcing\Shop")
-            ->addMetadataDir(__DIR__ . '/../../config/serializer', "BartoszBartniczak\EventSourcing")
-            ->addMetadataDir(__DIR__ . '/../../config/serializer', "BartoszBartniczak")
-            ->build();
-        $this->serializer = new JMSJsonSerializer($jmsSerializer, $propertyNamingStrategy);
+        $serializer = include '../../serializer.php';
+        $this->serializer = $serializer;
 
         $this->uuidGenerator = new RamseyGeneratorAdapter();
 

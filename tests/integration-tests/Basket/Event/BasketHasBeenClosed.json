@@ -1,11 +1,13 @@
 {
-  "event_family_name": "Basket",
+  "eventFamilyName": "Basket",
   "name": "BartoszBartniczak\\EventSourcing\\Shop\\Basket\\Event\\BasketHasBeenClosed",
-  "event_id": {
-    "uuid": "5c230fd5-3050-4635-a611-ca99865f36a2"
+  "eventId": {
+    "uuid": "5c230fd5-3050-4635-a611-ca99865f36a2",
+    "className": "BartoszBartniczak\\EventSourcing\\Event\\Id"
   },
-  "date_time": "2017-01-26T08:51:10+0100",
-  "basket_id": {
-    "uuid": "b70fce84-2a90-46e4-9867-e6b2574aadd9"
+  "dateTime": "2017-01-26T08:51:10+01:00",
+  "basketId": {
+    "uuid": "b70fce84-2a90-46e4-9867-e6b2574aadd9",
+    "className": "BartoszBartniczak\\EventSourcing\\Shop\\Basket\\Id"
   }
 }

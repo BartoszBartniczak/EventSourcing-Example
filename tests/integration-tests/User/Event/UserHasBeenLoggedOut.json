@@ -1,9 +1,10 @@
 {
-  "event_family_name": "User",
+  "eventFamilyName": "User",
   "name": "BartoszBartniczak\\EventSourcing\\Shop\\User\\Event\\UserHasBeenLoggedOut",
-  "event_id": {
-    "uuid": "99f9ad90-38f2-4392-ad50-a19c1365cb9a"
+  "eventId": {
+    "uuid": "99f9ad90-38f2-4392-ad50-a19c1365cb9a",
+    "className": "BartoszBartniczak\\EventSourcing\\Event\\Id"
   },
-  "date_time": "2017-01-26T08:51:10+0100",
-  "user_email": "user@user.com"
+  "dateTime": "2017-01-26T08:51:10+01:00",
+  "userEmail": "user@user.com"
 }

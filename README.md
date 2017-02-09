@@ -32,12 +32,9 @@ This is an example of the online shop.
 2. We want to know what products users searched for and found none.
 
 ### TODO
-1. Seperate the modules:
-    3. JMSSerializer
-    4. DBAL
-    5. Example
-3. Behat tests
-4. Integrity tests
+1. DI Container
+1. DBAL
+2. DDD
 
 ### Tests
 

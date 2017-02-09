@@ -8,11 +8,11 @@ namespace BartoszBartniczak\EventSourcing\Shop\Email\Event;
 
 
 use BartoszBartniczak\EventSourcing\Event\Event;
+use BartoszBartniczak\EventSourcing\Shop\DeSerializationTestCase;
 use BartoszBartniczak\EventSourcing\Shop\Email\Factory\Factory;
-use BartoszBartniczak\EventSourcing\Shop\SerializationTestCase;
 
 
-class EmailHasBeenSentTest extends SerializationTestCase
+class EmailHasBeenSentTest extends DeSerializationTestCase
 {
 
     protected function getJsonFileName(): string

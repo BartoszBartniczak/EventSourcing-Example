@@ -1,7 +1,8 @@
 {
   "name": "bartoszbartniczak/eventsourcing-example",
   "description": "Example of EventSourcing",
-  "minimum-stability": "stable",
+  "minimum-stability": "dev",
+  "prefer-stable": true,
   "license": "proprietary",
   "authors": [
     {
@@ -21,7 +22,11 @@
     "jms/serializer": "1.*",
     "symfony/yaml": "3.*",
     "bartoszbartniczak/array-object": "^1.0",
-    "bartoszbartniczak/EventSourcing": "dev-master"
+    "bartoszbartniczak/EventSourcing": "dev-master",
+    "symfony/serializer": "3.*",
+    "symfony/property-access": "3.*",
+    "bartoszbartniczak/symfony-serializer-arrayobject-normalizer": "dev-master",
+    "bartoszbartniczak/symfony-serializer-arrayofobjects-normalizer": "dev-master"
   },
   "require-dev": {
     "filp/whoops": "*",

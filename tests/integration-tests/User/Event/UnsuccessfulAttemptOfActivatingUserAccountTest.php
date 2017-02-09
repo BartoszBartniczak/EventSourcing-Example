@@ -8,9 +8,9 @@ namespace BartoszBartniczak\EventSourcing\Shop\User\Event;
 
 
 use BartoszBartniczak\EventSourcing\Event\Event;
-use BartoszBartniczak\EventSourcing\Shop\SerializationTestCase;
+use BartoszBartniczak\EventSourcing\Shop\DeSerializationTestCase;
 
-class UnsuccessfulAttemptOfActivatingUserAccountTest extends SerializationTestCase
+class UnsuccessfulAttemptOfActivatingUserAccountTest extends DeSerializationTestCase
 {
 
 

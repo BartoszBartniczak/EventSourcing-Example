@@ -9,14 +9,14 @@ namespace BartoszBartniczak\EventSourcing\Shop\Order\Event;
 
 use BartoszBartniczak\EventSourcing\Event\Event;
 use BartoszBartniczak\EventSourcing\Shop\Basket\Id as BasketId;
+use BartoszBartniczak\EventSourcing\Shop\DeSerializationTestCase;
 use BartoszBartniczak\EventSourcing\Shop\Order\Id as OrderId;
 use BartoszBartniczak\EventSourcing\Shop\Order\Position\Position;
 use BartoszBartniczak\EventSourcing\Shop\Order\Position\PositionArray\PositionArray as OrderPositions;
 use BartoszBartniczak\EventSourcing\Shop\Order\Position\PositionArray\ProductIdStrategy;
 use BartoszBartniczak\EventSourcing\Shop\Product\Factory\Factory as ProductFactory;
-use BartoszBartniczak\EventSourcing\Shop\SerializationTestCase;
 
-class OrderHasBeenCreatedTest extends SerializationTestCase
+class OrderHasBeenCreatedTest extends DeSerializationTestCase
 {
     protected function getJsonFileName(): string
     {

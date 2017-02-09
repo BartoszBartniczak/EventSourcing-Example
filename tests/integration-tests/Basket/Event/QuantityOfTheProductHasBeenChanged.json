@@ -1,15 +1,18 @@
 {
-  "event_family_name": "Basket",
+  "eventFamilyName": "Basket",
   "name": "BartoszBartniczak\\EventSourcing\\Shop\\Basket\\Event\\QuantityOfTheProductHasBeenChanged",
-  "event_id": {
-    "uuid": "6a5e9cd4-225a-4aa4-986b-8d6e9248c1cf"
+  "eventId": {
+    "uuid": "6a5e9cd4-225a-4aa4-986b-8d6e9248c1cf",
+    "className": "BartoszBartniczak\\EventSourcing\\Event\\Id"
   },
-  "date_time": "2017-01-26T08:51:10+0100",
-  "basket_id": {
-    "uuid": "b70fce84-2a90-46e4-9867-e6b2574aadd9"
+  "dateTime": "2017-01-26T08:51:10+01:00",
+  "basketId": {
+    "uuid": "b70fce84-2a90-46e4-9867-e6b2574aadd9",
+    "className": "BartoszBartniczak\\EventSourcing\\Shop\\Basket\\Id"
   },
-  "product_id": {
-    "uuid": "ed6fe093-825c-444b-b888-75350037fd93"
+  "productId": {
+    "uuid": "ed6fe093-825c-444b-b888-75350037fd93",
+    "className": "BartoszBartniczak\\EventSourcing\\Shop\\Product\\Id"
   },
   "quantity": 1.1
 }

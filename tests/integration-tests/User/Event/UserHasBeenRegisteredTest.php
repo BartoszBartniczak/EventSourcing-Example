@@ -8,9 +8,9 @@ namespace BartoszBartniczak\EventSourcing\Shop\User\Event;
 
 
 use BartoszBartniczak\EventSourcing\Event\Event;
-use BartoszBartniczak\EventSourcing\Shop\SerializationTestCase;
+use BartoszBartniczak\EventSourcing\Shop\DeSerializationTestCase;
 
-class UserHasBeenRegisteredTest extends SerializationTestCase
+class UserHasBeenRegisteredTest extends DeSerializationTestCase
 {
 
     protected function getJsonFileName(): string

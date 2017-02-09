@@ -1,10 +1,11 @@
 {
-  "event_family_name": "User",
+  "eventFamilyName": "User",
   "name": "BartoszBartniczak\\EventSourcing\\Shop\\User\\Event\\UserHasBeenRegistered",
-  "event_id": {
-    "uuid": "0f51d839-bfdd-47ee-bba6-913fedfbfbd7"
+  "eventId": {
+    "uuid": "0f51d839-bfdd-47ee-bba6-913fedfbfbd7",
+    "className": "BartoszBartniczak\\EventSourcing\\Event\\Id"
   },
-  "date_time": "2017-01-22T10:33:52+0100",
-  "user_email": "user@user.com",
-  "password_hash": "$2y$10$wKCkjofrs4YVNpV7OYz\/aOx4mnUxJNUJx4CNsnJuKimKssMMt4yYy"
+  "dateTime": "2017-01-22T10:33:52+01:00",
+  "userEmail": "user@user.com",
+  "passwordHash": "$2y$10$wKCkjofrs4YVNpV7OYz\/aOx4mnUxJNUJx4CNsnJuKimKssMMt4yYy"
 }

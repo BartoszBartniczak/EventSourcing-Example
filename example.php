@@ -10,7 +10,6 @@ use BartoszBartniczak\CQRS\Command\Bus\CannotExecuteTheCommandException;
 use BartoszBartniczak\EventSourcing\Command\Bus\CommandBus;
 use BartoszBartniczak\EventSourcing\Event\Bus\SimpleEventBus;
 use BartoszBartniczak\EventSourcing\Event\Repository\InMemoryEventRepository;
-use BartoszBartniczak\EventSourcing\Event\Serializer\JMSJsonSerializer;
 use BartoszBartniczak\EventSourcing\Shop\Basket\Command\AddProductToTheBasket as AddProductToTheBasketCommand;
 use BartoszBartniczak\EventSourcing\Shop\Basket\Command\ChangeQuantityOfTheProduct;
 use BartoszBartniczak\EventSourcing\Shop\Basket\Command\CloseBasket as CloseBasketCommand;
@@ -63,70 +62,7 @@ $emailSenderService = new NullEmailSenderService();
 
 $propertyNamingStrategy = new \JMS\Serializer\Naming\CamelCaseNamingStrategy();
 
-class TestHandler implements \JMS\Serializer\Handler\SubscribingHandlerInterface
-{
-    public static function getSubscribingMethods()
-    {
-        $methods = array();
-        $formats = array('json', 'xml', 'yml');
-        $collectionTypes = array(
-            \BartoszBartniczak\EventSourcing\Shop\Order\Position\PositionArray\PositionArray::class => 'PositionArray'
-        );
-
-        foreach ($collectionTypes as $type => $shortName) {
-            foreach ($formats as $format) {
-                $methods[] = array(
-                    'direction' => \JMS\Serializer\GraphNavigator::DIRECTION_SERIALIZATION,
-                    'type' => $type,
-                    'format' => $format,
-                    'method' => 'serialize' . $shortName,
-                );
-
-                $methods[] = array(
-                    'direction' => \JMS\Serializer\GraphNavigator::DIRECTION_DESERIALIZATION,
-                    'type' => $type,
-                    'format' => $format,
-                    'method' => 'deserialize' . $shortName,
-                );
-            }
-        }
-
-        return $methods;
-    }
-
-    public function serializePositionArray(\JMS\Serializer\VisitorInterface $visitor, \BartoszBartniczak\EventSourcing\Shop\Order\Position\PositionArray\PositionArray $positionArray, array $type, \JMS\Serializer\Context $context)
-    {
-//        $type['name'] = 'array';
-//        var_dump(iterator_to_array($arrayObject));
-        return $visitor->visitArray(iterator_to_array($positionArray), $type, $context);
-    }
-
-    public function deserializePositionArray(\JMS\Serializer\VisitorInterface $visitor, $data, array $type, \JMS\Serializer\Context $context)
-    {
-//        $type['name'] = 'array';
-        $array = $visitor->visitArray($data, $type, $context); //this doesn't work
-//        $arrayObject = new \ArrayObject($array);
-//        var_dump($array);
-//        die( __FILE__.":".__LINE__ );
-
-        $arrayObject = new \BartoszBartniczak\EventSourcing\Shop\Order\Position\PositionArray\PositionArray(new ProductIdStrategy(), $array);
-        return $arrayObject;
-    }
-
-}
-
-$jmsSerializer = JMS\Serializer\SerializerBuilder::create()
-    ->configureHandlers(function (\JMS\Serializer\Handler\HandlerRegistry $handlerRegistry) {
-        $handlerRegistry->registerSubscribingHandler(
-            new TestHandler()
-        );
-    })
-    ->setPropertyNamingStrategy($propertyNamingStrategy)
-    ->addMetadataDir(__DIR__ . '/config/serializer', "BartoszBartniczak\EventSourcing\Shop")
-    ->addMetadataDir(__DIR__ . '/config/serializer', "BartoszBartniczak\EventSourcing")
-    ->addMetadataDir(__DIR__ . '/config/serializer', "BartoszBartniczak")
-    ->build();
-$serializer = new JMSJsonSerializer($jmsSerializer, $propertyNamingStrategy);
+include_once 'serializer.php';
 
 $eventRepository = new InMemoryEventRepository($serializer);
 

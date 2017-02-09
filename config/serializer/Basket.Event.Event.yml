@@ -1,4 +1,0 @@
-BartoszBartniczak\EventSourcing\Shop\Basket\Event\Event:
-  properties:
-    basketId:
-      type: BartoszBartniczak\EventSourcing\Shop\Basket\Id

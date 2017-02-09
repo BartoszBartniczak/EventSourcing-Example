@@ -27,14 +27,14 @@ class ProductHasBeenAddedToTheBasket extends Event
     /**
      * ProductHasBeenAddedToTheBasket constructor.
      * @param Id $eventId
-     * @param \DateTime $eventDateTime
-     * @param BasketId $basketIdId
+     * @param \DateTime $dateTime
+     * @param BasketId $basketId
      * @param ProductId $productId
      * @param float $quantity
      */
-    public function __construct(Id $eventId, \DateTime $eventDateTime, BasketId $basketIdId, ProductId $productId, float $quantity)
+    public function __construct(Id $eventId, \DateTime $dateTime, BasketId $basketId, ProductId $productId, float $quantity)
     {
-        parent::__construct($eventId, $eventDateTime, $basketIdId);
+        parent::__construct($eventId, $dateTime, $basketId);
         $this->product_id = $productId;
         $this->quantity = $quantity;
     }
