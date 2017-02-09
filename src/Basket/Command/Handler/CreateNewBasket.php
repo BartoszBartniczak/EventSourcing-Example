@@ -27,7 +27,8 @@ class CreateNewBasket extends CommandHandler
             new BasketHasBeenCreated(
                 $this->generateEventId(),
                 $this->generateDateTime(),
-                $basket
+                $basket->getId(),
+                $basket->getOwnerEmail()
             )
         );
 

@@ -1,4 +1,0 @@
-BartoszBartniczak\EventSourcing\Shop\User\Event\ActivationTokenHasBeenGenerated:
-  properties:
-    activationToken:
-      type: string

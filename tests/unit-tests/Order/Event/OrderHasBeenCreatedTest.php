@@ -8,9 +8,10 @@ namespace BartoszBartniczak\EventSourcing\Shop\Order\Event;
 
 
 use BartoszBartniczak\EventSourcing\Shop\Basket\Id as BasketId;
-use BartoszBartniczak\EventSourcing\Test\EventTestCase;
 use BartoszBartniczak\EventSourcing\Shop\Order\Id;
-use BartoszBartniczak\EventSourcing\Shop\Order\Position\PositionArray;
+use BartoszBartniczak\EventSourcing\Shop\Order\Position\PositionArray\PositionArray;
+use BartoszBartniczak\EventSourcing\Shop\Order\Position\PositionArray\ProductIdStrategy;
+use BartoszBartniczak\EventSourcing\Test\EventTestCase;
 
 class OrderHasBeenCreatedTest extends EventTestCase
 {
@@ -34,9 +35,7 @@ class OrderHasBeenCreatedTest extends EventTestCase
             ->getMock();
         /* @var $basketId BasketId */
 
-        $positions = $this->getMockBuilder(PositionArray::class)
-            ->getMock();
-        /* @var $positions PositionArray */
+        $positions = new PositionArray(new ProductIdStrategy());
 
         $orderHasBeenCreated = new OrderHasBeenCreated(
             $this->generateEventId(),

@@ -15,7 +15,10 @@ use BartoszBartniczak\EventSourcing\Shop\Order\Event\OrderHasBeenCreated;
 use BartoszBartniczak\EventSourcing\Shop\Order\Factory\Factory;
 use BartoszBartniczak\EventSourcing\Shop\Order\Id;
 use BartoszBartniczak\EventSourcing\Shop\Order\Order;
-use BartoszBartniczak\EventSourcing\Shop\Order\Position\PositionArray;
+use BartoszBartniczak\EventSourcing\Shop\Order\Position\PositionArray\Factory as PositionsFactory;
+use BartoszBartniczak\EventSourcing\Shop\Order\Position\PositionArray\PositionArray;
+use BartoszBartniczak\EventSourcing\Shop\Order\Position\PositionArray\ProductIdStrategy;
+use BartoszBartniczak\EventSourcing\Shop\Product\Repository\Repository as ProductRepository;
 use BartoszBartniczak\EventSourcing\UUID\Generator;
 
 class InMemoryRepositoryTest extends \PHPUnit_Framework_TestCase
@@ -103,7 +106,7 @@ class InMemoryRepositoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return PositionArray|\PHPUnit_Framework_MockObject_MockObject
+     * @return \BartoszBartniczak\EventSourcing\Shop\Order\Position\PositionArray\PositionArray|\PHPUnit_Framework_MockObject_MockObject
      */
     private function createEmptyPositionArrayMock(): PositionArray
     {
@@ -185,8 +188,15 @@ class InMemoryRepositoryTest extends \PHPUnit_Framework_TestCase
         $uuidGenerator = $this->getMockBuilder(Generator::class)
             ->getMockForAbstractClass();
         /* @var $uuidGenerator Generator */
+
+        $productRepository = $this->getMockBuilder(ProductRepository::class)
+            ->getMockForAbstractClass();
+        /* @var $productRepository ProductRepository */
+
+        $positionsFactory = new PositionsFactory($productRepository, new ProductIdStrategy());
+
         $factory = $this->getMockBuilder(Factory::class)
-            ->setConstructorArgs([$uuidGenerator])
+            ->setConstructorArgs([$uuidGenerator, $positionsFactory])
             ->setMethods([
                 'createEmpty'
             ])

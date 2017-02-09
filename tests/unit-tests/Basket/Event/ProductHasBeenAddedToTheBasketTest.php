@@ -7,43 +7,45 @@
 namespace BartoszBartniczak\EventSourcing\Shop\Basket\Event;
 
 
-use BartoszBartniczak\EventSourcing\Shop\Basket\Basket;
+use BartoszBartniczak\EventSourcing\Shop\Basket\Id as BasketId;
+use BartoszBartniczak\EventSourcing\Shop\Product\Id as ProductId;
 use BartoszBartniczak\EventSourcing\Test\EventTestCase;
-use BartoszBartniczak\EventSourcing\Shop\Product\Product;
 
 class ProductHasBeenAddedToTheBasketTest extends EventTestCase
 {
 
     /**
      * @covers \BartoszBartniczak\EventSourcing\Shop\Basket\Event\ProductHasBeenAddedToTheBasket::__construct
-     * @covers \BartoszBartniczak\EventSourcing\Shop\Basket\Event\ProductHasBeenAddedToTheBasket::getProduct
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Basket\Event\ProductHasBeenAddedToTheBasket::getProductId
      * @covers \BartoszBartniczak\EventSourcing\Shop\Basket\Event\ProductHasBeenAddedToTheBasket::getQuantity
      */
     public function testConstructor()
     {
 
-        $basket = $this->getMockBuilder(Basket::class)
+        $basketId = $this->getMockBuilder(BasketId::class)
             ->disableOriginalConstructor()
+            ->setMethods(null)
             ->getMock();
-        /* @var $basket Basket */
+        /* @var $basketId BasketId */
 
-        $product = $this->getMockBuilder(Product::class)
+        $productId = $this->getMockBuilder(ProductId::class)
             ->disableOriginalConstructor()
+            ->setMethods(null)
             ->getMock();
-        /* @var $product Product */
+        /* @var $productId ProductId */
 
         $productHasBeenAddedToTheBasket = new ProductHasBeenAddedToTheBasket(
             $this->generateEventId(),
             $this->generateDateTime(),
-            $basket,
-            $product,
+            $basketId,
+            $productId,
             12.00
         );
         $this->assertInstanceOf(Event::class, $productHasBeenAddedToTheBasket);
         $this->assertSameEventIdAsGenerated($productHasBeenAddedToTheBasket);
         $this->assertSameDateTimeAsGenerated($productHasBeenAddedToTheBasket);
-        $this->assertSame($basket, $productHasBeenAddedToTheBasket->getBasket());
-        $this->assertSame($product, $productHasBeenAddedToTheBasket->getProduct());
+        $this->assertSame($basketId, $productHasBeenAddedToTheBasket->getBasketId());
+        $this->assertSame($productId, $productHasBeenAddedToTheBasket->getProductId());
         $this->assertSame(12.00, $productHasBeenAddedToTheBasket->getQuantity());
     }
 

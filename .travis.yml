@@ -8,5 +8,6 @@ script:
   - mkdir -p build/logs
   - phpunit --configuration tests/unit-tests/configuration.xml
   - vendor/bin/behat --config tests/behat/behat.yml -v
+  - phpunit --configuration tests/integration-tests/configuration.xml
 after_success:
   - travis_retry php vendor/bin/coveralls -v

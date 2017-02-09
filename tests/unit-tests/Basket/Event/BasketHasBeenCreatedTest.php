@@ -7,7 +7,7 @@
 namespace BartoszBartniczak\EventSourcing\Shop\Basket\Event;
 
 
-use BartoszBartniczak\EventSourcing\Shop\Basket\Basket;
+use BartoszBartniczak\EventSourcing\Shop\Basket\Id as BasketId;
 use BartoszBartniczak\EventSourcing\Test\EventTestCase;
 
 class BasketHasBeenCreatedTest extends EventTestCase
@@ -15,23 +15,27 @@ class BasketHasBeenCreatedTest extends EventTestCase
 
     /**
      * @covers \BartoszBartniczak\EventSourcing\Shop\Basket\Event\BasketHasBeenCreated::__construct
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Basket\Event\BasketHasBeenCreated::getOwnerEmail()
      */
     public function testConstructor()
     {
-        $basket = $this->getMockBuilder(Basket::class)
+        $basketId = $this->getMockBuilder(BasketId::class)
             ->disableOriginalConstructor()
+            ->setMethods(null)
             ->getMock();
-        /* @var $basket Basket */
+        /* @var $basketId BasketId */
 
         $basketHasBeenCreated = new BasketHasBeenCreated(
             $this->generateEventId(),
             $this->generateDateTime(),
-            $basket
+            $basketId,
+            'owner@email.com'
         );
         $this->assertInstanceOf(Event::class, $basketHasBeenCreated);
         $this->assertSameEventIdAsGenerated($basketHasBeenCreated);
         $this->assertSameDateTimeAsGenerated($basketHasBeenCreated);
-        $this->assertSame($basket, $basketHasBeenCreated->getBasket());
+        $this->assertSame($basketId, $basketHasBeenCreated->getBasketId());
+        $this->assertSame('owner@email.com', $basketHasBeenCreated->getOwnerEmail());
     }
 
 }

@@ -1,0 +1,12 @@
+{
+  "eventFamilyName": "User",
+  "name": "BartoszBartniczak\\EventSourcing\\Shop\\User\\Event\\UnsuccessfulAttemptOfActivatingUserAccount",
+  "eventId": {
+    "uuid": "be0d4de8-f4cf-4943-b009-01d9de8e0eed",
+    "className": "BartoszBartniczak\\EventSourcing\\Event\\Id"
+  },
+  "dateTime": "2017-01-23T12:34:36+01:00",
+  "userEmail": "user@user.com",
+  "activationToken": "xxx",
+  "message": "Invalid activation token."
+}

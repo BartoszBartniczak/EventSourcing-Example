@@ -1,4 +1,0 @@
-BartoszBartniczak\EventSourcing\UUID\UUID:
-  properties:
-    uuid:
-      type: string

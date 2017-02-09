@@ -1,8 +1,0 @@
-BartoszBartniczak\EventSourcing\EventAggregate\EventAggregate:
-  properties:
-    committedEvents:
-      expose: false
-      exclude: true
-    uncommittedEvents:
-      expose: false
-      exclude: true

@@ -9,7 +9,7 @@ namespace BartoszBartniczak\EventSourcing\Shop\Order\Event;
 use BartoszBartniczak\EventSourcing\Event\Id;
 use BartoszBartniczak\EventSourcing\Shop\Basket\Id as BasketId;
 use BartoszBartniczak\EventSourcing\Shop\Order\Id as OrderId;
-use BartoszBartniczak\EventSourcing\Shop\Order\Position\PositionArray;
+use BartoszBartniczak\EventSourcing\Shop\Order\Position\PositionArray\PositionArray;
 
 
 class OrderHasBeenCreated extends Event
@@ -31,7 +31,7 @@ class OrderHasBeenCreated extends Event
      * @param \DateTime $dateTime
      * @param OrderId $orderId
      * @param BasketId $basketId
-     * @param PositionArray $positions
+     * @param \BartoszBartniczak\EventSourcing\Shop\Order\Position\PositionArray\PositionArray $positions
      */
     public function __construct(Id $eventId, \DateTime $dateTime, OrderId $orderId, BasketId $basketId, PositionArray $positions)
     {
@@ -50,7 +50,7 @@ class OrderHasBeenCreated extends Event
     }
 
     /**
-     * @return PositionArray
+     * @return \BartoszBartniczak\EventSourcing\Shop\Order\Position\PositionArray\PositionArray
      */
     public function getPositions(): PositionArray
     {

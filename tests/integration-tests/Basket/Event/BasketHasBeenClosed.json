@@ -1,0 +1,13 @@
+{
+  "eventFamilyName": "Basket",
+  "name": "BartoszBartniczak\\EventSourcing\\Shop\\Basket\\Event\\BasketHasBeenClosed",
+  "eventId": {
+    "uuid": "5c230fd5-3050-4635-a611-ca99865f36a2",
+    "className": "BartoszBartniczak\\EventSourcing\\Event\\Id"
+  },
+  "dateTime": "2017-01-26T08:51:10+01:00",
+  "basketId": {
+    "uuid": "b70fce84-2a90-46e4-9867-e6b2574aadd9",
+    "className": "BartoszBartniczak\\EventSourcing\\Shop\\Basket\\Id"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "eventFamilyName": "User",
+  "name": "BartoszBartniczak\\EventSourcing\\Shop\\User\\Event\\UserHasBeenRegistered",
+  "eventId": {
+    "uuid": "0f51d839-bfdd-47ee-bba6-913fedfbfbd7",
+    "className": "BartoszBartniczak\\EventSourcing\\Event\\Id"
+  },
+  "dateTime": "2017-01-22T10:33:52+01:00",
+  "userEmail": "user@user.com",
+  "passwordHash": "$2y$10$wKCkjofrs4YVNpV7OYz\/aOx4mnUxJNUJx4CNsnJuKimKssMMt4yYy"
+}

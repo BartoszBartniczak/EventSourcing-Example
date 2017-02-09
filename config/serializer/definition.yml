@@ -1,0 +1,286 @@
+BartoszBartniczak\EventSourcing\Shop\Basket\Event\BasketHasBeenCreated:
+  attributes:
+    eventFamilyName:
+      groups: ['event']
+    name:
+      groups: ["event"]
+    eventId:
+      groups: ["event"]
+    dateTime:
+      groups: ["event"]
+    basketId:
+      groups: ["event"]
+    ownerEmail:
+      groups: ["event"]
+
+BartoszBartniczak\EventSourcing\Shop\Basket\Event\BasketHasBeenClosed:
+  attributes:
+    eventFamilyName:
+      groups: ['event']
+    name:
+      groups: ["event"]
+    eventId:
+      groups: ["event"]
+    dateTime:
+      groups: ["event"]
+    basketId:
+      groups: ["event"]
+
+BartoszBartniczak\EventSourcing\Shop\Basket\Event\ProductHasBeenAddedToTheBasket:
+  attributes:
+    eventFamilyName:
+      groups: ['event']
+    name:
+      groups: ["event"]
+    eventId:
+      groups: ["event"]
+    dateTime:
+      groups: ["event"]
+    basketId:
+      groups: ["event"]
+    productId:
+      groups: ["event"]
+    quantity:
+      groups: ["event"]
+
+BartoszBartniczak\EventSourcing\Shop\Basket\Event\ProductHasBeenRemovedFromTheBasket:
+  attributes:
+    eventFamilyName:
+      groups: ['event']
+    name:
+      groups: ["event"]
+    eventId:
+      groups: ["event"]
+    dateTime:
+      groups: ["event"]
+    basketId:
+      groups: ["event"]
+    productId:
+      groups: ["event"]
+
+BartoszBartniczak\EventSourcing\Shop\Basket\Event\QuantityOfTheProductHasBeenChanged:
+  attributes:
+    eventFamilyName:
+      groups: ['event']
+    name:
+      groups: ["event"]
+    eventId:
+      groups: ["event"]
+    dateTime:
+      groups: ["event"]
+    basketId:
+      groups: ["event"]
+    productId:
+      groups: ["event"]
+    quantity:
+      groups: ["event"]
+
+BartoszBartniczak\EventSourcing\Shop\Email\Event\EmailHasBeenSent:
+  attributes:
+    eventFamilyName:
+      groups: ['event']
+    name:
+      groups: ["event"]
+    eventId:
+      groups: ["event"]
+    dateTime:
+      groups: ["event"]
+    email:
+      groups: ['event']
+
+BartoszBartniczak\EventSourcing\Shop\Email\Event\EmailHasNotBeenSent:
+  attributes:
+    eventFamilyName:
+      groups: ['event']
+    name:
+      groups: ["event"]
+    eventId:
+      groups: ["event"]
+    dateTime:
+      groups: ["event"]
+    email:
+      groups: ['event']
+    errorMessage:
+      groups: ['event']
+
+BartoszBartniczak\EventSourcing\Shop\Email\Email:
+  attributes:
+    id:
+      groups: ['event']
+
+BartoszBartniczak\EventSourcing\Shop\Order\Event\OrderHasBeenCreated:
+  attributes:
+    eventFamilyName:
+      groups: ['event']
+    name:
+      groups: ["event"]
+    eventId:
+      groups: ["event"]
+    dateTime:
+      groups: ["event"]
+    orderId:
+      groups: ["event"]
+    basketId:
+      groups: ["event"]
+    positions:
+      groups: ["event"]
+
+BartoszBartniczak\EventSourcing\Shop\Order\Position\Position:
+  attributes:
+    product:
+      groups: ['event']
+    quantity:
+      groups: ['event']
+
+BartoszBartniczak\EventSourcing\Shop\Product\Product:
+  attributes:
+    id:
+      groups: ['event']
+    name:
+      groups: ['event']
+
+BartoszBartniczak\EventSourcing\Shop\Product\Repository\Event\ProductHasNotBeenFound:
+  attributes:
+    eventFamilyName:
+      groups: ['event']
+    name:
+      groups: ["event"]
+    eventId:
+      groups: ["event"]
+    dateTime:
+      groups: ["event"]
+    productName:
+      groups: ["event"]
+    userEmail:
+      groups: ["event"]
+
+BartoszBartniczak\EventSourcing\Shop\User\Event\ActivationTokenHasBeenGenerated:
+  attributes:
+    eventFamilyName:
+      groups: ['event']
+    name:
+      groups: ["event"]
+    eventId:
+      groups: ["event"]
+    dateTime:
+      groups: ["event"]
+    userEmail:
+      groups: ["event"]
+    activationToken:
+      groups: ["event"]
+
+BartoszBartniczak\EventSourcing\Shop\User\Event\AttemptOfActivatingAlreadyActivatedAccount:
+  attributes:
+    eventFamilyName:
+      groups: ['event']
+    name:
+      groups: ["event"]
+    eventId:
+      groups: ["event"]
+    dateTime:
+      groups: ["event"]
+    userEmail:
+      groups: ["event"]
+    activationToken:
+      groups: ["event"]
+    message:
+      groups: ["event"]
+
+BartoszBartniczak\EventSourcing\Shop\User\Event\UnsuccessfulAttemptOfActivatingUserAccount:
+  attributes:
+    eventFamilyName:
+      groups: ['event']
+    name:
+      groups: ["event"]
+    eventId:
+      groups: ["event"]
+    dateTime:
+      groups: ["event"]
+    userEmail:
+      groups: ["event"]
+    activationToken:
+      groups: ["event"]
+    message:
+      groups: ["event"]
+
+BartoszBartniczak\EventSourcing\Shop\User\Event\UserAccountHasBeenActivated:
+  attributes:
+    eventFamilyName:
+      groups: ['event']
+    name:
+      groups: ["event"]
+    eventId:
+      groups: ["event"]
+    dateTime:
+      groups: ["event"]
+    userEmail:
+      groups: ["event"]
+    activationToken:
+      groups: ["event"]
+
+BartoszBartniczak\EventSourcing\Shop\User\Event\UserHasBeenLoggedIn:
+  attributes:
+    eventFamilyName:
+      groups: ['event']
+    name:
+      groups: ["event"]
+    eventId:
+      groups: ["event"]
+    dateTime:
+      groups: ["event"]
+    userEmail:
+      groups: ["event"]
+
+BartoszBartniczak\EventSourcing\Shop\User\Event\UserHasBeenLoggedOut:
+  attributes:
+    eventFamilyName:
+      groups: ['event']
+    name:
+      groups: ["event"]
+    eventId:
+      groups: ["event"]
+    dateTime:
+      groups: ["event"]
+    userEmail:
+      groups: ["event"]
+
+BartoszBartniczak\EventSourcing\Shop\User\Event\UserHasBeenRegistered:
+  attributes:
+    eventFamilyName:
+      groups: ['event']
+    name:
+      groups: ["event"]
+    eventId:
+      groups: ["event"]
+    dateTime:
+      groups: ["event"]
+    userEmail:
+      groups: ["event"]
+    passwordHash:
+      groups: ["event"]
+
+BartoszBartniczak\EventSourcing\Shop\User\Event\AttemptOfLoggingInToInactiveAccount:
+  attributes:
+    eventFamilyName:
+      groups: ['event']
+    name:
+      groups: ["event"]
+    eventId:
+      groups: ["event"]
+    dateTime:
+      groups: ["event"]
+    userEmail:
+      groups: ["event"]
+
+BartoszBartniczak\EventSourcing\Shop\User\Event\UnsuccessfulAttemptOfLoggingIn:
+  attributes:
+    eventFamilyName:
+      groups: ['event']
+    name:
+      groups: ["event"]
+    eventId:
+      groups: ["event"]
+    dateTime:
+      groups: ["event"]
+    userEmail:
+      groups: ["event"]

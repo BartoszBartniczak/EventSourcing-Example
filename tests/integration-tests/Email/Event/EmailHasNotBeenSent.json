@@ -1,0 +1,16 @@
+{
+  "eventFamilyName": "Email",
+  "name": "BartoszBartniczak\\EventSourcing\\Shop\\Email\\Event\\EmailHasNotBeenSent",
+  "eventId": {
+    "uuid": "e41d4459-05a3-4c02-a359-0045e42ca1ba",
+    "className": "BartoszBartniczak\\EventSourcing\\Event\\Id"
+  },
+  "dateTime": "2017-01-23T10:33:21+01:00",
+  "email": {
+    "id": {
+      "uuid": "03b4a547-b951-4bc8-87fb-108646e753e7",
+      "className": "BartoszBartniczak\\EventSourcing\\Shop\\Email\\Id"
+    }
+  },
+  "errorMessage": "You are using NullEmailSenderService!"
+}

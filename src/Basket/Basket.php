@@ -16,7 +16,6 @@ use BartoszBartniczak\EventSourcing\Shop\Basket\Event\QuantityOfTheProductHasBee
 use BartoszBartniczak\EventSourcing\Shop\Basket\Position\Position;
 use BartoszBartniczak\EventSourcing\Shop\Basket\Position\PositionArray;
 use BartoszBartniczak\EventSourcing\Shop\Product\Id as ProductId;
-use BartoszBartniczak\EventSourcing\Shop\Product\Product;
 
 class Basket extends EventAggregate
 {
@@ -50,11 +49,27 @@ class Basket extends EventAggregate
     }
 
     /**
+     * @return Id
+     */
+    public function getId(): Id
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOwnerEmail(): string
+    {
+        return $this->ownerEmail;
+    }
+
+    /**
      * @param BasketHasBeenCreated $basketHasBeenCreated
      */
     protected function handleBasketHasBeenCreated(BasketHasBeenCreated $basketHasBeenCreated)
     {
-        $this->__construct($basketHasBeenCreated->getBasket()->getId(), $basketHasBeenCreated->getBasket()->getOwnerEmail());
+        $this->__construct($basketHasBeenCreated->getBasketId(), $basketHasBeenCreated->getOwnerEmail());
     }
 
     /**
@@ -72,40 +87,24 @@ class Basket extends EventAggregate
     }
 
     /**
-     * @return Id
-     */
-    public function getId(): Id
-    {
-        return $this->id;
-    }
-
-    /**
-     * @return string
-     */
-    public function getOwnerEmail(): string
-    {
-        return $this->ownerEmail;
-    }
-
-    /**
      * @param ProductHasBeenAddedToTheBasket $event
      */
     protected function handleProductHasBeenAddedToTheBasket(ProductHasBeenAddedToTheBasket $event)
     {
-        $this->add($event->getProduct(), $event->getQuantity());
+        $this->add($event->getProductId(), $event->getQuantity());
     }
 
     /**
-     * @param Product $product
+     * @param ProductId $productId
      * @param float $quantity
      */
-    private function add(Product $product, float $quantity)
+    private function add(ProductId $productId, float $quantity)
     {
         try {
-            $basketPosition = $this->findPositionByProductId($product->getId());
+            $basketPosition = $this->findPositionByProductId($productId);
             $basketPosition->addToQuantity($quantity);
         } catch (CannotFindPositionException $invalidArgumentException) {
-            $this->createNewItem($product, $quantity);
+            $this->createNewItem($productId, $quantity);
         }
     }
 
@@ -124,12 +123,12 @@ class Basket extends EventAggregate
     }
 
     /**
-     * @param Product $product
+     * @param ProductId $productId
      * @param float $quantity
      */
-    private function createNewItem(Product $product, float $quantity)
+    private function createNewItem(ProductId $productId, float $quantity)
     {
-        $this->positions[$product->getId()->toNative()] = new Position($product, $quantity);
+        $this->positions[$productId->toNative()] = new Position($productId, $quantity);
     }
 
     /**

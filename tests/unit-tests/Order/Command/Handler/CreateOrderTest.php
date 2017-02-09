@@ -19,9 +19,12 @@ use BartoszBartniczak\EventSourcing\Shop\Order\Command\CreateOrder as CreateOrde
 use BartoszBartniczak\EventSourcing\Shop\Order\Event\OrderHasBeenCreated;
 use BartoszBartniczak\EventSourcing\Shop\Order\Order;
 use BartoszBartniczak\EventSourcing\Shop\Order\Position\Position as OrderPosition;
-use BartoszBartniczak\EventSourcing\Shop\Order\Position\PositionArray as OrderPositions;
+use BartoszBartniczak\EventSourcing\Shop\Order\Position\PositionArray\Factory;
+use BartoszBartniczak\EventSourcing\Shop\Order\Position\PositionArray\PositionArray as OrderPositions;
+use BartoszBartniczak\EventSourcing\Shop\Order\Position\PositionArray\ProductIdStrategy;
 use BartoszBartniczak\EventSourcing\Shop\Product\Id as ProductId;
 use BartoszBartniczak\EventSourcing\Shop\Product\Product;
+use BartoszBartniczak\EventSourcing\Shop\Product\Repository\InMemoryRepository;
 use BartoszBartniczak\EventSourcing\UUID\Generator;
 use BartoszBartniczak\EventSourcing\UUID\UUID;
 
@@ -58,53 +61,39 @@ class CreateOrderTest extends \PHPUnit_Framework_TestCase
             ->getMock();
         /* @var $basketId BasketId */
 
+        $productId1 = new ProductId(uniqid());
+
         $product1 = $this->getMockBuilder(Product::class)
             ->disableOriginalConstructor()
             ->setMethods([
-                'getId'
+                'getId',
+                'getName'
             ])
             ->getMock();
         $product1->method('getId')
-            ->willReturn(new ProductId(uniqid()));
+            ->willReturn($productId1);
+        $product1->method('getName')
+            ->willReturn(uniqid());
         /* @var $product1 Product */
 
-        $basketPosition1 = $this->getMockBuilder(BasketPosition::class)
-            ->disableOriginalConstructor()
-            ->setMethods([
-                'getProduct',
-                'getQuantity'
-            ])
-            ->getMock();
-        $basketPosition1->method('getProduct')
-            ->willReturn($product1);
+        $basketPosition1 = new BasketPosition($productId1, 120.45);
 
-        $basketPosition1->method('getQuantity')
-            ->willReturn(120.45);
-        /* @var $basketPosition BasketPosition */
+        $productId2 = new ProductId(uniqid());
 
         $product2 = $this->getMockBuilder(Product::class)
             ->disableOriginalConstructor()
             ->setMethods([
-                'getId'
+                'getId',
+                'getName'
             ])
             ->getMock();
         $product2->method('getId')
-            ->willReturn(new ProductId(uniqid()));
+            ->willReturn($productId2);
+        $product2->method('getName')
+            ->willReturn(uniqid());
         /* @var $product2 Product */
 
-        $basketPosition2 = $this->getMockBuilder(BasketPosition::class)
-            ->disableOriginalConstructor()
-            ->setMethods([
-                'getProduct',
-                'getQuantity'
-            ])
-            ->getMock();
-        $basketPosition2->method('getProduct')
-            ->willReturn($product2);
-
-        $basketPosition2->method('getQuantity')
-            ->willReturn(1.12);
-        /* @var $basketPosition BasketPosition */
+        $basketPosition2 = new BasketPosition($productId2, 1.12);
 
         $basketPositions = new BasketPositions();
         $basketPositions[] = $basketPosition1;
@@ -134,11 +123,18 @@ class CreateOrderTest extends \PHPUnit_Framework_TestCase
             ->getMock();
         /* @var $email Email */
 
+        $inMemoryRepository = new InMemoryRepository();
+        $inMemoryRepository->save($product1);
+        $inMemoryRepository->save($product2);
+        $factory = new Factory($inMemoryRepository, new ProductIdStrategy());
+
         $createOrderCommand = new CreateOrderCommand(
             $generator,
             $basket,
             $service,
-            $email);
+            $email,
+            $factory
+        );
 
         $createOrder = new CreateOrder($generator);
         $order = $createOrder->handle($createOrderCommand);
@@ -182,7 +178,7 @@ class CreateOrderTest extends \PHPUnit_Framework_TestCase
             $orderPosition = $orderPositions->shift();
             /* @var $orderPosition OrderPosition */
 
-            $this->assertSame($basketPosition->getProduct(), $orderPosition->getProduct());
+            $this->assertSame($basketPosition->getProductId(), $orderPosition->getProduct()->getId());
             $this->assertSame($basketPosition->getQuantity(), $orderPosition->getQuantity());
         }
 

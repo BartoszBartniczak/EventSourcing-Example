@@ -19,6 +19,8 @@ use BartoszBartniczak\EventSourcing\Shop\Order\Command\CreateOrder as CreateOrde
 use BartoszBartniczak\EventSourcing\Shop\Order\Command\Handler\CreateOrder as CreateOrderHandler;
 use BartoszBartniczak\EventSourcing\Shop\Order\Factory\Factory as OrderFactory;
 use BartoszBartniczak\EventSourcing\Shop\Order\Order;
+use BartoszBartniczak\EventSourcing\Shop\Order\Position\PositionArray\Factory as PositionsFactory;
+use BartoszBartniczak\EventSourcing\Shop\Order\Position\PositionArray\ProductIdStrategy;
 use BartoszBartniczak\EventSourcing\Shop\Order\Repository\InMemoryRepository as OrderRepository;
 use BartoszBartniczak\EventSourcing\Shop\Product\Factory\Factory as ProductFactory;
 use BartoszBartniczak\EventSourcing\Shop\Product\Id as ProductId;
@@ -63,6 +65,11 @@ class OrderContext implements Context
     private $order;
 
     /**
+     * @var PositionsFactory
+     */
+    private $positionsFactory;
+
+    /**
      * Initializes context.
      *
      * Every scenario gets its own context instance.
@@ -77,12 +84,15 @@ class OrderContext implements Context
         $eventRepository = new InMemoryEventRepository($fakeSerializer);
         $productFactory = new ProductFactory($this->uuidGenerator);
 
-        $orderFactory = new OrderFactory($this->uuidGenerator);
-        $this->orderRepository = new OrderRepository($eventRepository, $orderFactory);
 
         $this->productRepository = new ProductRepository();
         $this->productRepository->save($productFactory->createNew('Name is irrelevant.', "2925d7e0-1266-44fb-b902-80bc7076896e"));
         $this->productRepository->save($productFactory->createNew('Name is irrelevant.', "f31a23e2-fc1e-456d-8eed-4063f97efb5f"));
+
+        $this->positionsFactory = new PositionsFactory($this->productRepository, new ProductIdStrategy());
+
+        $orderFactory = new OrderFactory($this->uuidGenerator, $this->positionsFactory);
+        $this->orderRepository = new OrderRepository($eventRepository, $orderFactory);
 
         $this->commandBus = new CommandBus($this->uuidGenerator, $eventRepository, $eventBus);
         $this->commandBus->registerHandler(AddProductToTheBasketCommand::class, new AddProductToTheBasketHandler($this->uuidGenerator));
@@ -122,7 +132,7 @@ class OrderContext implements Context
         $emailFactory = new EmailFactory($this->uuidGenerator);
         $this->email = $emailFactory->createEmpty();
 
-        $command = new CreateOrderCommand($this->uuidGenerator, $this->basket, $senderService, $this->email);
+        $command = new CreateOrderCommand($this->uuidGenerator, $this->basket, $senderService, $this->email, $this->positionsFactory);
         $this->commandBus->execute($command);
         $this->order = $this->orderRepository->findByBasketId($this->basket->getId());
     }

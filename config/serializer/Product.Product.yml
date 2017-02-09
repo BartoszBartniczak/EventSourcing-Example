@@ -1,6 +1,0 @@
-BartoszBartniczak\EventSourcing\Shop\Product\Product:
-  properties:
-    id:
-      type: BartoszBartniczak\EventSourcing\Shop\Product\Id
-    name:
-      type: string

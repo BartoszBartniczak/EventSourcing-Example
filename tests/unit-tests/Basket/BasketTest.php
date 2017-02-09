@@ -66,20 +66,20 @@ class BasketTest extends \PHPUnit_Framework_TestCase
             ->getMock();
         /* @var $id Id */
 
-        $basket = new Basket($id, 'owner@email.com');
-        /* @var $basket Basket */
-
         $basketHasBeenCreated = $this->getMockBuilder(BasketHasBeenCreated::class)
             ->disableOriginalConstructor()
             ->setMethods([
-                'getBasket',
+                'getBasketId',
+                'getOwnerEmail'
             ])
             ->getMock();
-        $basketHasBeenCreated->method('getBasket')
-            ->willReturn($basket);
-
-
+        $basketHasBeenCreated->method('getBasketId')
+            ->willReturn($id);
+        $basketHasBeenCreated->method('getOwnerEmail')
+            ->willReturn('owner@email.com');
         /* @var $basketHasBeenCreated BasketHasBeenCreated */
+
+
         $emptyBasket->apply($basketHasBeenCreated);
         $this->assertSame($id, $emptyBasket->getId());
         $this->assertSame('owner@email.com', $emptyBasket->getOwnerEmail());
@@ -135,13 +135,13 @@ class BasketTest extends \PHPUnit_Framework_TestCase
         $productHasBeenAddedToTheBasket1 = $this->getMockBuilder(ProductHasBeenAddedToTheBasket::class)
             ->disableOriginalConstructor()
             ->setMethods([
-                'getProduct',
+                'getProductId',
                 'getQuantity'
             ])
             ->getMock();
 
-        $productHasBeenAddedToTheBasket1->method('getProduct')
-            ->willReturn($product1);
+        $productHasBeenAddedToTheBasket1->method('getProductId')
+            ->willReturn($productId);
 
         $productHasBeenAddedToTheBasket1->method('getQuantity')
             ->willReturn(12.03);
@@ -151,7 +151,7 @@ class BasketTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(1, $basket->getPositions()->count());
         $position = $basket->findPositionByProductId($productId);
         $this->assertSame(12.03, $position->getQuantity());
-        $this->assertSame($product1, $position->getProduct());
+        $this->assertSame($productId, $position->getProductId());
         $this->assertEquals(0, $basket->getCommittedEvents()->count());
         $this->assertEquals(1, $basket->getUncommittedEvents()->count());
         $this->assertSame($productHasBeenAddedToTheBasket1, $basket->getUncommittedEvents()->offsetGet(0));
@@ -159,13 +159,13 @@ class BasketTest extends \PHPUnit_Framework_TestCase
         $productHasBeenAddedToTheBasket2 = $this->getMockBuilder(ProductHasBeenAddedToTheBasket::class)
             ->disableOriginalConstructor()
             ->setMethods([
-                'getProduct',
+                'getProductId',
                 'getQuantity'
             ])
             ->getMock();
 
-        $productHasBeenAddedToTheBasket2->method('getProduct')
-            ->willReturn($product1);
+        $productHasBeenAddedToTheBasket2->method('getProductId')
+            ->willReturn($productId);
 
         $productHasBeenAddedToTheBasket2->method('getQuantity')
             ->willReturn(7.04);
@@ -175,7 +175,7 @@ class BasketTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(1, $basket->getPositions()->count());
         $position = $basket->findPositionByProductId($productId);
         $this->assertSame(19.07, $position->getQuantity());
-        $this->assertSame($product1, $position->getProduct());
+        $this->assertSame($productId, $position->getProductId());
         $this->assertEquals(0, $basket->getCommittedEvents()->count());
         $this->assertEquals(2, $basket->getUncommittedEvents()->count());
         $this->assertSame($productHasBeenAddedToTheBasket2, $basket->getUncommittedEvents()->offsetGet(1));
@@ -189,14 +189,14 @@ class BasketTest extends \PHPUnit_Framework_TestCase
     public function testHandleQuantityOfTheProductHasBeenChanged()
     {
 
-        $product = $this->getMockBuilder(Product::class)
+        $productId = $this->getMockBuilder(ProductId::class)
             ->disableOriginalConstructor()
             ->getMock();
-        /* @var $product Product */
+        /* @var $productId ProductId */
 
         $basketPosition = $this->getMockBuilder(BasketPosition::class)
             ->setConstructorArgs([
-                $product,
+                $productId,
                 1.0
             ])
             ->setMethods(null)
@@ -208,10 +208,6 @@ class BasketTest extends \PHPUnit_Framework_TestCase
             ->getMock();
         /* @var $id Id */
 
-        $productId = $this->getMockBuilder(ProductId::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        /* @var $productId ProductId */
 
         $basket = $this->getMockBuilder(Basket::class)
             ->setConstructorArgs([
@@ -312,28 +308,17 @@ class BasketTest extends \PHPUnit_Framework_TestCase
     {
         $productId = new ProductId('7c204e0a-5141-4fa8-bbd1-d59443bcc73f');
 
-        $product = $this->getMockBuilder(Product::class)
-            ->disableOriginalConstructor()
-            ->setMethods([
-                'getId'
-            ])
-            ->getMock();
-
-        $product->method('getId')
-            ->willReturn($productId);
-        /* @var $product Product */
-
         $productHasBeenAddedToTheBasket = $this->getMockBuilder(ProductHasBeenAddedToTheBasket::class)
             ->disableOriginalConstructor()
             ->setMethods([
-                'getProduct',
+                'getProductId',
                 'getQuantity'
             ])
             ->getMock();
         $productHasBeenAddedToTheBasket->method('getQuantity')
             ->willReturn(94.00);
-        $productHasBeenAddedToTheBasket->method('getProduct')
-            ->willReturn($product);
+        $productHasBeenAddedToTheBasket->method('getProductId')
+            ->willReturn($productId);
         /* @var $productHasBeenAddedToTheBasket ProductHasBeenAddedToTheBasket */
 
         $productHasBeenRemovedFromTheBasket = $this->getMockBuilder(ProductHasBeenRemovedFromTheBasket::class)
@@ -462,25 +447,15 @@ class BasketTest extends \PHPUnit_Framework_TestCase
 
         $productId = new ProductId(uniqid());
 
-        $product = $this->getMockBuilder(Product::class)
-            ->disableOriginalConstructor()
-            ->setMethods([
-                'getId'
-            ])
-            ->getMock();
-        $product->method('getId')
-            ->willReturn($productId);
-        /* @var $product Product */
-
         $productHasBeenAddedToTheBasket = $this->getMockBuilder(ProductHasBeenAddedToTheBasket::class)
             ->disableOriginalConstructor()
             ->setMethods([
-                'getProduct',
+                'getProductId',
                 'getQuantity'
             ])
             ->getMock();
-        $productHasBeenAddedToTheBasket->method('getProduct')
-            ->willReturn($product);
+        $productHasBeenAddedToTheBasket->method('getProductId')
+            ->willReturn($productId);
         $productHasBeenAddedToTheBasket->method('getQuantity')
             ->willReturn(12.00);
         /* @var $productHasBeenAddedToTheBasket ProductHasBeenAddedToTheBasket */

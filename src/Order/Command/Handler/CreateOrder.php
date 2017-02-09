@@ -8,8 +8,8 @@ namespace BartoszBartniczak\EventSourcing\Shop\Order\Command\Handler;
 
 
 use BartoszBartniczak\CQRS\Command\Command;
-use BartoszBartniczak\EventSourcing\Shop\Basket\Command\CloseBasket;
 use BartoszBartniczak\EventSourcing\Command\Handler\CommandHandler;
+use BartoszBartniczak\EventSourcing\Shop\Basket\Command\CloseBasket;
 use BartoszBartniczak\EventSourcing\Shop\Email\Command\SendEmail;
 use BartoszBartniczak\EventSourcing\Shop\Order\Event\OrderHasBeenCreated;
 use BartoszBartniczak\EventSourcing\Shop\Order\Id;
@@ -22,13 +22,13 @@ class CreateOrder extends CommandHandler
      */
     public function handle(Command $command): Order
     {
-        /* @var $command \Shop\Order\Command\CreateOrder */
+        /* @var $command \BartoszBartniczak\EventSourcing\Shop\Order\Command\CreateOrder */
 
         $order = new Order(
             new Id($command->getUuidGenerator()->generate()->toNative()),
-            $command->getBasket()->getId()
-        );
-        $order->addPositionsFromBasket($command->getBasket()->getPositions());
+            $command->getBasket()->getId(),
+            $command->getPositionsFactory()->createFromBasketPositions($command->getBasket()->getPositions()
+            ));
 
         $order->apply(
             new OrderHasBeenCreated(

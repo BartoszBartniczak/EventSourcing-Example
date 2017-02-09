@@ -1,0 +1,12 @@
+{
+  "eventFamilyName": "User",
+  "name": "BartoszBartniczak\\EventSourcing\\Shop\\User\\Event\\AttemptOfActivatingAlreadyActivatedAccount",
+  "eventId": {
+    "uuid": "eccacc01-db93-4738-9b82-a3737843f617",
+    "className": "BartoszBartniczak\\EventSourcing\\Event\\Id"
+  },
+  "dateTime": "2017-01-23T12:34:36+01:00",
+  "userEmail": "user@user.com",
+  "activationToken": "5885ea4c4bd4d",
+  "message": "User has been already activated."
+}
