@@ -73,7 +73,7 @@ abstract class DeSerializationTestCase extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         parent::setUp();
-        $serializer = include '../../serializer.php';
+        $serializer = include __DIR__ . '/../../serializer.php';
         $this->serializer = $serializer;
 
         $this->uuidGenerator = new RamseyGeneratorAdapter();
